@@ -1,0 +1,176 @@
+/* src/styles/Footer.css */
+
+#footerd {
+    background: linear-gradient(135deg, #f7f2f7, #e3d8f0);
+    color: #222;
+    padding: 40px 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-top: 5px solid #e67e22;
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+    text-align: left;
+}
+
+.mycondiv h2,
+.mycondiv h3,
+.soclass h3 {
+    margin-bottom: 15px;
+    font-size: 22px;
+    color: #34495e;
+    border-bottom: 2px solid #ddd;
+    padding-bottom: 5px;
+}
+
+.mycondiv p {
+    font-size: 15px;
+    line-height: 1.6;
+    color: #555;
+}
+
+.footer-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footer-links li {
+    margin: 8px 0;
+}
+
+.footer-link {
+    color: #e67e22;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.footer-link:hover {
+    color: #d35400;
+    text-decoration: underline;
+}
+
+.newsletter-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+#emailsubc {
+    padding: 10px 12px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    outline: none;
+    font-size: 14px;
+    width: 100%;
+    max-width: 220px;
+    transition: border-color 0.3s;
+}
+
+#emailsubc:focus {
+    border-color: #3498db;
+    box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
+}
+
+.subbtn {
+    display: inline-block;
+    padding: 10px 18px;
+    background: #e67e22;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    width: fit-content;
+}
+
+.subbtn:hover {
+    background: #d35400;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transform: scale(1.02);
+}
+
+.soclass {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.rating-section {
+    margin: 12px 0;
+}
+
+.social-title {
+    margin-top: 20px;
+}
+
+.socialMedia {
+    display: flex;
+    gap: 15px;
+    margin-top: 10px;
+}
+
+.iconssocial {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    color: #333;
+    text-decoration: none;
+}
+
+.iconssocial:hover {
+    transform: scale(1.15) rotate(5deg);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.footer-bottom {
+    max-width: 1200px;
+    margin: 30px auto 0;
+    text-align: center;
+    padding-top: 20px;
+    border-top: 1px solid #ddd;
+}
+
+.footer-bottom p {
+    margin: 5px 0;
+    font-size: 14px;
+    color: #7f8c8d;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+    .footer-grid {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+
+    .mycondiv,
+    .soclass {
+        align-items: center;
+    }
+
+    .newsletter-form {
+        align-items: center;
+    }
+
+    #emailsubc {
+        max-width: 100%;
+    }
+
+    .footer-bottom {
+        padding-top: 20px;
+    }
+}

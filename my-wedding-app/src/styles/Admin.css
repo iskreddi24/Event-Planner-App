@@ -1,0 +1,186 @@
+/* ------------------------------------- /
+/ Global Admin Layout Styling (AdminLayout.jsx) /
+/ ------------------------------------- */
+
+.admin-wrapper {
+min-height: 100vh;
+background-color: #f4f6f9; /* Soft background */
+font-family: Arial, sans-serif;
+}
+
+.admin-header {
+background-color: #007bff; /* Primary Blue */
+color: white;
+padding: 15px 30px;
+display: flex;
+justify-content: space-between;
+align-items: center;
+box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+}
+
+.admin-header h2 {
+margin: 0;
+font-size: 1.6em;
+font-weight: 600;
+}
+
+.admin-nav {
+display: flex;
+align-items: center;
+gap: 20px;
+}
+
+.admin-nav button {
+padding: 8px 15px;
+border: none;
+border-radius: 4px;
+cursor: pointer;
+background-color: rgba(255, 255, 255, 0.2);
+color: white;
+font-size: 14px;
+transition: background-color 0.2s;
+}
+
+.admin-nav button:hover {
+background-color: rgba(255, 255, 255, 0.3);
+}
+
+.admin-logout-btn {
+background-color: #dc3545 !important;
+}
+.admin-logout-btn:hover {
+background-color: #c82333 !important;
+}
+
+.admin-user-info {
+font-size: 0.9em;
+color: #ced4da;
+}
+
+.admin-main-content {
+padding: 20px;
+}
+
+.admin-access-denied {
+max-width: 500px;
+margin: 100px auto;
+padding: 30px;
+text-align: center;
+background: white;
+border-radius: 8px;
+box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+border-top: 5px solid #dc3545;
+}
+
+.admin-access-denied h1 {
+color: #dc3545;
+}
+
+
+
+.admin-dashboard h1 {
+color: #343a40;
+margin-bottom: 30px;
+text-align: center;
+}
+
+.bookings-grid {
+display: grid;
+grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+gap: 20px;
+}
+
+.admin-card {
+background: #ffffff;
+border: 1px solid #e9ecef;
+border-top: 5px solid #007bff;
+border-radius: 6px;
+padding: 25px;
+box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.admin-card h3 {
+margin-top: 0;
+margin-bottom: 10px;
+color: #495057;
+font-size: 1.25em;
+}
+
+.admin-card p {
+margin: 5px 0;
+font-size: 14px;
+line-height: 1.4;
+color: #6c757d;
+}
+.admin-card strong {
+color: #343a40;
+}
+
+.submission-date {
+font-size: 0.8em;
+color: #adb5bd;
+margin-bottom: 15px !important;
+text-align: right;
+}
+
+.message-text {
+background: #f8f9fa;
+padding: 10px;
+border-radius: 4px;
+border-left: 3px solid #ced4da;
+}
+
+.admin-actions {
+margin-top: 20px;
+display: flex;
+gap: 10px;
+flex-wrap: wrap;
+border-top: 1px solid #eee;
+padding-top: 15px;
+}
+
+.status-badge {
+display: inline-block;
+padding: 4px 8px;
+border-radius: 4px;
+font-weight: bold;
+font-size: 0.85em;
+color: white;
+text-transform: uppercase;
+margin-left: 10px;
+}
+
+.status-badge.pending {
+background-color: #ffc107;
+}
+.status-badge.contacted {
+background-color: #007bff;
+}
+.status-badge.completed {
+background-color: #28a745;
+}
+
+.accept-btn, .complete-btn {
+padding: 8px 12px;
+color: white;
+border: none;
+border-radius: 4px;
+cursor: pointer;
+font-size: 13px;
+transition: background-color 0.2s;
+}
+
+.accept-btn {
+background-color: #17a2b8; 
+}
+
+.complete-btn {
+background-color: #28a745;
+}
+
+.no-inquiries, .admin-error {
+text-align: center;
+padding: 50px;
+color: #6c757d;
+font-style: italic;
+}

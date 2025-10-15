@@ -1,0 +1,41 @@
+.sentence-container {
+    width: 80%;
+    max-width: 1000px;
+    margin: 40px auto;
+    font-size: 45px;
+    text-align: center;
+    overflow: hidden;
+    padding: 20px;
+}
+
+.slide-in {
+    display: inline-block;
+    white-space: nowrap;
+    animation: slideIn 3s ease-in-out forwards;
+    font-weight: 600;
+}
+
+.swipe-text-color {
+    opacity: 1;
+    color: #e67e22;
+    font-style: italic;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@media screen and (max-width: 678px) {
+    .sentence-container {
+        font-size: 24px;
+        margin: 20px auto;
+    }
+}

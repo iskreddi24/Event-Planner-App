@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Submission Debugger</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-gray-100 p-8">
+
+    <div id="app" class="max-w-md mx-auto bg-white p-6 rounded-xl shadow-2xl">
+        <h1 class="text-2xl font-bold mb-6 text-gray-800">API Test Debugger</h1>
+        <p class="text-sm text-red-600 mb-4 font-medium">Use this tool to submit known invalid data (e.g., bad userId) to force the detailed error message from your server.</p>
+        
+        <div id="result" class="mt-4 p-3 rounded-lg text-sm hidden"></div>
+
+        <button id="submitBtn" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-4 rounded-lg transition duration-150 ease-in-out mt-4">
+            Test Submission (Invalid UserId)
+        </button>
+    </div>
+
+    <script>
+        document.getElementById('submitBtn').addEventListener('click', async () => {
+            const resultDiv = document.getElementById('result');
+            resultDiv.textContent = 'Submitting...';
+            resultDiv.className = 'mt-4 p-3 rounded-lg text-sm text-indigo-700 bg-indigo-100 block';
+
+            // Data is designed to fail CastError for userId (since it's not a valid ObjectId)
+            const testData = {
+                name: "Test Name",
+                email: "test@example.com",
+                eventType: "Birthday",
+                userId: "12345" // <-- THIS IS INTENTIONALLY INVALID and will trigger the detailed 400 error.
+            };
+
+            try {
+                const response = await fetch('http://localhost:8080/api/contact', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(testData),
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    resultDiv.textContent = `SUCCESS (201): ${data.message}`;
+                    resultDiv.className = 'mt-4 p-3 rounded-lg text-sm text-green-700 bg-green-100 block';
+                } else {
+                    // 🚨 THIS IS THE KEY PART: Display the server's detailed error message
+                    const errorMessage = data.message || data.error || 'Unknown Error';
+
+                    resultDiv.textContent = `FAILURE (${response.status} ${response.statusText}): ${errorMessage}. Full details logged to console.`;
+                    resultDiv.className = 'mt-4 p-3 rounded-lg text-sm text-red-700 bg-red-100 block';
+                    
+                    console.error('Server detailed response:', data);
+                    
+                    // Alerting the main message as your client likely does
+                    alert(`Server Failure Message: ${errorMessage}`);
+                }
+            } catch (error) {
+                resultDiv.textContent = `NETWORK ERROR: Could not reach the server or parsing failed. Check console.`;
+                resultDiv.className = 'mt-4 p-3 rounded-lg text-sm text-yellow-700 bg-yellow-100 block';
+                console.error('Network or Fetch Error:', error);
+            }
+        });
+    </script>
+</body>
+</html>

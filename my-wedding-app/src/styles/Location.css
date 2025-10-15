@@ -1,0 +1,81 @@
+
+.location-page {
+    padding: 40px 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.location-title {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+    font-weight: 700;
+}
+
+.location-intro {
+    font-size: 1.1rem;
+    color: #6c757d;
+    margin-bottom: 30px;
+}
+
+.hyderabad-color { color: #007bff; /* Blue */ }
+.tirupati-color { color: #6f42c1; /* Purple */ }
+.vijayawada-color { color: #dc3545; /* Red */ }
+
+
+.hall-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 25px;
+    padding: 0;
+}
+
+.hall-card {
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    text-align: left;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hall-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.hall-name {
+    font-size: 1.5rem;
+    margin-top: 0;
+    margin-bottom: 10px;
+    color: #28a745; 
+}
+
+.hall-card p {
+    margin: 5px 0;
+    font-size: 1rem;
+    color: #343a40;
+}
+
+.hall-card b {
+    font-weight: 600;
+    color: #495057;
+}
+
+.hall-price {
+    font-size: 1.1rem;
+    color: #e67e22; 
+    font-weight: bold;
+}
+
+.hyderabad-card { background: #e8f5ff; border: 1px solid #b3d9ff; }
+.tirupati-card { background: #f3e9ff; border: 1px solid #d8baff; }
+.vijayawada-card { background: #fff0f0; border: 1px solid #ffcccc; }
+
+@media (max-width: 600px) {
+    .location-page {
+        padding: 20px 10px;
+    }
+    .hall-grid {
+        grid-template-columns: 1fr;
+    }
+}
