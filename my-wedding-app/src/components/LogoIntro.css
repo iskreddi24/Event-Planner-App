@@ -1,0 +1,133 @@
+.logo-intro {
+    position: fixed;
+    inset: 0;
+    background-color: #000;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+
+    animation: fadeOut 0.8s ease-in-out forwards,
+        simpleGlow 3s ease-in-out infinite alternate;
+    animation-delay: 5.5s, 0s;
+}
+
+.wedding-intro {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.bride-img,
+.groom-img {
+    position: absolute;
+    height: 270px;
+    object-fit: contain;
+    z-index: 10;
+}
+
+.bride-img {
+    right: -300px;
+    animation: slideInRightToCenter 1.5s ease-out forwards;
+    animation-delay: 0.5s;
+}
+
+.groom-img {
+    left: -300px;
+    animation: slideInLeftToCenter 1.5s ease-out forwards;
+    animation-delay: 0.5s;
+}
+
+.love-symbol {
+    position: absolute;
+    font-size: 10rem;
+    color: #ff3366;
+    opacity: 0;
+    transform: scale(0.5);
+    z-index: 20;
+    animation:
+        fadeInScale 0.8s ease-out forwards,
+        pulseGlow 1.5s ease-in-out infinite alternate;
+    animation-delay: 2s;
+    animation-fill-mode: forwards;
+}
+
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    background: transparent;
+    border: none;
+    font-size: 2rem;
+    color: #d4af37;
+    cursor: pointer;
+    transition: color 0.3s;
+    z-index: 10000;
+}
+
+.close-btn:hover {
+    color: #fff;
+}
+
+@keyframes slideInRightToCenter {
+    to {
+        right: calc(44% - 170px);
+    }
+}
+
+@keyframes slideInLeftToCenter {
+    to {
+        left: calc(44% - 170px);
+    }
+}
+
+@keyframes fadeInScale {
+    from {
+        opacity: 0;
+        transform: scale(0.5);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes pulseGlow {
+    from {
+        transform: scale(1);
+        text-shadow: 0 0 10px rgba(255, 51, 102, 0.5);
+    }
+
+    to {
+        transform: scale(1.1);
+        text-shadow: 0 0 25px rgba(255, 51, 102, 0.8), 0 0 40px rgba(255, 51, 102, 0.3);
+    }
+}
+
+@keyframes simpleGlow {
+    0% {
+        box-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
+    }
+
+    50% {
+        box-shadow: 0 0 50px rgba(212, 175, 55, 0.6), 0 0 80px rgba(212, 175, 55, 0.2);
+    }
+
+    100% {
+        box-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
+    }
+}
+
+
+@keyframes fadeOut {
+    to {
+        opacity: 0;
+        visibility: hidden;
+    }
+}

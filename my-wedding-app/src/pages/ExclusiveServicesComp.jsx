@@ -590,7 +590,10 @@ function ExclusiveServicesComp() {
             {isAuthenticated && bookings.length > 0 && (
                 <div className="previous-bookings">
                     {bookings.map((b) => (
-                        <div key={b._id} className="booking-card">
+                        <div
+                            key={b._id}
+                            className={`booking-card ${b.serviceType === 'Makeup Artist' ? 'makeup' : 'jewelry'}`}
+                        >
                             <h3>{b.serviceType}</h3>
                             <p><strong>Date:</strong> {new Date(b.date).toLocaleDateString()}</p>
                             {b.targetPerson && <p><strong>For:</strong> {b.targetPerson}</p>}
@@ -599,9 +602,12 @@ function ExclusiveServicesComp() {
                             {b.rentalDurationDays && <p><strong>Duration:</strong> {b.rentalDurationDays} days</p>}
                             {b.budget && <p><strong>Budget:</strong> ₹{b.budget}</p>}
                             {b.message && <p><strong>Message:</strong> {b.message}</p>}
-                            <p><strong>Status:</strong> {b.status || "Pending"}</p>
+                            <p><strong>Status:</strong> <span className={b.status?.toLowerCase() || 'pending'}>
+                                {b.status || "Pending"}
+                            </span></p>
                         </div>
                     ))}
+
                 </div>
             )}
         </div>

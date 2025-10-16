@@ -527,7 +527,7 @@ import "./App.css";
 import NavComponent from "./components/NavComponent";
 import Footer from "./components/Footer";
 import NotFound from "./components/NotFound";
-
+import LogoIntro from "./components/LogoIntro";
 // ====== Pages ======
 import HomeComp from "./pages/HomeComp";
 import AboutComp from "./pages/AboutComp";
@@ -539,6 +539,7 @@ import Dashboard from "./pages/Dashboard";
 import BookingsPage from "./pages/BookingsPage";
 import ExclusiveOffers from "./pages/ExclusiveOffers";
 import ExclusiveServicesComp from "./pages/ExclusiveServicesComp";
+import DecorationServiceComp from "./pages/DecorationServiceComp";
 
 // ====== Location Pages ======
 import HyderabadComp from "./pages/locations/HyderabadComp";
@@ -578,6 +579,9 @@ const MainLayout = ({ children }) => (
 function App() {
     return (
         <AuthProvider>
+            {/* ✅ Display logo intro on page load */}
+            <LogoIntro />
+            
             <Router>
                 <Routes>
                     {/* ---------- Public Routes ---------- */}
@@ -593,6 +597,8 @@ function App() {
 
                     {/* ---------- Auth Routes ---------- */}
                     <Route path="/login" element={<Login />} />
+
+
                     <Route path="/signup" element={<SignUp />} />
 
                     {/* ---------- Protected User Routes ---------- */}
@@ -603,6 +609,7 @@ function App() {
                     <Route path="/exclusive-services" element={<MainLayout><ExclusiveServicesComp /></MainLayout>} />
                     {/* Redirect /exclusive → /exclusive-services */}
                     <Route path="/exclusive" element={<Navigate to="/exclusive-services" replace />} />
+                    <Route path="/decoration" element={<DecorationServiceComp />} />
 
                     {/* ---------- Exclusive Offers ---------- */}
                     <Route path="/exclusive-offers" element={<MainLayout><ExclusiveOffers /></MainLayout>} />

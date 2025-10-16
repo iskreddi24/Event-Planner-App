@@ -183,7 +183,6 @@
     margin: 0.25rem 0;
 }
 
-/* ------------------ Responsive ------------------ */
 @media (max-width: 600px) {
     .exclusive-services-page {
         padding: 1rem;

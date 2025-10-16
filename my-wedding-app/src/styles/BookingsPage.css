@@ -1,86 +1,144 @@
-.bookings-page {
-    max-width: 900px;
-    margin: 40px auto;
-    padding: 20px;
-    background: #fcfcfc;
-    border-radius: 8px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+/* --- New CSS Style: Minimalist & Modern Design --- */
+
+/* Main Grid Container */
+.previous-bookings {
+    max-width: 1100px;
+    /* Slightly wider max-width */
+    width: 100%;
+    display: grid;
+    /* Grid layout with slightly larger min card size */
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+    padding: 1rem;
+    margin: 0 auto;
+    /* Center the grid */
 }
 
-.bookings-page h2 {
-    text-align: center;
-    color: #333;
-    margin-bottom: 30px;
-    border-bottom: 2px solid #eee;
-    padding-bottom: 10px;
-}
-
-.bookings-list {
-    list-style: none;
-    padding: 0;
-}
-
+/* Booking Card Base Style */
 .booking-card {
-    background: #fff;
-    border: 1px solid #ddd;
-    border-radius: 6px;
-    padding: 20px;
-    margin-bottom: 15px;
-    transition: transform 0.2s;
-}
-
-.booking-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-}
-
-.booking-card h3 {
-    margin-top: 0;
-    color: #007bff; 
-}
-
-.booking-card p {
-    margin: 5px 0;
-    font-size: 15px;
-}
-
-.status-badge {
-    display: inline-block;
-    padding: 4px 8px;
-    border-radius: 4px;
-    font-weight: bold;
-    font-size: 0.85em;
-    color: white;
-    text-transform: uppercase;
-    margin-left: 10px;
-}
-
-.status-badge.pending {
-    background-color: #ffc107; 
-}
-.status-badge.contacted {
-    background-color: #007bff; 
-}
-.status-badge.completed {
-    background-color: #28a745; 
-}
-
-.booking-actions {
-    margin-top: 15px;
-    text-align: right;
-}
-
-.cancel-btn {
-    padding: 8px 15px;
-    background-color: #dc3545; 
-    color: white;
+    background-color: #ffffff;
+    border-radius: 0.75rem;
+    /* Softer rounded corners */
     border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 14px;
-    transition: background-color 0.2s;
+    /* Remove subtle border */
+    padding: 1.5rem;
+    /* Soft, diffused shadow (elevation effect) */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    position: relative;
+    overflow: hidden;
 }
 
-.cancel-btn:hover {
-    background-color: #c82333;
+/* Hover Effect: Subtle Lift and Shadow Intensification */
+.booking-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
 }
+
+/* Title Styling */
+.booking-card h3 {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #374151;
+    /* Darker, more professional title color (gray-700) */
+    margin-bottom: 1rem;
+    /* More spacing below title */
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #f3f4f6;
+    /* Subtle separator line */
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* Title Emojis (Optional: keeping the emoji concept but simplifying the default) */
+.booking-card h3::before {
+    content: "✨";
+    /* Neutral, elegant default */
+    display: inline-block;
+    font-size: 1.1rem;
+    color: #10b981;
+    /* Default accent color (emerald-500) */
+}
+
+/* Specific emoji/color overrides (e.g., for 'Jewelry' or other services) */
+.booking-card h3:has(:where(:contains('Jewelry')))::before {
+    content: "💎";
+    color: #f59e0b;
+    /* Amber accent */
+}
+
+/* Paragraph Content */
+.booking-card p {
+    font-size: 0.95rem;
+    /* Slightly larger text */
+    color: #6b7280;
+    /* Medium gray for readability (gray-500) */
+    margin: 0.5rem 0;
+    /* More vertical space */
+    line-height: 1.5;
+}
+
+/* Highlight key info */
+.booking-card p strong {
+    color: #1f2937;
+    /* Very dark gray (gray-800) for strong contrast */
+    font-weight: 600;
+}
+
+/* --- Status Styling --- */
+
+/* Target the Status Line (assuming it's the last paragraph) */
+.booking-card p:last-child {
+    margin-top: 1rem;
+    padding-top: 0.5rem;
+    border-top: 1px dashed #e5e7eb;
+    /* Dotted line separator */
+    font-weight: 500;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #4b5563;
+    /* Text color for the status line */
+}
+
+/* Status Label (The 'Status:' text) */
+.booking-card p:last-child strong {
+    color: #374151;
+}
+
+/* Status Tag Styling */
+.booking-card p:last-child span {
+    padding: 0.35rem 0.8rem;
+    border-radius: 9999px;
+    /* Pill shape */
+    font-size: 0.75rem;
+    /* Smaller, neat tag font */
+    text-transform: uppercase;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+
+/* Status Color Indicators */
+.booking-card p:last-child span.pending {
+    background-color: #fef3c7;
+    /* Subtle yellow background */
+    color: #b45309;
+    /* Darker amber text */
+}
+
+.booking-card p:last-child span.completed {
+    background-color: #d1fae5;
+    /* Soft green background */
+    color: #059669;
+    /* Darker green text */
+}
+
+.booking-card p:last-child span.cancelled {
+    background-color: #fee2e2;
+    /* Soft red background */
+    color: #b91c1c;
+    /* Darker red text */
+}
+
+/* Removed specific .makeup and .jewelry class styling to maintain minimalism */

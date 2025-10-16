@@ -114,6 +114,8 @@ const exclusiveServiceRoutes = require('./routes/exclusiveServiceRoutes.cjs'); /
 app.use('/api/auth', authRoutes);
 app.use('/api/contact', contactRoutes);
 app.use('/api/exclusive', exclusiveServiceRoutes); // 👈 Added route endpoint
+const decorationServiceRoute = require("./routes/decorationServiceRoute.cjs");
+app.use("/api/decoration", decorationServiceRoute);
 
 app.get('/', (req, res) => {
     res.send('🎉 Event Planner Backend is running with Exclusive Services!');

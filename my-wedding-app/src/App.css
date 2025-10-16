@@ -305,69 +305,86 @@ body {
     ======================================================= */
 @media (max-width: 768px) {
     .navbar {
-        padding: 10px 20px;
-        /* FIX: Allow menu to wrap below the logo/toggler */
+        padding: 6px 15px;
+        /* reduced from 10px 20px */
         flex-wrap: wrap;
         align-items: flex-start;
     }
 
     .menu-toggler {
         display: block;
+        font-size: 1.1rem;
     }
 
     .nav-links {
-        /* FIX: Reset transform and use max-height for better vertical flow */
         position: absolute;
-        top: 60px;
-        /* Below the header */
+        top: 55px;
+        /* slightly less than before */
         left: 0;
         width: 100%;
         flex-direction: column;
         background-color: #ffffff;
-        box-shadow: 0 8px 8px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         padding: 0;
-        /* Initial padding removed */
-        transition: max-height 0.3s ease-in-out;
-        transform: none;
-        /* Remove conflicting transform */
+        transition: all 0.3s ease-in-out;
         max-height: 0;
         overflow: hidden;
         align-items: flex-start;
     }
 
+    /* 👇 Smaller open height */
     .nav-links.nav-open {
-        max-height: 500px;
-        padding: 20px 0;
-    }
-
-    .nav-links>.dropdown {
-        width: 100%;
-        box-sizing: border-box;
-        position: static;
+        max-height: 600px;
+        /* reduced height */
+        padding: 8px 0;
+        overflow-y: auto;
     }
 
     .nav-links a,
     .nav-links .logout-btn {
         width: 100%;
-        padding: 10px 40px;
+        padding: 8px 25px;
+        /* smaller padding */
+        font-size: 0.9rem;
+        /* reduced font size */
         box-sizing: border-box;
         justify-content: flex-start;
         border-radius: 0;
     }
 
+    .nav-links a:hover,
+    .nav-links .logout-btn:hover {
+        background-color: #e67e22;
+        color: white;
+    }
+
+    .nav-links>.dropdown {
+        width: 100%;
+        position: static;
+    }
+
     .dropdown-menu {
         position: static;
         width: 100%;
+        background: #f39c12;
         border-radius: 0;
-        background: #f1c40f;
+        padding: 0;
         box-shadow: none;
-        /* Optional: Remove box shadow for inner menu */
     }
 
     .dropdown-menu a {
-        padding-left: 60px;
+        padding: 6px 40px;
+        /* reduced inner dropdown spacing */
+        font-size: 0.85rem;
+        color: white;
+    }
+
+    .dropdown-menu a:hover {
+        background: #e67e22;
     }
 }
+
+
 
 .auth-page {
     max-width: 400px;
