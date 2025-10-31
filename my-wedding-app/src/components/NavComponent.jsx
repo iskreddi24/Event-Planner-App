@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import {
     FaHome,
@@ -12,23 +12,28 @@ import {
     FaBars,
     FaTimes,
     FaSignOutAlt,
-    FaConciergeBell
+    FaConciergeBell,
+    FaGem,
+    FaPalette,
+    FaCalendarCheck // 👈 Icon for Bookings
 } from "react-icons/fa";
 import { useAuth } from "../context/AuthContext";
+import "../styles/bookingStyles.css"; 
 
-import JueymLogo from '../assets/jueym-logo.png'; // 👈 **CHANGE PATH AS NEEDED**
+import JueymLogo from '../assets/jueym-logo.png'; 
 
 function NavComponent() {
-    const [showLocations, setShowLocations] = useState(false);
+    const [showBookingsDropdown, setShowBookingsDropdown] = useState(false); 
     const [showServices, setShowServices] = useState(false);
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
     const { isAuthenticated, user, logout } = useAuth();
     const isAdmin = user && user.role === "admin";
+    const isHallOwner = user && user.role === "hallOwner"; 
 
     const closeMenu = () => {
         setIsMenuOpen(false);
-        setShowLocations(false);
+        setShowBookingsDropdown(false); 
         setShowServices(false);
     };
 
@@ -42,17 +47,15 @@ function NavComponent() {
     return (
         <header className="header-sticky">
             <nav className="navbar">
-                {/* 2. REPLACE THE H3 WITH AN IMAGE TAG */}
                 <div className="logo">
                     <Link to="/" onClick={closeMenu}>
                         <img src={JueymLogo} alt="JUEYM Web Application Logo" className="logo-img" style={{
-                            height: "40px", 
+                            height: "40px",
                             width: "auto"
                         }} />
                     </Link>
                 </div>
 
-                {/* Mobile Menu Toggler */}
                 <button
                     className="menu-toggler"
                     onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -60,9 +63,8 @@ function NavComponent() {
                     {isMenuOpen ? <FaTimes size={24} /> : <FaBars size={24} />}
                 </button>
 
-                {/* Navigation Links */}
                 <div className={`nav-links ${isMenuOpen ? "nav-open" : ""}`}>
-                    {/* Main Links */}
+                    {/* Basic Links */}
                     <Link to="/" onClick={closeMenu}>
                         <FaHome className="nav-icon" />Home
                     </Link>
@@ -73,10 +75,7 @@ function NavComponent() {
                         <FaBlog className="nav-icon" />Blog
                     </Link>
 
-                    {/* SERVICES DROPDOWN (rest of the code is unchanged) */}
-                    {/* ... (Your services and contact dropdowns remain the same) ... */}
-
-                    {/* SERVICES DROPDOWN */}
+                    {}
                     <div
                         className="dropdown"
                         onMouseEnter={() => setShowServices(true)}
@@ -94,40 +93,62 @@ function NavComponent() {
                         {(showServices || isMenuOpen) && (
                             <div className="dropdown-menu">
                                 <Link to="/exclusive-services" onClick={closeMenu}>
-                                    Exclusive Services
+                                    <FaGem className="nav-icon" /> Exclusive Services
                                 </Link>
                                 <Link to="/decoration" onClick={closeMenu}>
-                                    Decoration Services
+                                    <FaPalette className="nav-icon" /> Decoration Services
+                                </Link>
+                                <Link to="/photography" onClick={closeMenu}>
+                                    📸 Photoshoot & Video
                                 </Link>
                             </div>
                         )}
                     </div>
 
-                    {/* CONTACT DROPDOWN */}
+                    {}
                     <div
                         className="dropdown"
-                        onMouseEnter={() => setShowLocations(true)}
-                        onMouseLeave={() => setShowLocations(false)}
-                        onClick={(e) => handleDropdownClick(e, setShowLocations)}
+                        onMouseEnter={() => setShowBookingsDropdown(true)}
+                        onMouseLeave={() => setShowBookingsDropdown(false)}
+                        onClick={(e) => handleDropdownClick(e, setShowBookingsDropdown)}
                     >
-                        <Link
-                            to="/contact"
-                            className="contact-link"
-                            onClick={!isMenuOpen ? closeMenu : null}
-                        >
-                            <FaEnvelope className="nav-icon" />Contact
-                        </Link>
+                        
+                        {}
+                        {!isHallOwner && (
+                            <Link
+                                to="/bookings" 
+                                className="bookings-link"
+                                onClick={closeMenu}
+                            >
+                                <FaCalendarCheck className="nav-icon" />Bookings
+                            </Link>
+                        )}
+                        
 
-                        {(showLocations || isMenuOpen) && (
+                        {}
+                        {(!isAuthenticated || isMenuOpen) && (
                             <div className="dropdown-menu">
-                                <Link to="/vijayawada" onClick={closeMenu}>Vijayawada</Link>
-                                <Link to="/hyderabad" onClick={closeMenu}>Hyderabad</Link>
-                                <Link to="/tirupati" onClick={closeMenu}>Tirupati</Link>
+                                
+                                {}
+                                {!isAuthenticated && (
+                                    <>
+                                        <Link to="/hall-owner-signup" onClick={closeMenu}>
+                                            <FaUserPlus className="nav-icon" /> Hall Owner Sign Up 
+                                        </Link>
+                                        <Link to="/hall-owner-login" onClick={closeMenu}>
+                                            <FaSignInAlt className="nav-icon" /> Hall Owner Login
+                                        </Link>
+                                    </>
+                                )}
+                                
+                                <Link to="/contact" onClick={closeMenu}>
+                                    <FaEnvelope className="nav-icon" /> Contact Us
+                                </Link>
                             </div>
                         )}
                     </div>
 
-                    {/* Auth Links */}
+                    {}
                     {isAuthenticated ? (
                         <>
                             {isAdmin && (
@@ -135,8 +156,9 @@ function NavComponent() {
                                     <FaUserShield className="nav-icon" />Admin Portal
                                 </Link>
                             )}
-
-                            <Link to="/dashboard" className="auth-link" onClick={closeMenu}>
+                            
+                            {}
+                            <Link to={isHallOwner ? "/owner/dashboard" : "/dashboard"} className="auth-link" onClick={closeMenu}>
                                 <FaTachometerAlt className="nav-icon" />Dashboard
                             </Link>
 
@@ -147,7 +169,7 @@ function NavComponent() {
                                 }}
                                 className="logout-btn"
                             >
-                                <FaSignOutAlt size={20} color="grey" /> Logout
+                                <FaSignOutAlt size={20} color="#dc2626" /> Logout
                             </button>
                         </>
                     ) : (

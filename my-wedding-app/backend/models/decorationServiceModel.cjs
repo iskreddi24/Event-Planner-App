@@ -4,8 +4,8 @@ const decorationServiceSchema = new mongoose.Schema({
   userName: { type: String, required: true },
   email: { type: String, required: true },
   phone: { type: String, required: true },
-  eventType: { type: String, required: true }, // Birthday, Anniversary, etc.
-  theme: { type: String, required: false }, // Theme of decoration
+  eventType: { type: String, required: true },
+  theme: { type: String, required: false }, 
   membersCount: { type: Number, required: true },
   date: { type: Date, required: true },
   location: { type: String, required: true },

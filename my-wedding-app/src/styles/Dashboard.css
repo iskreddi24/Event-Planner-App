@@ -1,55 +1,115 @@
 .dashboard-page {
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    padding: 60px 20px;
-    min-height: calc(100vh - 120px);
-    background-color: #6da6df;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: calc(100vh - 120px);
+  background: linear-gradient(135deg, #081c2f, #123e68, #2c87c8);
+  background-size: 400% 400%;
+  animation: bgFlow 10s ease infinite;
+  padding: 60px 20px;
+}
+
+@keyframes bgFlow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 
 .welcome-card {
-    max-width: 800px;
-    width: 100%;
-    padding: 40px;
-    background: #ffffff;
-    border-radius: 15px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-    text-align: center;
+  max-width: 850px;
+  width: 100%;
+  padding: 50px;
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(20px);
+  border-radius: 20px;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.35);
+  text-align: center;
+  transform: translateY(0);
+  animation: fadeUp 1.2s ease forwards;
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.welcome-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .welcome-title {
-    font-size: 2.5rem;
-    color: #3498db;
-    margin-bottom: 10px;
+  font-size: 2.8rem;
+  color: #ffffff;
+  text-shadow: 0 0 20px rgba(52, 152, 219, 0.7);
+  margin-bottom: 10px;
+  animation: glowText 2.5s infinite alternate ease-in-out;
+}
+
+@keyframes glowText {
+  from {
+    text-shadow: 0 0 10px rgba(52, 152, 219, 0.5),
+                 0 0 20px rgba(52, 152, 219, 0.3);
+  }
+  to {
+    text-shadow: 0 0 25px rgba(52, 152, 219, 1),
+                 0 0 40px rgba(52, 152, 219, 0.8);
+  }
 }
 
 .welcome-message {
-    font-size: 1.1rem;
-    color: #555;
-    margin-bottom: 30px;
-    line-height: 1.6;
+  font-size: 1.2rem;
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 40px;
+  line-height: 1.7;
+  letter-spacing: 0.5px;
 }
 
 .dashboard-features {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    flex-wrap: wrap;
+  display: flex;
+  justify-content: center;
+  gap: 25px;
+  flex-wrap: wrap;
 }
 
 .feature-btn {
-    padding: 12px 25px;
-    background-color: #33cc2e; 
-    color: rgb(10, 10, 10);
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 16px;
-    font-weight: bold;
-    transition: background-color 0.3s ease, transform 0.2s;
+  position: relative;
+  padding: 14px 35px;
+  background: linear-gradient(135deg, #00ffb3, #0072ff);
+  color: #fff;
+  font-weight: bold;
+  font-size: 17px;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 8px 20px rgba(0, 114, 255, 0.4);
 }
 
 .feature-btn:hover {
-    background-color: #27ae60;
-    transform: translateY(-2px);
+  transform: scale(1.05);
+  box-shadow: 0 12px 30px rgba(0, 255, 179, 0.6);
+}
+
+.feature-btn::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 200%;
+  height: 100%;
+  background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  transition: left 0.6s ease;
+}
+
+.feature-btn:hover::before {
+  left: 100%;
 }

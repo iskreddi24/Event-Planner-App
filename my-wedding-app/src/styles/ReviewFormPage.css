@@ -1,0 +1,174 @@
+/* --------------------------------------------------- */
+/* 🌸 Modern Review Form Page UI — Elegant & Soft Theme */
+/* --------------------------------------------------- */
+
+.review-form-page {
+    max-width: 700px;
+    margin: 3rem auto;
+    background: linear-gradient(145deg, #ffffff, #f7f5fa);
+    border-radius: 1.5rem;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+    padding: 2.5rem;
+    font-family: 'Poppins', sans-serif;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.review-form-page:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 30px rgba(147, 51, 234, 0.15);
+}
+
+/* --- Title & Subtitle --- */
+.review-form-page h1 {
+    text-align: center;
+    font-size: 2rem;
+    font-weight: 700;
+    color: #6b21a8; /* purple-800 */
+    margin-bottom: 0.75rem;
+}
+
+.review-form-page p {
+    text-align: center;
+    color: #6b7280;
+    font-size: 0.95rem;
+    margin-bottom: 2rem;
+}
+
+/* --- Labels --- */
+.review-form-page label {
+    display: block;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #374151;
+    margin-bottom: 0.4rem;
+}
+
+/* --- Inputs, Selects, Textareas --- */
+.review-form-page select,
+.review-form-page textarea,
+.review-form-page input[type="file"] {
+    width: 100%;
+    border: 1px solid #d1d5db;
+    border-radius: 0.6rem;
+    padding: 0.8rem 1rem;
+    font-size: 0.95rem;
+    background-color: #ffffff;
+    transition: all 0.3s ease;
+}
+
+.review-form-page select:focus,
+.review-form-page textarea:focus,
+.review-form-page input[type="file"]:focus {
+    outline: none;
+    border-color: #9333ea;
+    box-shadow: 0 0 6px rgba(147, 51, 234, 0.3);
+}
+
+/* --- Satisfaction Toggle (Smiley/Frown) --- */
+.satisfaction-section {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin: 1rem 0;
+}
+
+.satisfaction-option {
+    display: flex;
+    align-items: center;
+    padding: 0.6rem 1.2rem;
+    border-radius: 9999px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.satisfaction-option.satisfied {
+    border: 2px solid #10b981;
+    color: #065f46;
+    background-color: #ecfdf5;
+}
+
+.satisfaction-option.not-satisfied {
+    border: 2px solid #ef4444;
+    color: #7f1d1d;
+    background-color: #fef2f2;
+}
+
+.satisfaction-option:hover {
+    transform: scale(1.05);
+}
+
+/* --- File Upload --- */
+input[type="file"]::file-selector-button {
+    padding: 0.4rem 1rem;
+    background: #f3e8ff;
+    color: #6b21a8;
+    border: none;
+    border-radius: 9999px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+input[type="file"]::file-selector-button:hover {
+    background: #e9d5ff;
+}
+
+/* --- Status Message --- */
+.status-message {
+    text-align: center;
+    font-weight: 600;
+    margin: 1.5rem 0;
+    border-radius: 0.75rem;
+    padding: 0.8rem;
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+.status-message.success {
+    background-color: #ecfdf5;
+    color: #065f46;
+    border: 1px solid #34d399;
+}
+
+.status-message.error {
+    background-color: #fef2f2;
+    color: #7f1d1d;
+    border: 1px solid #ef4444;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-6px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* --- Submit Button --- */
+.review-form-page button[type="submit"] {
+    width: 100%;
+    background: linear-gradient(90deg, #9333ea, #7e22ce);
+    color: white;
+    font-size: 1rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 0.75rem;
+    padding: 0.9rem 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.review-form-page button[type="submit"]:hover {
+    background: linear-gradient(90deg, #a855f7, #9333ea);
+    box-shadow: 0 4px 10px rgba(147, 51, 234, 0.3);
+}
+
+.review-form-page button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* --- Responsive --- */
+@media (max-width: 640px) {
+    .review-form-page {
+        padding: 1.5rem;
+        margin: 1rem;
+    }
+}

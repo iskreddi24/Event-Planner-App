@@ -1,0 +1,50 @@
+/* This CSS ensures the Review Form (which uses its own max-width for centering) 
+and the Customer Reviews (which is often full-width) flow cleanly together.
+*/
+
+.review-container-page {
+    /* Use a very light background for the whole page area to provide a clean base */
+    background-color: #f7f5fa;
+    min-height: 100vh;
+    padding-top: 1px;
+    /* Small trick to ensure container respects margin of first child */
+}
+
+/* The Submission Form area already centers itself using the CSS defined 
+   in ReviewFormPage.css (e.g., max-w-2xl mx-auto)
+*/
+
+.reviews-section-divider {
+    /* Styles for the separator between the form and the public display area */
+    margin: 3rem 0;
+    padding: 2rem 0;
+    background-color: #f0f0f5;
+    /* Slightly darker than the page background */
+    border-top: 1px solid #e0e0e9;
+    border-bottom: 1px solid #e0e0e9;
+    text-align: center;
+}
+
+.reviews-section-divider h2 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #4a007d;
+    /* Dark purple */
+}
+
+.reviews-section-divider p {
+    color: #6b7280;
+    /* Gray text */
+}
+
+/* On smaller screens, reduce margin/padding */
+@media (max-width: 768px) {
+    .reviews-section-divider {
+        margin: 2rem 0;
+        padding: 1.5rem 0;
+    }
+
+    .reviews-section-divider h2 {
+        font-size: 1.5rem;
+    }
+}

@@ -19,7 +19,6 @@ function DecorationServiceComp() {
   const [status, setStatus] = useState("");
   const [bookings, setBookings] = useState([]);
 
-  // ✅ Fetch all previous bookings
   useEffect(() => {
     fetchBookings();
   }, []);

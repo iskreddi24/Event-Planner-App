@@ -16,18 +16,24 @@ function Login() {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
+        // Note: Using a custom modal/message box is preferable over alert()
         if (!formData.email || !formData.password) {
             alert("Please fill in both email and password.");
             return;
         }
 
         try {
+            // Assumes a /auth/login route handles regular users
             const { data } = await axiosClient.post('/auth/login', formData);
 
             if (data?.token && data?.user) {
                 localStorage.setItem('token', data.token);
 
-                login(data.token, data.user);
+                // Note: Ensure your login function in AuthContext accepts (user, token) or similar.
+                // Based on your original code: login(data.token, data.user);
+                // Based on the recommended AuthContext: login(data.user, data.token);
+                // I will use the format from the recommended AuthContext:
+                login(data.user, data.token);
 
                 if (data.user.role === 'admin') {
                     navigate('/admin');
@@ -46,7 +52,7 @@ function Login() {
 
     return (
         <div className="auth-page">
-            <h1 className="auth-title">Login to Your Account</h1>
+            <h1 className="auth-title">Login to Your Account (User)</h1>
             <form className="auth-form" onSubmit={handleSubmit}>
                 <label>Email</label>
                 <input
@@ -67,8 +73,14 @@ function Login() {
                 />
 
                 <button type="submit" className="auth-btn">Login</button>
+                
                 <p className="auth-link-text">
                     Don't have an account? <Link to="/signup">Sign Up here</Link>
+                </p>
+                
+                {/* NEW: Explicit link to the Hall Owner Login */}
+                <p className="auth-link-text owner-switch-link">
+                    Are you a **Function Hall Owner**? <Link to="/hall-owner-login">Login here</Link>
                 </p>
             </form>
         </div>

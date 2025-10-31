@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import { useState } from "react";
+// Import Link from react-router-dom for navigation
+import { Link } from "react-router-dom"; 
 import { FaFacebook, FaTwitter, FaInstagram, FaLinkedin } from "react-icons/fa";
-import Rating from "../rating/Rating";
 import '../styles/Footer.css';
 
 function Footer() {
@@ -8,20 +9,19 @@ function Footer() {
 
     const handleSubscribe = (e) => {
         e.preventDefault();
+        // NOTE: Replaced window.alert with a simple console log for non-alert systems
         if (email) {
-            alert(`Thanks for subscribing with ${email}!`);
+            console.log(`Thanks for subscribing with ${email}!`);
             setEmail("");
         }
     };
 
-    const handleRatingChange = (rating) => {
-        alert(`Thank you for your ${rating}-star rating!`);
-    };
+    // Removed handleRatingChange and Rating import since we are linking to the full review page
 
     return (
         <footer id="footerd">
             <div className="footer-grid">
-                { }
+                { /* Company Info */ }
                 <div className="mycondiv">
                     <h2>JUEYM Events</h2>
                     <p>
@@ -31,17 +31,23 @@ function Footer() {
                     </p>
                 </div>
 
-                { }
+                { /* Quick Links */ }
                 <div className="mycondiv">
                     <h2>Quick Links</h2>
                     <ul className="footer-links">
                         <li><a href="/about" className="footer-link">About Us</a></li>
                         <li><a href="/blog" className="footer-link">Blog</a></li>
                         <li><a href="/contact" className="footer-link">Contact</a></li>
+                        {/* New Link for Review Submission */}
+                        <li>
+                            <Link to="/submit-review" className="footer-link review-link">
+                                Leave a Review
+                            </Link>
+                        </li>
                     </ul>
                 </div>
 
-                { }
+                { /* Newsletter */ }
                 <div className="mycondiv">
                     <h3>Newsletter</h3>
                     <form onSubmit={handleSubscribe} className="newsletter-form">
@@ -59,11 +65,14 @@ function Footer() {
                     </form>
                 </div>
 
-                { }
+                { /* Rating and Social Media */ }
                 <div className="mycondiv soclass">
                     <h3>Rate Your Experience</h3>
                     <div className="rating-section">
-                        <Rating value={0} onChange={handleRatingChange} />
+                        {/* Replaced old Rating component with a dedicated link/button */}
+                        <Link to="/submit-review" className="review-btn">
+                            Share Your Feedback!
+                        </Link>
                     </div>
 
                     <h3 className="social-title">Connect With Us</h3>

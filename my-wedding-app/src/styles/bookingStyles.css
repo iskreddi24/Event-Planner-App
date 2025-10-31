@@ -1,0 +1,400 @@
+/* ------------------------------------------------------------------- */
+/* --- GENERAL BOOKING VIEW LAYOUT & TYPOGRAPHY --- */
+/* ------------------------------------------------------------------- */
+.booking-view {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 30px;
+    background-color: #f8f9fa; /* Light background */
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+.booking-title {
+    font-size: 2.5em;
+    font-weight: 700;
+    color: #4a4a4a;
+    text-align: center;
+    margin-bottom: 40px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.booking-section {
+    margin-bottom: 35px;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    border: 1px solid #e0e0e0;
+}
+
+.section-title {
+    font-size: 1.6em;
+    color: #ff7043; /* Vibrant orange for titles */
+    border-bottom: 3px solid #ff704350;
+    padding-bottom: 8px;
+    margin-bottom: 20px;
+    font-weight: 600;
+}
+
+/* --- Error/Loading Messages --- */
+.error-message {
+    color: #dc3545; /* Bootstrap red */
+    font-weight: 600;
+    padding: 10px;
+    border: 1px solid #f5c6cb;
+    background-color: #f8d7da;
+    border-radius: 6px;
+    margin-top: 10px;
+}
+
+/* ------------------------------------------------------------------- */
+/* --- STEP 1: EVENT GRID & TILES --- */
+/* ------------------------------------------------------------------- */
+.event-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+
+.event-tile {
+    width: 220px;
+    cursor: pointer;
+    border-radius: 10px;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border 0.3s;
+    text-align: center;
+    background-color: #fff;
+    border: 3px solid #f0f0f0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.event-tile:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+.event-tile img {
+    width: 100%;
+    height: 140px;
+    object-fit: cover;
+    display: block;
+}
+
+.event-tile h3 {
+    font-size: 1.1em;
+    margin: 10px 0;
+    padding: 0 10px 10px;
+    color: #333;
+    font-weight: 500;
+}
+
+.event-tile.selected {
+    border-color: #ff7043;
+    box-shadow: 0 0 15px rgba(255, 112, 67, 0.7);
+    background-image: linear-gradient(to top, #ff70431a, #ffffff);
+}
+
+/* ------------------------------------------------------------------- */
+/* --- STEP 2: LOCATION SELECTOR --- */
+/* ------------------------------------------------------------------- */
+.location-selector-controls {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.location-select {
+    flex-grow: 1;
+    min-width: 250px;
+    padding: 12px 15px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    font-size: 1em;
+    appearance: none; /* Remove default arrow */
+    background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%236c757d%22%20d%3D%22M287%20177.3c-4.1%204.1-9.3%206.2-14.7%206.2s-10.6-2.1-14.7-6.2L146.2%2066.8%2034.8%20177.3c-4.1%204.1-9.3%206.2-14.7%206.2s-10.6-2.1-14.7-6.2-6.2-10.6-6.2-14.7%202.1-10.6%206.2-14.7L131.5%2037.3c4.1-4.1%209.3-6.2%2014.7-6.2s10.6%202.1%2014.7%206.2l111.4%20111.4c4.1%204.1%206.2%209.3%206.2%2014.7s-2.1%2010.6-6.2%2014.7z%22%2F%3E%3C%2Fsvg%3E');
+    background-repeat: no-repeat;
+    background-position: right 15px top 50%;
+    background-size: 12px auto;
+}
+.location-select:focus {
+    border-color: #ff7043;
+    box-shadow: 0 0 5px rgba(255, 112, 67, 0.5);
+    outline: none;
+}
+
+/* ------------------------------------------------------------------- */
+/* --- STEP 3: HALL PICKER (SlotAndHallPicker.jsx) --- */
+/* ------------------------------------------------------------------- */
+.hall-picker-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.5fr; /* Hall list (1) and Details/Slots (1.5) */
+    gap: 40px;
+    margin-top: 10px;
+}
+@media (max-width: 768px) {
+    .hall-picker-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.hall-picker-title {
+    color: #1e88e5; /* Blue for contrast */
+    border-bottom: 2px solid #1e88e550;
+    padding-bottom: 8px;
+    margin-bottom: 20px;
+    font-size: 1.4em;
+    font-weight: 600;
+}
+
+/* Hall List */
+.hall-list {
+    max-height: 450px;
+    overflow-y: auto;
+    padding-right: 15px;
+}
+
+.hall-item {
+    cursor: pointer;
+    padding: 15px;
+    margin-bottom: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    transition: all 0.2s;
+    background-color: #fafafa;
+}
+
+.hall-item:hover {
+    transform: translateX(3px);
+    background-color: #f0f8ff;
+}
+
+.hall-item.selected {
+    border-color: #1e88e5;
+    background-color: #e3f2fd;
+    box-shadow: 0 0 8px rgba(30, 136, 229, 0.4);
+}
+
+.hall-item .name {
+    font-weight: 700;
+    color: #1e88e5;
+    margin: 0;
+    font-size: 1.1em;
+}
+.hall-item .details {
+    font-size: 0.9em;
+    color: #666;
+    margin: 4px 0 0;
+}
+
+/* Slot Selector */
+.slot-selector-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.slot-button {
+    padding: 12px 10px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s;
+    position: relative;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Slot States */
+.slot-button.available {
+    background-color: #e8f5e9; /* Light green */
+    color: #2e7d32;
+    border: 1px solid #4caf50;
+}
+.slot-button.available:hover:not(:disabled) {
+    background-color: #dcedc8;
+}
+
+.slot-button.selected {
+    background-color: #ff7043;
+    color: white;
+    border: 1px solid #d84315;
+    transform: scale(1.05);
+}
+
+.slot-button.booked {
+    background-color: #fce4ec; /* Light pink/red */
+    color: #c2185b;
+    border: 1px dashed #f06292;
+    cursor: not-allowed;
+    text-decoration: line-through;
+}
+
+.slot-booked-text {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    font-size: 0.7em;
+    font-weight: 700;
+    color: #c2185b;
+}
+
+/* Booking Summary and Button */
+.booking-summary-actions {
+    margin-top: 25px;
+    padding-top: 20px;
+    border-top: 1px solid #eee;
+}
+
+.booking-summary-text {
+    font-size: 1.1em;
+    color: #ff7043;
+    font-weight: 700;
+    margin-bottom: 15px;
+}
+
+.proceed-button {
+    width: 100%;
+    padding: 15px;
+    background: linear-gradient(45deg, #ff7043, #ff9800);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.2em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: opacity 0.3s, box-shadow 0.3s;
+    box-shadow: 0 4px 10px rgba(255, 112, 67, 0.3);
+}
+
+.proceed-button:hover:not(:disabled) {
+    opacity: 0.9;
+    box-shadow: 0 6px 15px rgba(255, 112, 67, 0.4);
+}
+
+.proceed-button:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+    box-shadow: none;
+}
+
+/* ------------------------------------------------------------------- */
+/* --- PAYMENT PORTAL (StripePaymentPortal.jsx) --- */
+/* ------------------------------------------------------------------- */
+.payment-portal-container {
+    max-width: 500px;
+    margin: 40px auto;
+    padding: 30px;
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    border-top: 5px solid #1e88e5;
+}
+
+.payment-portal-title {
+    font-size: 1.8em;
+    color: #1e88e5;
+    margin-bottom: 10px;
+}
+
+.payment-portal-info {
+    font-size: 1em;
+    color: #666;
+    margin-bottom: 25px;
+}
+
+.checkout-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.checkout-form h5 {
+    color: #333;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 8px;
+    margin-bottom: 10px;
+    font-size: 1.1em;
+}
+
+.card-element-container {
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    background-color: #f7f7f7;
+    transition: border-color 0.3s;
+}
+
+.payment-error {
+    color: #dc3545;
+    font-weight: 500;
+}
+
+.payment-amount {
+    font-size: 1.2em;
+    font-weight: 600;
+    color: #4a4a4a;
+    text-align: right;
+    margin-top: 10px;
+}
+.payment-amount span {
+    color: #28a745; /* Green for amount */
+}
+
+.payment-button {
+    padding: 15px;
+    font-size: 1.1em;
+    font-weight: bold;
+    background: linear-gradient(90deg, #1e88e5, #00b0ff);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s, box-shadow 0.3s;
+    box-shadow: 0 4px 10px rgba(30, 136, 229, 0.3);
+}
+
+.payment-button:hover:not(:disabled) {
+    background: linear-gradient(90deg, #1565c0, #0091ea);
+    box-shadow: 0 6px 15px rgba(30, 136, 229, 0.4);
+}
+.payment-button:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+    box-shadow: none;
+}
+/* --- Mock Payment Styles --- */
+
+.mock-title {
+    color: #007bff !important; /* Use a distinct blue color */
+    border-bottom: 2px dashed #007bff;
+    padding-bottom: 10px;
+}
+
+.mock-form {
+    border: 3px dashed #007bff;
+    padding: 25px;
+    background-color: #f0f8ff; /* Very light blue background */
+}
+
+.payment-button.mock-button {
+    background-color: #007bff;
+    transition: background-color 0.3s, transform 0.1s;
+    box-shadow: 0 4px 10px rgba(0, 123, 255, 0.4);
+}
+
+.payment-button.mock-button:hover:not(:disabled) {
+    background-color: #0056b3;
+    transform: translateY(-2px);
+}
+
+.mock-warning {
+    text-align: center;
+    font-size: 0.85em;
+    color: #6c757d;
+    margin-top: 10px;
+    font-style: italic;
+}

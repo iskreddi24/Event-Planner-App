@@ -17,6 +17,7 @@ const signTokenAndRespond = (user, res, statusCode = 200) => {
     });
 };
 
+
 router.post('/register', async (req, res) => {
     const { name, email, password } = req.body;
     try {

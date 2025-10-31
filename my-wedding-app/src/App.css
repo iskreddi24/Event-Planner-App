@@ -1,167 +1,3 @@
-/* body {
-    font-family: 'Poppins', sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f8f9fa;
-    color: #343a40;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-}
-
-.main-content {
-    flex-grow: 1;
-    padding-top: 70px; 
-}
-
-.header-sticky {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    z-index: 1000;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-}
-
-.navbar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 10px 40px;
-    background: #ffffff;
-}
-
-.logo h3 {
-    margin: 0;
-    font-size: 28px;
-    color: #e67e22;
-    font-weight: 700;
-}
-
-.nav-links {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-}
-
-.nav-links a, .nav-links .logout-btn {
-    text-decoration: none;
-    color: #0a0a0a;
-    font-weight: 500;
-    transition: color 0.3s ease, background-color 0.3s ease;
-    padding: 8px 12px;
-    border-radius: 6px;
-    display: flex;
-    align-items: center;
-    border: none;
-    background: none;
-    cursor: pointer;
-    text-align: left; 
-    white-space: nowrap; 
-}
-
-.nav-icon {
-    margin-right: 5px;
-    color: #95a5a6;
-}
-
-.nav-links a:hover, .nav-links .logout-btn:hover {
-    color: #ffffff;
-    background-color: #e67e22;
-}
-
-.dropdown {
-    position: relative;
-}
-
-.dropdown-menu {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    background: #e67e22;
-    min-width: 150px;
-    border-radius: 0 0 5px 5px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    display: flex;
-    flex-direction: column;
-    z-index: 10;
-    padding: 0;
-}
-
-.dropdown-menu a {
-    color: #ffffff;
-    padding: 10px 15px;
-    border-radius: 0;
-    transition: background 0.2s ease;
-    width: auto;
-}
-
-.dropdown-menu a:hover {
-    background: #d35400;
-}
-
-.menu-toggler {
-    display: none;
-    background: none;
-    border: none;
-    cursor: pointer;
-    color: #e67e22;
-}
-
-@media (max-width: 768px) {
-    .navbar {
-        padding: 10px 20px;
-    }
-
-    .menu-toggler {
-        display: block;
-    }
-
-    .nav-links {
-        position: absolute;
-        top: 60px; 
-        left: 0;
-        width: 100%;
-        flex-direction: column;
-        background-color: #ffffff;
-        box-shadow: 0 8px 8px rgba(0, 0, 0, 0.1);
-        padding: 20px 0;
-        transition: transform 0.3s ease-in-out;
-        transform: translateY(-100%); 
-        align-items: flex-start;
-    }
-
-    .nav-links.nav-open {
-        transform: translateY(0); 
-    }
-
-    .nav-links a, .nav-links .logout-btn {
-        width: 100%;
-        padding: 10px 40px;
-        box-sizing: border-box; 
-    }
-    
-    .logout-btn {
-        color: #0a0a0a;
-    }
-
-    .dropdown-menu {
-        position: static;
-        width: 100%;
-        border-radius: 0;
-        background: #f1c40f; 
-    }
-    
-    .dropdown-menu a {
-        color: #ffffff;
-        padding-left: 60px; 
-    }
-    
-    .dropdown-menu a:hover {
-        background: #e67e22;
-    }
-} */
-/* Global Styles */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 
 body {
@@ -169,7 +5,6 @@ body {
     margin: 0;
     padding: 0;
     background-color: #ecf0f1;
-    /* Light gray background */
     color: #34495e;
     min-height: 100vh;
     display: flex;
@@ -186,7 +21,6 @@ body {
 .main-content {
     flex-grow: 1;
     padding-top: 70px;
-    /* Offset for the sticky header (Crucial fix for content overlap) */
 }
 
 .mock-page {
@@ -194,195 +28,236 @@ body {
     text-align: center;
 }
 
-/* =======================================================
-   NAVBAR STYLES (Previously Missing or Not Applied)
-   ======================================================= */
+/* ===== NAVBAR (CINEMATIC PREMIUM LOOK) ===== */
 .header-sticky {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    z-index: 1000;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  backdrop-filter: blur(15px);
+  background: linear-gradient(135deg, rgba(15, 32, 39, 0.9), rgba(32, 58, 67, 0.9), rgba(44, 83, 100, 0.9));
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  animation: fadeDown 0.8s ease forwards;
 }
 
+/* Smooth fade entry animation */
+@keyframes fadeDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Navbar container */
 .navbar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 10px 40px;
-    background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 40px;
+  max-width: 1300px;
+  margin: 0 auto;
 }
 
-.logo h3 {
-    margin: 0;
-    font-size: 28px;
-    color: #e67e22;
-    /* Orange for the logo */
-    font-weight: 700;
+/* Logo styling */
+.logo img {
+  height: 45px;
+  filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.3));
+  transition: transform 0.3s ease;
 }
 
+.logo img:hover {
+  transform: scale(1.05);
+}
+
+/* ===== NAV LINKS ===== */
 .nav-links {
-    display: flex;
-    align-items: center;
-    gap: 20px;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  transition: all 0.4s ease;
 }
 
 .nav-links a,
 .nav-links .logout-btn {
-    text-decoration: none;
-    color: #0a0a0a;
-    font-weight: 500;
-    transition: color 0.3s ease, background-color 0.3s ease;
-    padding: 8px 12px;
-    border-radius: 6px;
-    display: flex;
-    align-items: center;
-
-    /* Ensure button looks like a link */
-    border: none;
-    background: none;
-    cursor: pointer;
-    text-align: left;
-    white-space: nowrap;
+  color: #f2f2f2;
+  font-weight: 500;
+  padding: 10px 16px;
+  text-decoration: none;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  background: transparent;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
 }
 
-.nav-icon {
-    margin-right: 5px;
-    color: #95a5a6;
+/* Light streak effect */
+.nav-links a::before,
+.nav-links .logout-btn::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 200%;
+  height: 100%;
+  background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.6s ease;
 }
 
+.nav-links a:hover::before,
+.nav-links .logout-btn:hover::before {
+  left: 100%;
+}
+
+/* Hover Glow */
 .nav-links a:hover,
 .nav-links .logout-btn:hover {
-    color: #ffffff;
-    background-color: #e67e22;
+  background: linear-gradient(135deg, #00c6ff, #0072ff);
+  color: #fff;
+  box-shadow: 0 0 15px rgba(0, 150, 255, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
 }
 
-/* Dropdown Styles */
+/* Active Links */
+.nav-links .active {
+  background: linear-gradient(135deg, #00c6ff, #0072ff);
+  color: #fff !important;
+  box-shadow: 0 0 15px rgba(0, 150, 255, 0.8);
+  transform: scale(1.05);
+}
+
+/* Navbar Icons */
+.nav-icon {
+  margin-right: 6px;
+  color: #a8c4d8;
+  transition: color 0.3s ease;
+}
+
+.nav-links a:hover .nav-icon {
+  color: #fff;
+}
+
+/* ===== DROPDOWN MENU ===== */
 .dropdown {
-    position: relative;
+  position: relative;
 }
 
 .dropdown-menu {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    background: #e67e22;
-    min-width: 150px;
-    border-radius: 0 0 5px 5px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    display: flex;
-    flex-direction: column;
-    z-index: 10;
-    padding: 0;
+  position: absolute;
+  top: 110%;
+  left: 0;
+  background: rgba(10, 30, 50, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+  display: flex;
+  flex-direction: column;
+  z-index: 100;
+  min-width: 190px;
+  opacity: 0;
+  transform: translateY(-10px);
+  visibility: hidden;
+  transition: all 0.3s ease;
+}
+
+/* Show dropdown on hover */
+.dropdown:hover .dropdown-menu {
+  opacity: 1;
+  transform: translateY(0);
+  visibility: visible;
 }
 
 .dropdown-menu a {
-    color: #ffffff;
-    padding: 10px 15px;
-    border-radius: 0;
-    transition: background 0.2s ease;
+  color: #f1f1f1;
+  padding: 12px 20px;
+  font-size: 0.95rem;
+  border-radius: 6px;
+  transition: background 0.3s ease;
 }
 
 .dropdown-menu a:hover {
-    background: #d35400;
+  background: linear-gradient(135deg, #00c6ff, #0072ff);
+  color: #fff;
 }
 
-/* Menu Toggler (Mobile) */
+/* ===== MOBILE MENU ===== */
 .menu-toggler {
-    display: none;
-    background: none;
-    border: none;
-    cursor: pointer;
-    color: #e67e22;
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #fff;
+  transition: transform 0.3s ease;
 }
 
-/* =======================================================
-   MOBILE RESPONSIVENESS (Ensures menu is shown)
-   ======================================================= */
-/* =======================================================
-    MOBILE RESPONSIVENESS (Adjusted)
-    ======================================================= */
+.menu-toggler:hover {
+  transform: scale(1.1);
+}
+
 @media (max-width: 768px) {
-    .navbar {
-        padding: 6px 15px;
-        /* reduced from 10px 20px */
-        flex-wrap: wrap;
-        align-items: flex-start;
-    }
+  .navbar {
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 10px 20px;
+  }
 
-    .menu-toggler {
-        display: block;
-        font-size: 1.1rem;
-    }
+  .menu-toggler {
+    display: block;
+  }
 
-    .nav-links {
-        position: absolute;
-        top: 55px;
-        /* slightly less than before */
-        left: 0;
-        width: 100%;
-        flex-direction: column;
-        background-color: #ffffff;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        padding: 0;
-        transition: all 0.3s ease-in-out;
-        max-height: 0;
-        overflow: hidden;
-        align-items: flex-start;
-    }
+  .nav-links {
+    position: absolute;
+    top: 60px;
+    left: 0;
+    width: 100%;
+    flex-direction: column;
+    background: rgba(15, 32, 39, 0.98);
+    backdrop-filter: blur(10px);
+    padding: 15px 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease;
+  }
 
-    /* 👇 Smaller open height */
-    .nav-links.nav-open {
-        max-height: 600px;
-        /* reduced height */
-        padding: 8px 0;
-        overflow-y: auto;
-    }
+  .nav-links.nav-open {
+    max-height: 600px;
+  }
 
-    .nav-links a,
-    .nav-links .logout-btn {
-        width: 100%;
-        padding: 8px 25px;
-        /* smaller padding */
-        font-size: 0.9rem;
-        /* reduced font size */
-        box-sizing: border-box;
-        justify-content: flex-start;
-        border-radius: 0;
-    }
+  .nav-links a,
+  .nav-links .logout-btn {
+    width: 100%;
+    text-align: center;
+    padding: 12px 0;
+    border-radius: 0;
+  }
 
-    .nav-links a:hover,
-    .nav-links .logout-btn:hover {
-        background-color: #e67e22;
-        color: white;
-    }
+  .dropdown-menu {
+    position: static;
+    background: rgba(25, 45, 60, 0.9);
+    border: none;
+    box-shadow: none;
+    opacity: 1;
+    transform: none;
+    visibility: visible;
+    padding: 0;
+  }
 
-    .nav-links>.dropdown {
-        width: 100%;
-        position: static;
-    }
-
-    .dropdown-menu {
-        position: static;
-        width: 100%;
-        background: #f39c12;
-        border-radius: 0;
-        padding: 0;
-        box-shadow: none;
-    }
-
-    .dropdown-menu a {
-        padding: 6px 40px;
-        /* reduced inner dropdown spacing */
-        font-size: 0.85rem;
-        color: white;
-    }
-
-    .dropdown-menu a:hover {
-        background: #e67e22;
-    }
+  .dropdown-menu a {
+    text-align: center;
+    padding: 10px 0;
+  }
 }
+
 
 
 
@@ -423,14 +298,12 @@ body {
     margin-top: 15px;
 }
 
-/* Dashboard Page Styles (To match your screenshot) */
 .dashboard-page {
     display: flex;
     justify-content: center;
     align-items: flex-start;
     padding: 60px 20px;
     min-height: calc(100vh - 70px - 80px);
-    /* Adjust height for nav and footer */
     background-color: #3498db;
 }
 
@@ -479,12 +352,10 @@ body {
 
 .primary-btn {
     background-color: #2ecc71;
-    /* Green */
     color: white;
 }
 
 .secondary-btn {
     background-color: #27ae60;
-    /* Darker Green */
     color: white;
 }

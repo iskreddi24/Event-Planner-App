@@ -41,7 +41,7 @@ router.post("/", protect, async (req, res) => {
 
 router.get("/", protect, admin, async (req, res) => {
     try {
-        console.log("✅ Admin fetching all contacts...");
+        console.log("Admin fetching all contacts...");
         console.log("Admin user:", req.user);
         
         const contacts = await Contact.find().sort({ submittedAt: -1 }); // Use submittedAt instead of createdAt

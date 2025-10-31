@@ -1,0 +1,80 @@
+/* Global container for review page */
+.customer-reviews-container {
+    background-color: #f7f5fa; /* Very light purple/gray background */
+    padding: 3rem 1rem; /* Adjust padding for visual spacing */
+    min-height: 80vh;
+    font-family: 'Inter', sans-serif;
+}
+
+/* Grid layout for review cards */
+.reviews-grid {
+    display: grid;
+    gap: 2rem;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Review Card styling */
+.review-card {
+    /* Base styles already provided in JSX: bg-white, p-6, rounded-lg, shadow-lg, border-t-4 border-purple-400 */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 250px; /* Ensure cards look uniform */
+    transition: transform 0.3s, box-shadow 0.3s;
+    border-top: 5px solid #a855f7; /* Purple border top */
+}
+
+.review-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(168, 85, 247, 0.2); /* Lifted shadow with purple accent */
+}
+
+/* Star Rating Colors */
+.review-card .text-yellow-500 {
+    color: #f59e0b; /* Golden Yellow */
+}
+.review-card .text-gray-300 {
+    color: #d1d5db; /* Light gray for unrated stars */
+}
+.review-card .text-purple-400 {
+    color: #c084fc; /* Icon color for uploaded photo */
+}
+
+/* Text status colors (Satisfied/Needs Improvement) */
+.text-green-600 { color: #059669; }
+.text-red-600 { color: #dc2626; }
+
+/* Review CTA Button */
+.review-cta-button {
+    /* Styles matching the form button aesthetic */
+    display: inline-flex;
+    align-items: center;
+    padding: 0.8rem 2.2rem;
+    background-color: #9333ea; /* Purple-600 */
+    color: white;
+    font-weight: 600;
+    border-radius: 9999px; /* Rounded-full */
+    text-decoration: none;
+    transition: background-color 0.3s, transform 0.2s;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    letter-spacing: 0.5px;
+}
+
+.review-cta-button:hover {
+    background-color: #7e22ce; /* Darker purple on hover */
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .reviews-grid {
+        grid-template-columns: 1fr; /* Stack reviews on mobile */
+        padding: 0 1rem;
+    }
+    .customer-reviews-container {
+        padding: 2rem 0.5rem;
+    }
+}

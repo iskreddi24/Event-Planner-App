@@ -1,3 +1,4 @@
+/* Existing Styles */
 .admin-dashboard {
     max-width: 1200px;
     margin: 40px auto;
@@ -7,7 +8,7 @@
 .admin-dashboard h1 {
     text-align: center;
     color: #495057;
-    margin-bottom: 40px;
+    margin-bottom: 20px; /* Reduced margin to bring tabs closer */
 }
 
 .admin-error {
@@ -20,6 +21,54 @@
     border-radius: 4px;
 }
 
+/* ------------------- NEW TAB STYLES ------------------- */
+.admin-tabs {
+    display: flex;
+    flex-wrap: wrap; /* Allows tabs to wrap on smaller screens */
+    justify-content: center; /* Center the tabs */
+    margin-bottom: 30px;
+    border-bottom: 2px solid #e9ecef;
+}
+
+.tab-button {
+    background: transparent;
+    border: none;
+    padding: 12px 20px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+    color: #6c757d; /* Default color */
+    border-bottom: 3px solid transparent;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.tab-button:hover:not(.active) {
+    color: #0056b3;
+    background-color: #f8f9fa;
+}
+
+.tab-button.active {
+    color: #007bff; /* Active tab color */
+    border-bottom-color: #007bff; /* Underline for active tab */
+    background-color: #ffffff;
+}
+
+.admin-content-section {
+    padding: 20px 0;
+}
+
+.admin-content-section h2 {
+    color: #343a40;
+    margin-bottom: 20px;
+    text-align: center;
+}
+/* ------------------- END NEW TAB STYLES ------------------- */
+
+
+/* Booking/Card Grid remains the same for the content inside the active tab */
 .bookings-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -42,6 +91,8 @@
     border-bottom: 1px dashed #ced4da;
     padding-bottom: 5px;
 }
+
+/* ... (Rest of .admin-card, .admin-actions, and button styles remain the same) */
 
 .admin-card p {
     margin: 8px 0;
@@ -81,3 +132,5 @@
 .pending-btn {
     background-color: #080808;
 }
+
+/* Removed the previous media query as the tab navigation is naturally responsive */

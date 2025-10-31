@@ -2,7 +2,6 @@ const express = require("express");
 const router = express.Router();
 const DecorationService = require("../models/decorationServiceModel.cjs");
 
-// ✅ POST new decoration booking
 router.post("/", async (req, res) => {
   try {
     const newDecoration = new DecorationService(req.body);
@@ -14,7 +13,6 @@ router.post("/", async (req, res) => {
   }
 });
 
-// ✅ GET all decoration bookings (optional)
 router.get("/", async (req, res) => {
   try {
     const decorations = await DecorationService.find();
@@ -23,7 +21,6 @@ router.get("/", async (req, res) => {
     res.status(500).json({ error: "Error fetching decorations." });
   }
 });
-// ✅ GET all decoration bookings
 router.get("/", async (req, res) => {
   try {
     const bookings = await DecorationService.find().sort({ createdAt: -1 });

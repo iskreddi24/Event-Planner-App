@@ -1,105 +1,158 @@
-
 .about-page {
-    font-family: 'Arial', sans-serif;
-    max-width: 1000px;
-    margin: 40px auto;
-    padding: 30px;
-    background: #ffffff;
-    border-radius: 12px;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
-    line-height: 1.7;
+  font-family: "Poppins", sans-serif;
+  max-width: 1100px;
+  margin: 60px auto;
+  padding: 50px;
+  background: linear-gradient(135deg, #1b1b1f 0%, #242933 100%);
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  color: #f4f4f4;
+  line-height: 1.8;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Cinematic glow lines */
+.about-page::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(
+    circle at center,
+    rgba(255, 215, 0, 0.07),
+    transparent 60%
+  );
+  animation: pulseGlow 8s infinite alternate;
+  z-index: 0;
+}
+
+@keyframes pulseGlow {
+  0% {
+    opacity: 0.3;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0.8;
+    transform: scale(1.1);
+  }
 }
 
 .about-header {
-    text-align: center;
-    font-size: 2.8rem;
-    color: #e67e22; 
-    margin-bottom: 10px;
-    border-bottom: 2px solid #f0f0f0;
-    padding-bottom: 10px;
+  text-align: center;
+  font-size: 3rem;
+  background: linear-gradient(90deg, #ffb347, #ffcc33);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 20px;
+  position: relative;
+  z-index: 1;
 }
 
 .about-intro {
-    font-size: 1.15rem;
-    margin-bottom: 30px;
-    text-align: center;
-    color: #555;
-    max-width: 800px;
-    margin-left: auto;
-    margin-right: auto;
+  font-size: 1.2rem;
+  text-align: center;
+  color: #cfcfcf;
+  margin-bottom: 40px;
+  max-width: 850px;
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+  z-index: 1;
 }
 
+/* Section Styles */
 .about-section {
-    margin-top: 40px;
-    padding: 20px 0;
+  margin-top: 60px;
+  padding: 25px 0;
+  position: relative;
+  z-index: 1;
 }
 
 .section-title {
-    color: #2c3e50;
-    font-size: 2rem;
-    margin-bottom: 20px;
-    border-left: 6px solid #e67e22;
-    padding-left: 15px;
+  font-size: 2rem;
+  color: #ffd700;
+  text-shadow: 0 0 15px rgba(255, 215, 0, 0.4);
+  margin-bottom: 25px;
+  border-left: 6px solid #ffcc33;
+  padding-left: 15px;
+  font-weight: 600;
 }
 
 .about-mission p {
-    font-size: 1.1rem;
-    color: #34495e;
+  font-size: 1.1rem;
+  color: #d3d3d3;
+  line-height: 1.9;
 }
 
+/* Services Grid */
 .services-list {
-    list-style: none;
-    padding: 0;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 15px;
+  list-style: none;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 20px;
 }
 
 .services-list li {
-    background: #f8f9fa;
-    padding: 15px 20px;
-    border-radius: 8px;
-    font-size: 1.1rem;
-    font-weight: 500;
-    border: 1px solid #eee;
-    transition: all 0.3s ease-in-out;
+  background: linear-gradient(145deg, #2a2f3a, #1e2128);
+  padding: 20px;
+  border-radius: 12px;
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: #f8f8f8;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.3);
+  transition: all 0.4s ease;
+  border: 1px solid rgba(255, 215, 0, 0.1);
+  cursor: pointer;
 }
 
 .services-list li:hover {
-    background: #ffe6cc; 
-    transform: scale(1.02);
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  transform: translateY(-8px) scale(1.02);
+  background: linear-gradient(145deg, #343946, #252932);
+  box-shadow: 0 12px 25px rgba(255, 204, 51, 0.25);
 }
 
 .services-list li span {
-    margin-right: 10px;
+  margin-right: 10px;
+  font-size: 1.3rem;
 }
 
+/* Values section with cinematic contrast */
 .about-values {
-    background: #fdf3e7; 
-    padding: 25px;
-    border-radius: 8px;
-    border-left: 6px solid #3498db; 
+  background: linear-gradient(145deg, #1a1c21, #2c313a);
+  padding: 30px;
+  border-radius: 12px;
+  border-left: 6px solid #ffb347;
+  box-shadow: inset 0 0 20px rgba(255, 204, 51, 0.08);
+  margin-top: 50px;
 }
 
 .value-statement {
-    font-style: italic;
-    font-size: 1.1rem;
-    color: #495057;
+  font-style: italic;
+  font-size: 1.15rem;
+  color: #e0e0e0;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.08);
 }
 
+/* Responsive Styling */
 @media (max-width: 768px) {
-    .about-page {
-        margin: 20px;
-        padding: 20px;
-    }
-    .about-header {
-        font-size: 2rem;
-    }
-    .section-title {
-        font-size: 1.5rem;
-    }
-    .services-list {
-        grid-template-columns: 1fr;
-    }
+  .about-page {
+    margin: 20px;
+    padding: 25px;
+  }
+
+  .about-header {
+    font-size: 2.2rem;
+  }
+
+  .section-title {
+    font-size: 1.6rem;
+  }
+
+  .services-list {
+    grid-template-columns: 1fr;
+  }
 }

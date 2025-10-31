@@ -1,0 +1,190 @@
+/* PhotographyServiceComp.css */
+
+.photography-service-container {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+    background-color: #f8f9fa;
+    min-height: 80vh;
+}
+
+.booking-form-card {
+    background: #fff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    max-width: 500px;
+    width: 100%;
+}
+
+.form-title {
+    color: #4a235a; /* Deep Purple */
+    font-size: 1.8rem;
+    margin-bottom: 5px;
+    text-align: center;
+}
+
+.booking-form-card > p {
+    text-align: center;
+    color: #666;
+    margin-bottom: 25px;
+    font-weight: 300;
+}
+
+.booking-form-content {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 600;
+    color: #333;
+    font-size: 0.9rem;
+}
+
+.form-input,
+.form-textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-sizing: border-box;
+    font-size: 1rem;
+    transition: border-color 0.3s, box-shadow 0.3s;
+    background-color: #fefefe;
+}
+
+.form-input:focus,
+.form-textarea:focus {
+    border-color: #a350a3; /* Light Purple for focus */
+    box-shadow: 0 0 0 3px rgba(163, 80, 163, 0.2);
+    outline: none;
+}
+
+.form-textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.submit-button {
+    background-color: #4a235a; /* Deep Purple */
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 700;
+    transition: background-color 0.3s, transform 0.1s;
+    margin-top: 10px;
+}
+
+.submit-button:hover:not(:disabled) {
+    background-color: #6c3483;
+    transform: translateY(-1px);
+}
+
+.submit-button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+/* Status Messages */
+.status-message {
+    padding: 10px;
+    border-radius: 8px;
+    margin-top: 15px;
+    text-align: center;
+    font-weight: 600;
+}
+.status-message.success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+.status-message.error {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+
+/* Bookings Section Styles */
+.bookings-section {
+    max-width: 500px;
+    width: 100%;
+    padding: 20px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+.bookings-title {
+    color: #4a235a;
+    border-bottom: 2px solid #f0f0f0;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+    text-align: center;
+}
+
+.bookings-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.booking-card {
+    background-color: #f5eef7; /* Very light purple/pink background */
+    border-left: 5px solid #a350a3;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    line-height: 1.5;
+    font-size: 0.95rem;
+}
+
+.booking-card p strong {
+    color: #4a235a;
+}
+
+.booking-status {
+    margin-top: 5px;
+    font-weight: 700;
+}
+
+.booking-status.status-pending {
+    color: #e49a00; /* Orange */
+}
+.booking-status.status-confirmed {
+    color: #155724; /* Green */
+}
+.booking-status.status-cancelled {
+    color: #721c24; /* Red */
+}
+
+.no-bookings-message {
+    text-align: center;
+    color: #999;
+    padding: 20px;
+    border: 1px dashed #ccc;
+    border-radius: 8px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+    .photography-service-container {
+        padding: 10px;
+    }
+    .booking-form-card {
+        padding: 20px;
+    }
+    .form-title {
+        font-size: 1.5rem;
+    }
+}

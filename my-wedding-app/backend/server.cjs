@@ -1,154 +1,104 @@
-// require('dotenv').config();
-// const express = require('express');
-// const mongoose = require('mongoose');
-// const cors = require('cors');
-// const app = express();
-
-// app.use(express.json());
-
-// const PORT = process.env.PORT || 8080;
-
-// const allowedOrigins = [process.env.CLIENT_URL || 'http://localhost:5173'];
-
-// const corsOptions = {
-//     origin: function (origin, callback) {
-//         if (!origin || allowedOrigins.includes(origin)) {
-//             callback(null, true);
-//         } else {
-//             console.error('CORS blocked for origin:', origin);
-//             callback(new Error('Not allowed by CORS'));
-//         }
-//     },
-//     credentials: true,
-//     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
-//     allowedHeaders: ['Content-Type', 'Authorization'],
-// };
-// app.use(cors(corsOptions));
-
-// mongoose.set('strictQuery', true);
-// mongoose
-//     .connect(process.env.MONGO_URI)
-//     .then(() => console.log('MongoDBs connected successfully!'))
-//     .catch((err) => console.error('MongoDB connection error:', err));
-
-// const authRoutes = require('./routes/authRoutes.cjs');
-// const contactRoutes = require('./routes/contactRoutes.cjs');
-
-// app.use('/api/auth', authRoutes);
-// app.use('/api/contact', contactRoutes);
-
-// app.get('/', (req, res) => {
-//     res.send('Event Planner Backend is running!');
-// });
-
-// app.use((req, res, next) => {
-//     res.header('Access-Control-Allow-Origin', allowedOrigins[0]);
-//     res.header('Access-Control-Allow-Credentials', 'true');
-//     res.header('Access-Control-Allow-Methods', 'GET,POST,PUT,DELETE,PATCH');
-//     res.header('Access-Control-Allow-Headers', 'Content-Type,Authorization');
-//     if (req.method === 'OPTIONS') {
-//         return res.sendStatus(204);
-//     }
-//     next();
-// });
-
-// app.use((err, req, res, next) => {
-//     console.error('Global Error:', err.stack || err);
-//     if (process.env.NODE_ENV === 'development') {
-//         res.status(500).json({
-//             message: 'Server error occurred.',
-//             error: err.message,
-//             stack: err.stack
-//         });
-//     } else {
-//         res.status(500).json({ message: 'Server error occurred.' });
-//     }
-// });
-// app.get('/api/contact/test', (req, res) => {
-//     res.json({ message: 'Contact routes are working!' });
-// });
-// app.listen(PORT, () => {
-//     console.log(`Server running on http://localhost:${PORT}`);
-// });
-require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
+const dotenv = require('dotenv');
+const path = require('path');
+const fs = require('fs');
 
-const app = express();
+// --- 1. LOAD ENVIRONMENT VARIABLES (from backend/.env) ---
+dotenv.config({ path: path.resolve(__dirname, '.env') });
 
-// Middleware
-app.use(express.json());
+// --- 2. SAFELY FETCH MONGO URI ---
+const getMongoUri = () => {
+    if (process.env.MONGODB_CONNECTION_URI) {
+        console.log("DEBUG: Loaded MONGODB_CONNECTION_URI directly from process.env");
+        return process.env.MONGODB_CONNECTION_URI;
+    }
 
-const PORT = process.env.PORT || 8080;
-
-// ✅ Allowed CORS Origins
-const allowedOrigins = [process.env.CLIENT_URL || 'http://localhost:5173'];
-
-const corsOptions = {
-    origin: function (origin, callback) {
-        if (!origin || allowedOrigins.includes(origin)) {
-            callback(null, true);
-        } else {
-            console.error('CORS blocked for origin:', origin);
-            callback(new Error('Not allowed by CORS'));
+    try {
+        const envPath = path.resolve(__dirname, '.env');
+        const envFileContent = fs.readFileSync(envPath, 'utf8').trim();
+        const mongoUriRegex = /^MONGODB_CONNECTION_URI\s*=\s*(["']?)([^"'\r\n]+)\1/m;
+        const match = envFileContent.match(mongoUriRegex);
+        if (match && match[2]) {
+            console.log("DEBUG: Loaded MONGO_URI via manual .env parsing.");
+            return match[2].trim();
         }
-    },
-    credentials: true,
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
-    allowedHeaders: ['Content-Type', 'Authorization'],
+    } catch (e) {
+        console.error("FATAL: Error reading .env file:", e.message);
+    }
+
+    return undefined;
 };
 
-app.use(cors(corsOptions));
+const MONGO_URI = getMongoUri();
 
-mongoose.set('strictQuery', true);
-mongoose
-    .connect(process.env.MONGO_URI)
-    .then(() => console.log('✅ MongoDB connected successfully!'))
-    .catch((err) => console.error('❌ MongoDB connection error:', err));
+// --- 3. EXPRESS APP SETUP ---
+const app = express();
+app.use(cors());
+app.use(express.json());
 
+// --- 4. DATABASE CONNECTION ---
+if (!MONGO_URI) {
+    console.log(`DEBUG CHECK: MONGO_URI = [${MONGO_URI}]`);
+    console.error("MongoDB connection error: MONGO_URI is undefined after all attempts.");
+    process.exit(1);
+}
+
+console.log(`DEBUG: Attempting Mongoose connection with URI length: ${MONGO_URI.length}`);
+
+mongoose.connect(MONGO_URI)
+    .then(() => console.log('✅ MongoDB connected successfully'))
+    .catch(err => {
+        console.error('❌ MongoDB connection error:', err);
+        process.exit(1);
+    });
+
+// --- 5. ROUTES IMPORT ---
 const authRoutes = require('./routes/authRoutes.cjs');
 const contactRoutes = require('./routes/contactRoutes.cjs');
-const exclusiveServiceRoutes = require('./routes/exclusiveServiceRoutes.cjs'); // 👈 Added new route
+const exclusiveServiceRoutes = require('./routes/exclusiveServiceRoutes.cjs');
+const decorationServiceRoute = require('./routes/decorationServiceRoute.cjs');
+const queryRoutes = require('./routes/queryRoutes.cjs');
+const photographyRoutes = require('./routes/photographyRoutes.cjs');
+const reviewRoutes = require('./routes/reviewRoutes.cjs');
 
+// 🔑 CRITICAL IMPORTS FOR OWNER/BOOKING:
+// ownerRoutes handles /signup, /login, /hall/:id
+const ownerRoutes = require('./routes/ownerRoutes.cjs'); 
+// bookingRoutes handles /halls, /availability, /create, /confirm
+const bookingRoutes = require('./routes/bookingRoutes.cjs');
+
+// --- 6. ROUTE DEFINITIONS ---
 app.use('/api/auth', authRoutes);
 app.use('/api/contact', contactRoutes);
-app.use('/api/exclusive', exclusiveServiceRoutes); // 👈 Added route endpoint
-const decorationServiceRoute = require("./routes/decorationServiceRoute.cjs");
-app.use("/api/decoration", decorationServiceRoute);
+app.use('/api/exclusive', exclusiveServiceRoutes);
+app.use('/api/decoration', decorationServiceRoute);
+app.use('/api/queries', queryRoutes);
+app.use('/api/photography', photographyRoutes);
+app.use('/api/reviews', reviewRoutes);
 
+// 🔑 CRITICAL FIX: Owner routes mounted at /api/owner
+// This handles requests like POST /api/owner/signup correctly.
+app.use('/api/owner', ownerRoutes); 
+
+// Booking routes mounted at /api/booking
+// This handles requests like GET /api/booking/halls correctly.
+app.use('/api/booking', bookingRoutes); 
+
+
+// --- 7. BASIC ROUTES ---
 app.get('/', (req, res) => {
-    res.send('🎉 Event Planner Backend is running with Exclusive Services!');
+    res.send('🎉 JUEYM Wedding App Backend is running!');
 });
 
-app.get('/api/contact/test', (req, res) => {
-    res.json({ message: 'Contact routes are working!' });
+// --- 8. 404 HANDLER ---
+app.use((req, res) => {
+    res.status(404).send('<h1>404: Route Not Found</h1>');
 });
 
-app.use((req, res, next) => {
-    res.header('Access-Control-Allow-Origin', allowedOrigins[0]);
-    res.header('Access-Control-Allow-Credentials', 'true');
-    res.header('Access-Control-Allow-Methods', 'GET,POST,PUT,DELETE,PATCH');
-    res.header('Access-Control-Allow-Headers', 'Content-Type,Authorization');
-    if (req.method === 'OPTIONS') {
-        return res.sendStatus(204);
-    }
-    next();
-});
-
-app.use((err, req, res, next) => {
-    console.error('Global Error:', err.stack || err);
-    if (process.env.NODE_ENV === 'development') {
-        res.status(500).json({
-            message: 'Server error occurred.',
-            error: err.message,
-            stack: err.stack
-        });
-    } else {
-        res.status(500).json({ message: 'Server error occurred.' });
-    }
-});
-
+// --- 9. SERVER START ---
+const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
-    console.log(`🚀 Server running on http://localhost:${PORT}`);
+    console.log(`🚀 Server is running on http://localhost:${PORT}`);
 });
