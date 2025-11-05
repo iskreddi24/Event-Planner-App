@@ -1,0 +1,594 @@
+/* --- VIPWeddingService.css - Premium, Minimalist, Clean Style --- */
+
+.vip-service-comp {
+    font-family: 'Inter', sans-serif; /* Modern, clean font */
+    background-color: #ffffff; /* Pure white background */
+    color: #1a1a1a;
+    padding-bottom: 80px;
+}
+
+/* --- HERO SECTION --- */
+.vip-hero {
+    background: linear-gradient(rgba(26, 26, 26, 0.7), rgba(26, 26, 26, 0.7)), url('vip_wedding_hero.jpg') no-repeat center center;
+    background-size: cover;
+    height: 70vh; /* Taller hero */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: #fff;
+    box-shadow: none; /* No shadow for a cleaner look */
+    border-bottom: 1px solid #e0e0e0; /* Subtle separation */
+}
+
+.vip-title {
+    font-size: 4rem;
+    margin-bottom: 15px;
+    font-weight: 300; /* Lighter font weight for premium feel */
+    letter-spacing: 2px;
+}
+
+.vip-title .highlight {
+    color: #b8860b; /* Elegant gold/bronze accent */
+    font-weight: 600;
+}
+
+.vip-tagline {
+    font-size: 1.6rem;
+    margin-bottom: 40px;
+    font-weight: 300;
+    opacity: 0.9;
+}
+
+.start-planning-btn {
+    background-color: #1a1a1a; /* Dark button */
+    color: #fff;
+    border: 2px solid #1a1a1a;
+    padding: 15px 40px;
+    font-size: 1.1rem;
+    font-weight: 500;
+    border-radius: 0; /* Square edges */
+    cursor: pointer;
+    transition: all 0.3s ease;
+    letter-spacing: 1px;
+}
+
+.start-planning-btn:hover {
+    background-color: #333333;
+    border-color: #333333;
+    transform: none;
+}
+
+/* --- General Section Styling --- */
+.vip-section {
+    padding: 80px 40px; /* More padding/whitespace */
+    text-align: center;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.section-title {
+    font-size: 2.5rem;
+    color: #1a1a1a;
+    margin-bottom: 60px;
+    font-weight: 300;
+    letter-spacing: 1px;
+}
+
+.section-title::after {
+    content: '';
+    position: absolute;
+    bottom: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 1px; /* Very thin line */
+    background-color: #b8860b; /* Gold accent */
+    border-radius: 0;
+}
+
+/* --- Planning Steps (Process) --- */
+.planning-section {
+    background-color: #f9f9f9;
+}
+
+.steps-container {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    flex-wrap: wrap;
+}
+
+.step-card {
+    max-width: 350px;
+    padding: 40px;
+    border-radius: 0;
+    box-shadow: none;
+    border: 1px solid #e0e0e0; /* Subtle border for definition */
+    background-color: #fff;
+    transition: border-color 0.3s ease;
+}
+
+.step-card:hover {
+    transform: none;
+    border-color: #b8860b; /* Highlight on hover */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05); /* Very light shadow */
+}
+
+.step-icon {
+    font-size: 1.8rem;
+    color: #b8860b; /* Gold accent */
+    font-weight: 600;
+    margin-bottom: 20px;
+    border: 1px solid #b8860b;
+    background-color: #fff;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto 20px;
+    border-radius: 50%; /* Keep circular number for flow */
+}
+
+.step-card h3 {
+    color: #1a1a1a;
+    margin-bottom: 15px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+}
+
+/* --- Services Grid --- */
+.services-section {
+    background-color: #ffffff;
+}
+
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.service-card {
+    background-color: #fcfcfc;
+    padding: 30px;
+    border-radius: 0;
+    box-shadow: none;
+    border-left: 3px solid #e0e0e0; /* Subtle vertical line */
+    text-align: left;
+    transition: border-left-color 0.3s ease, background-color 0.3s ease;
+}
+
+.service-card:hover {
+    border-left-color: #b8860b; /* Gold hover accent */
+    background-color: #fff;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.service-icon {
+    font-size: 2rem;
+    color: #b8860b;
+    margin-bottom: 15px;
+}
+
+.service-card h4 {
+    font-size: 1.3rem;
+    margin-bottom: 8px;
+    font-weight: 500;
+}
+
+.service-card p {
+    color: #666;
+}
+
+.read-more-link {
+    color: #1a1a1a;
+    text-decoration: none;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    margin-top: 15px;
+    transition: color 0.3s ease;
+}
+
+.read-more-link:hover {
+    color: #b8860b;
+}
+
+/* --- VENUE BOOKING FORM SECTION --- */
+.booking-form-section {
+    background-color: #f9f9f9;
+}
+
+.booking-form-card {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px 40px;
+    text-align: left;
+    max-width: 1000px;
+    margin: 0 auto 30px;
+    padding: 30px;
+    background: #fff;
+    border: 1px solid #e0e0e0;
+}
+
+.booking-form-card label {
+    display: block;
+    font-weight: 500;
+    color: #333;
+    margin-bottom: 5px;
+    font-size: 0.95rem;
+}
+
+.booking-form-card input[type="date"],
+.booking-form-card input[type="number"],
+.booking-form-card input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 0;
+    font-size: 1rem;
+    box-sizing: border-box;
+    transition: border-color 0.3s;
+}
+
+.booking-form-card input:focus {
+    border-color: #b8860b;
+    outline: none;
+}
+
+.haldi-checkbox {
+    grid-column: 1 / -1; /* Span full width on single columns */
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.haldi-checkbox input[type="checkbox"] {
+    width: auto;
+    margin-right: 10px;
+    transform: scale(1.2);
+}
+
+.form-tip {
+    font-style: italic;
+    color: #666;
+    margin-top: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.form-tip .fa-arrow-right {
+    color: #b8860b;
+    margin-right: 10px;
+}
+
+/* --- Venue Showcase --- */
+.venue-section {
+    background-color: #fff;
+}
+
+.city-selector {
+    margin-bottom: 40px;
+}
+
+.city-btn {
+    background-color: #fff;
+    border: 1px solid #cccccc;
+    color: #333;
+    padding: 10px 25px;
+    margin: 0 8px;
+    cursor: pointer;
+    border-radius: 25px; /* Rounded buttons for city selection */
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.city-btn:hover {
+    background-color: #f0f0f0;
+}
+
+.city-btn.active {
+    background-color: #1a1a1a;
+    color: #fff;
+    border-color: #1a1a1a;
+}
+
+.venue-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+    text-align: left;
+}
+
+.venue-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 25px;
+    border: 1px solid #e0e0e0;
+    border-radius: 0;
+    box-shadow: none;
+    background-color: #fff;
+}
+
+.venue-detail h5 {
+    font-size: 1.3rem;
+    margin-bottom: 5px;
+    color: #1a1a1a;
+    font-weight: 600;
+}
+
+.venue-detail p {
+    font-size: 0.95rem;
+    color: #666;
+    margin-bottom: 3px;
+}
+
+.venue-detail strong {
+    color: #b8860b; /* Gold price highlight */
+    font-weight: 600;
+    font-size: 1rem;
+}
+
+.venue-book-btn {
+    background-color: #b8860b; /* Gold accent for action */
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 0;
+    cursor: pointer;
+    font-size: 0.95rem;
+    font-weight: 500;
+    transition: background-color 0.3s ease;
+}
+
+.venue-book-btn:hover {
+    background-color: #a3780a;
+}
+
+.venue-book-btn:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+.no-venues {
+    grid-column: 1 / -1;
+    color: #777;
+    font-style: italic;
+    padding: 20px;
+}
+
+
+/* --- CHAT SECTION --- */
+.contact-expert {
+    background-color: #f9f9f9;
+    padding: 60px 40px;
+    border-top: 1px solid #e0e0e0;
+}
+
+.chat-box {
+    max-width: 800px;
+    margin: 0 auto 20px;
+    height: 250px;
+    overflow-y: auto;
+    border: 1px solid #e0e0e0;
+    padding: 15px;
+    text-align: left;
+    background-color: #fff;
+    font-size: 0.9rem;
+}
+
+.chat-box p {
+    margin: 5px 0;
+    padding: 5px 10px;
+    border-radius: 4px;
+}
+
+.chat-input {
+    max-width: 800px;
+    margin: 0 auto;
+    display: flex;
+}
+
+.chat-input input {
+    flex-grow: 1;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 0;
+    font-size: 1rem;
+}
+
+.chat-input button {
+    background-color: #1a1a1a;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    margin-left: 10px;
+    border-radius: 0;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.chat-input button:hover {
+    background-color: #333333;
+}
+
+/* --- ACTION LOG --- */
+.action-log-section {
+    background-color: #fff;
+    padding-top: 30px;
+}
+
+.action-log-container {
+    max-width: 800px;
+    margin: 0 auto;
+    border: 1px solid #e0e0e0;
+    padding: 15px;
+    background-color: #fcfcfc;
+    min-height: 100px;
+    text-align: left;
+}
+
+.action-item {
+    border-bottom: 1px dashed #eee;
+    padding: 10px 0;
+    transition: background-color 0.3s;
+}
+
+.action-item:last-child {
+    border-bottom: none;
+}
+
+.action-header {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.8rem;
+    margin-bottom: 5px;
+}
+
+.action-name {
+    font-weight: 600;
+    color: #333;
+}
+
+.action-time {
+    color: #999;
+}
+
+.action-message {
+    margin: 0;
+    font-size: 0.9rem;
+}
+
+.action-item.success {
+    border-left: 3px solid #4CAF50;
+    padding-left: 10px;
+}
+
+.action-item.error {
+    border-left: 3px solid #ff0000;
+    padding-left: 10px;
+}
+
+/* --- Login Prompt --- */
+.vip-login-prompt {
+    min-height: 50vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background-color: #f0f0f0;
+    padding: 50px;
+}
+
+.vip-login-prompt h2 {
+    color: #1a1a1a;
+    margin-bottom: 20px;
+    font-weight: 300;
+}
+
+.vip-login-prompt .login-btn {
+    background-color: #b8860b;
+    color: #fff;
+    border: none;
+    padding: 10px 25px;
+    font-size: 1rem;
+    font-weight: 500;
+    border-radius: 0;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.vip-login-prompt .login-btn:hover {
+    background-color: #a3780a;
+}
+
+/* --- Responsive Adjustments --- */
+@media (max-width: 1024px) {
+    .vip-title {
+        font-size: 3rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .vip-section {
+        padding: 50px 20px;
+    }
+    .vip-hero {
+        height: 50vh;
+    }
+    .vip-title {
+        font-size: 2.5rem;
+    }
+    .vip-tagline {
+        font-size: 1.2rem;
+    }
+    .steps-container {
+        gap: 20px;
+    }
+    .booking-form-card {
+        padding: 20px;
+        grid-template-columns: 1fr;
+    }
+    .chat-input {
+        flex-direction: column;
+    }
+    .chat-input input {
+        margin-bottom: 10px;
+    }
+    .chat-input button {
+        margin-left: 0;
+        padding: 12px 20px;
+    }
+}
+
+/* --- DYNAMIC NOTIFICATION BAR STYLES (Kept subtle) --- */
+.notification-bar {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 12px 25px;
+    border-radius: 4px;
+    color: #fff;
+    font-weight: 500;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    animation: fadeInOut 3s ease-in-out forwards;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.notification-bar.success {
+    background-color: #4CAF50;
+}
+
+.notification-bar.info {
+    background-color: #1a1a1a; /* Dark background for info */
+}
+
+@keyframes fadeInOut {
+    /* ... (keyframes remain the same) ... */
+    0% {
+        opacity: 0;
+        transform: translate(-50%, 20px);
+    }
+    10% {
+        opacity: 1;
+        transform: translate(-50%, 0);
+    }
+    90% {
+        opacity: 1;
+        transform: translate(-50%, 0);
+    }
+    100% {
+        opacity: 0;
+        transform: translate(-50%, 20px);
+    }
+}

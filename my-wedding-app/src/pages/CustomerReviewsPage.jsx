@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { Link } from 'react-router-dom'; 
+import { Link } from 'react-router-dom';
 import axiosClient from "../utils/axiosClient";
 import { FaStar, FaRegStar, FaCamera } from "react-icons/fa";
-import "../styles/CustomerReviewsPage.css"; 
+import "../styles/CustomerReviewsPage.css";
 
 const StarRating = ({ rating }) => {
     const fullStars = Math.floor(rating);
@@ -17,30 +17,43 @@ const StarRating = ({ rating }) => {
     }
     return <div className="flex space-x-1 mb-2">{stars}</div>;
 };
-
 const ReviewCard = ({ review }) => (
-    <div className="review-card bg-white p-6 rounded-lg shadow-lg transition duration-300 hover:shadow-xl border-t-4 border-purple-400">
-        <StarRating rating={review.rating} />
-        
-        <p className="text-lg font-semibold text-gray-800 mb-2">"{review.description}"</p>
-        
+    <div className="review-card bg-white p-6 rounded-xl shadow-lg transition duration-300 hover:shadow-xl border-t-4 border-purple-500">
+        {/* Stars */}
+        <div className="mb-3">
+            <StarRating rating={review.rating} />
+        </div>
+
+        {/* Review Text */}
+        <p className="text-base font-medium text-gray-800 italic mb-3 leading-relaxed">
+            “{review.description}”
+        </p>
+
+        {/* Footer */}
         <div className="flex justify-between items-center text-sm text-gray-500 mt-4 pt-3 border-t border-gray-100">
             <div>
-                <p className="font-bold text-purple-600">— {review.userName}</p>
-                <p>Reviewed Service: {review.service}</p>
+                <p className="font-semibold text-purple-600">— {review.userName}</p>
+                <p className="text-gray-500">Service: {review.service}</p>
             </div>
-            
             {review.photoUrl && (
                 <div className="review-photo-indicator" title="Customer photo uploaded">
-                    <FaCamera size={20} className="text-purple-400" />
+                    <FaCamera size={18} className="text-purple-400" />
                 </div>
             )}
         </div>
-        <small className={`text-xs mt-2 inline-block font-medium ${review.isSatisfied ? 'text-green-600' : 'text-red-600'}`}>
+
+        {/* Status */}
+        <small
+            className={`text-xs mt-3 inline-block font-semibold tracking-wide ${
+                review.isSatisfied ? 'text-green-600' : 'text-red-600'
+            }`}
+        >
             {review.isSatisfied ? 'Highly Satisfied' : 'Needs Improvement'}
         </small>
     </div>
 );
+
+
 
 function CustomerReviewsPage() {
     const [reviews, setReviews] = useState([]);
@@ -51,7 +64,7 @@ function CustomerReviewsPage() {
         setLoading(true);
         setError(null);
         try {
-            const res = await axiosClient.get("/reviews/public"); 
+            const res = await axiosClient.get("/reviews/public");
             setReviews(res.data);
         } catch (err) {
             console.error("Error fetching reviews:", err);
@@ -64,7 +77,7 @@ function CustomerReviewsPage() {
     useEffect(() => {
         fetchReviews();
     }, [fetchReviews]);
-    
+
     const totalRating = reviews.reduce((sum, review) => sum + review.rating, 0);
     const averageRating = reviews.length > 0 ? (totalRating / reviews.length).toFixed(1) : 0;
 
@@ -85,7 +98,7 @@ function CustomerReviewsPage() {
 
             {loading && <p className="text-center text-lg text-purple-600">Loading reviews...</p>}
             {error && <p className="text-center text-lg text-red-600">{error}</p>}
-            
+
             {!loading && reviews.length === 0 && !error && (
                 <p className="text-center text-lg text-gray-500">No approved reviews to display yet. Be the first!</p>
             )}
@@ -95,10 +108,10 @@ function CustomerReviewsPage() {
                     <ReviewCard key={review._id} review={review} />
                 ))}
             </div>
-            
+
             <div className="text-center mt-12">
-                 {/* Link component for navigation */}
-                 <Link to="/submit-review" className="review-cta-button">
+                { }
+                <Link to="/submit-review" className="review-cta-button">
                     Leave Your Own Review
                 </Link>
             </div>

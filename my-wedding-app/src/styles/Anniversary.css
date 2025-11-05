@@ -164,6 +164,7 @@
     opacity: 0;
     transform: translateY(-20px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -175,6 +176,7 @@
     opacity: 0;
     transform: translateY(20px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -186,11 +188,13 @@
   .event-title {
     font-size: 2rem;
   }
+
   .steps-container,
   .gallery-container {
     flex-direction: column;
     align-items: center;
   }
+
   .step-card,
   .gallery-card {
     width: 85%;

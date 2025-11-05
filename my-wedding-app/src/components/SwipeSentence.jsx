@@ -1,44 +1,43 @@
 import React from "react";
-import "../styles/Sentence.css";
+import "../styles/Sentence.css"; 
 
 function SwipeSentence() {
     const sentence = "Join us and enjoy your moments";
-    const quote = "We Make Better Your Memories"; // ⬅️ NEW QUOTE
-    const words = sentence.split(' ');
+    const quote = "We Make Better Your Memories";
+    const words = sentence.split(" ");
 
     const cinematicColors = [
-        '#223743', // Dark Slate Blue
-        '#680718', // Deep Crimson Red
-        '#475962', // Medium Slate Gray
-        '#A47816', // Metallic Gold/Bronze
-        '#2C3E50', // Darker Blue-Gray
-        '#34495E', // Another dark blue-gray
-        '#7B241C', // Deepest Red
+        "#223743",
+        "#680718",
+        "#475962",
+        "#A47816",
+        "#2C3E50",
+        "#34495E",
+        "#7B241C",
     ];
 
     return (
-        <div className="premium-sentence-container cinematic-background">
-            <p className="premium-sentence-wrapper">
+        <div className="swipe-container">
+            <p className="swipe-sentence">
                 {words.map((word, index) => (
-                    <span 
+                    <span
                         key={index}
-                        className={`animated-word-block ${index % 2 === 0 ? 'from-top' : 'from-bottom'}`}
+                        className={`swipe-word ${index % 2 === 0 ? "slide-top" : "slide-bottom"}`}
                         style={{
                             backgroundColor: cinematicColors[index % cinematicColors.length],
-                            // Sequential delay
-                            animationDelay: `${0.1 + index * 0.2}s`, 
+                            animationDelay: `${0.1 + index * 0.2}s`,
                         }}
                     >
                         {word}
                     </span>
                 ))}
             </p>
-            
-            {/* ⬅️ NEW QUOTE ELEMENT */}
-            <p 
-                className="cinematic-quote"
-                style={{ animationDelay: `${0.1 + words.length * 0.2 + 0.5}s` }} 
-                // This ensures the quote starts fading in after the last word (moments) has settled, plus a 0.5s pause.
+
+            <p
+                className="swipe-quote"
+                style={{
+                    animationDelay: `${0.1 + words.length * 0.2 + 0.5}s`,
+                }}
             >
                 {quote}
             </p>

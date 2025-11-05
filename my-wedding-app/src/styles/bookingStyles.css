@@ -1,11 +1,8 @@
-/* ------------------------------------------------------------------- */
-/* --- GENERAL BOOKING VIEW LAYOUT & TYPOGRAPHY --- */
-/* ------------------------------------------------------------------- */
 .booking-view {
     max-width: 1200px;
     margin: 40px auto;
     padding: 30px;
-    background-color: #f8f9fa; /* Light background */
+    background-color: #f8f9fa; 
     border-radius: 12px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
 }
@@ -124,9 +121,6 @@
     outline: none;
 }
 
-/* ------------------------------------------------------------------- */
-/* --- STEP 3: HALL PICKER (SlotAndHallPicker.jsx) --- */
-/* ------------------------------------------------------------------- */
 .hall-picker-grid {
     display: grid;
     grid-template-columns: 1fr 1.5fr; /* Hall list (1) and Details/Slots (1.5) */
@@ -148,7 +142,6 @@
     font-weight: 600;
 }
 
-/* Hall List */
 .hall-list {
     max-height: 450px;
     overflow-y: auto;
@@ -188,7 +181,6 @@
     margin: 4px 0 0;
 }
 
-/* Slot Selector */
 .slot-selector-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
@@ -208,7 +200,6 @@
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-/* Slot States */
 .slot-button.available {
     background-color: #e8f5e9; /* Light green */
     color: #2e7d32;
@@ -242,7 +233,6 @@
     color: #c2185b;
 }
 
-/* Booking Summary and Button */
 .booking-summary-actions {
     margin-top: 25px;
     padding-top: 20px;
@@ -281,9 +271,6 @@
     box-shadow: none;
 }
 
-/* ------------------------------------------------------------------- */
-/* --- PAYMENT PORTAL (StripePaymentPortal.jsx) --- */
-/* ------------------------------------------------------------------- */
 .payment-portal-container {
     max-width: 500px;
     margin: 40px auto;
@@ -341,7 +328,7 @@
     margin-top: 10px;
 }
 .payment-amount span {
-    color: #28a745; /* Green for amount */
+    color: #28a745;
 }
 
 .payment-button {
@@ -366,10 +353,9 @@
     cursor: not-allowed;
     box-shadow: none;
 }
-/* --- Mock Payment Styles --- */
 
 .mock-title {
-    color: #007bff !important; /* Use a distinct blue color */
+    color: #007bff !important;
     border-bottom: 2px dashed #007bff;
     padding-bottom: 10px;
 }
@@ -377,7 +363,7 @@
 .mock-form {
     border: 3px dashed #007bff;
     padding: 25px;
-    background-color: #f0f8ff; /* Very light blue background */
+    background-color: #f0f8ff; 
 }
 
 .payment-button.mock-button {

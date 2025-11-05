@@ -14,12 +14,10 @@ function SignUp() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            // Assumes a /auth/register route handles regular user registration
             const { data } = await axiosClient.post('/auth/register', formData);
 
             if (data?.token && data?.user) {
                 localStorage.setItem('token', data.token);
-                // Note: Using a custom modal/message box is preferable over alert()
                 alert('Registration successful! Please log in.');
                 navigate('/login');
             } else {

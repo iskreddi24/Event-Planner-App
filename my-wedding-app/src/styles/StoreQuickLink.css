@@ -1,0 +1,31 @@
+.store-quicklink {
+  position: fixed;
+  bottom: 90px; /* placed slightly above VIP Plan button */
+  right: 25px;
+  background: linear-gradient(135deg, #007bff, #00bcd4);
+  color: white;
+  padding: 12px 20px;
+  border-radius: 50px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  font-size: 15px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  z-index: 1000;
+}
+
+.store-quicklink:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+}
+
+.store-icon {
+  font-size: 18px;
+}
+
+.store-text {
+  letter-spacing: 0.5px;
+}

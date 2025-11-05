@@ -1,0 +1,64 @@
+.swiper-section {
+  width: 100%;
+  margin-top: 30px;
+  padding: 0 20px;
+}
+
+.swiper-section h2 {
+  font-size: 22px;
+  color: #333;
+  margin-bottom: 15px;
+}
+
+.swiper-wrapper {
+  display: flex;
+  gap: 20px;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  padding-bottom: 10px;
+}
+
+.swiper-wrapper::-webkit-scrollbar {
+  height: 8px;
+}
+
+.swiper-wrapper::-webkit-scrollbar-thumb {
+  background-color: #007bff;
+  border-radius: 10px;
+}
+
+.swiper-card {
+  min-width: 250px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: 0.3s ease;
+  cursor: pointer;
+}
+
+.swiper-card:hover {
+  transform: translateY(-5px);
+}
+
+.swiper-card img {
+  width: 100%;
+  height: 150px;
+  border-radius: 10px 10px 0 0;
+  object-fit: cover;
+}
+
+.swiper-info {
+  padding: 10px;
+  text-align: center;
+}
+
+.swiper-info h4 {
+  font-size: 16px;
+  color: #222;
+  margin-bottom: 5px;
+}
+
+.swiper-info p {
+  font-size: 13px;
+  color: #666;
+}

@@ -29,7 +29,7 @@ function ReviewFormPage() {
         const { name, value, type, checked, files } = e.target;
         
         if (type === 'file') {
-            setEventPhoto(files[0]); // Store the file object
+            setEventPhoto(files[0]); 
         } else {
             setFormData(prev => ({
                 ...prev,
@@ -45,7 +45,7 @@ function ReviewFormPage() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (!isAuthenticated) {
-            setStatusMessage("❌ You must be logged in to submit a review.");
+            setStatusMessage("You must be logged in to submit a review.");
             return;
         }
 
@@ -53,21 +53,16 @@ function ReviewFormPage() {
         setStatusMessage('');
 
         try {
-            // 1. Create FormData object for multipart submission
             const data = new FormData();
             
-            // Append JSON data fields
             Object.keys(formData).forEach(key => {
                 data.append(key, formData[key]);
             });
             
-            // Append the image file if selected
             if (eventPhoto) {
-                // 'eventPhoto' must match the field name in the multer upload handler on the backend
                 data.append('eventPhoto', eventPhoto); 
             }
 
-            // 2. Submit the form using axiosClient, forcing multipart/form-data header
             await axiosClient.post("/reviews", data, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
@@ -84,12 +79,12 @@ function ReviewFormPage() {
                 isSatisfied: true,
             });
             setEventPhoto(null);
-            document.getElementById('eventPhoto').value = null; // Clear the file input
+            document.getElementById('eventPhoto').value = null; 
 
         } catch (err) {
             console.error("Submission error:", err.response || err);
             const msg = err.response?.data?.message || "Failed to submit review. Check fields or ensure file size is acceptable.";
-            setStatusMessage(`❌ ${msg}`);
+            setStatusMessage(` ${msg}`);
         } finally {
             setLoading(false);
         }

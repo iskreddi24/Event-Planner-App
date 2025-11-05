@@ -1,0 +1,66 @@
+/* VIP Quick Link Button Styles */
+
+.vip-quick-link-btn {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    
+    /* Aesthetics */
+    background: linear-gradient(145deg, #ff5e62, #ff9966); /* Warm, wedding-themed gradient */
+    color: white;
+    padding: 12px 18px;
+    border: none;
+    border-radius: 40px; /* Pill shape */
+    box-shadow: 0 6px 15px rgba(255, 94, 98, 0.4);
+    cursor: pointer;
+    z-index: 900; /* High z-index to stay on top */
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    
+    /* Animation */
+    transition: all 0.3s ease;
+    transform-origin: bottom right;
+}
+
+.vip-quick-link-btn:hover {
+    transform: scale(1.05) translateY(-2px);
+    box-shadow: 0 8px 20px rgba(255, 94, 98, 0.6);
+}
+
+.vip-quick-link-btn:active {
+    transform: scale(0.98);
+}
+
+.vip-icon {
+    font-size: 1.5rem;
+    animation: bounce 1.5s infinite;
+}
+
+.vip-text {
+    font-weight: 600;
+    font-size: 1rem;
+    display: inline;
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-3px); }
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+    .vip-quick-link-btn {
+        bottom: 15px;
+        right: 15px;
+        padding: 10px 15px;
+        gap: 6px;
+    }
+    .vip-icon {
+        font-size: 1.3rem;
+    }
+    /* Hide text on very small screens to save space */
+    .vip-text {
+        display: none;
+    }
+}

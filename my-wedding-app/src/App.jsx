@@ -7,7 +7,14 @@ import Footer from "./components/Footer";
 import NotFound from "./components/NotFound";
 import LogoIntro from "./components/LogoIntro";
 import QueryChatbot from "./components/QueryChatbot";
-import MainBookingView from './components/BookingModule/MainBookingView'; 
+import MainBookingView from "./components/BookingModule/MainBookingView";
+import VIPQuickLink from "./components/VIPQuickLink";
+
+// ====== 🛍 Event Store Components ======
+import StoreFront from "./components/EventStore/StoreFront";
+import CartPage from "./components/EventStore/CartPage";
+import CheckoutPage from "./components/EventStore/CheckoutPage";
+import SwiperSection from "./components/EventStore/SwiperSection";
 
 // ====== Pages ======
 import HomeComp from "./pages/HomeComp";
@@ -20,14 +27,17 @@ import Dashboard from "./pages/Dashboard";
 import ExclusiveOffers from "./pages/ExclusiveOffers";
 import ExclusiveServicesComp from "./pages/ExclusiveServicesComp";
 import DecorationServiceComp from "./pages/DecorationServiceComp";
-import PhotographyServiceComp from './pages/PhotographyServiceComp';
-// Review pages
-import ReviewFormPage from './pages/ReviewFormPage';
-import CustomerReviewsPage from './pages/CustomerReviewsPage'; 
-import ReviewContainerPage from './pages/ReviewContainerPage';
-// NEW IMPORTS FOR OWNER
-import OwnerAuth from './pages/Owner/OwnerAuth'; 
-import OwnerDashboard from "./pages/Owner/OwnerDashboard"; 
+import PhotographyServiceComp from "./pages/PhotographyServiceComp";
+import VIPWeddingServiceComp from "./pages/VIPWeddingServiceComp";
+
+// ====== Review Pages ======
+import ReviewFormPage from "./pages/ReviewFormPage";
+import CustomerReviewsPage from "./pages/CustomerReviewsPage";
+import ReviewContainerPage from "./pages/ReviewContainerPage";
+
+// ====== Owner ======
+import OwnerAuth from "./pages/Owner/OwnerAuth";
+import OwnerDashboard from "./pages/Owner/OwnerDashboard";
 
 // ====== Location Pages ======
 import HyderabadComp from "./pages/locations/HyderabadComp";
@@ -36,119 +46,121 @@ import VijayawadaComp from "./pages/locations/VijayawadaComp";
 
 // ====== Admin ======
 import AdminLayout from "./admin/AdminLayout";
-import AdminDashboard from "./admin/adminDashboard";
+import AdminDashboard from "./admin/AdminDashboard";
+import AdminStoreManagement from "./admin/AdminStoreManagement";
+import StoreQuickLink from "./components/StoreQuickLink";
 
 // ====== Auth Context ======
 import { AuthProvider, useAuth } from "./context/AuthContext";
 
-
-// ====== Protected Route Components (User, Admin, Owner) ======
-
+// ====== Protected Routes ======
 const ProtectedRoute = ({ children }) => {
-    const { isAuthenticated } = useAuth();
-    return isAuthenticated ? children : <Navigate to="/login" replace />;
+  const { isAuthenticated } = useAuth();
+  return isAuthenticated ? children : <Navigate to="/login" replace />;
 };
 
 const AdminRoute = ({ children }) => {
-    const { isAuthenticated, user } = useAuth();
-    return isAuthenticated && user?.role === "admin"
-        ? children
-        : <Navigate to="/login" replace />;
+  const { isAuthenticated, user } = useAuth();
+  return isAuthenticated && user?.role === "admin"
+    ? children
+    : <Navigate to="/login" replace />;
 };
 
-// 🔑 NEW: Protected Route for Hall Owners
 const OwnerRoute = ({ children }) => {
-    const { isAuthenticated, user } = useAuth();
-    return isAuthenticated && user?.role === "hallOwner"
-        ? children
-        : <Navigate to="/hall-owner-login" replace />;
+  const { isAuthenticated, user } = useAuth();
+  return isAuthenticated && user?.role === "hallOwner"
+    ? children
+    : <Navigate to="/hall-owner-login" replace />;
 };
 
-// ====== Main Layout ======
+// ====== Layout ======
 const MainLayout = ({ children }) => (
-    <>
-        <NavComponent />
-        <main className="main-content">{children}</main>
-        <Footer />
-    </>
+  <>
+    <NavComponent />
+    <main className="main-content">{children}</main>
+    <Footer />
+  </>
 );
 
 function App() {
-    // Note: Reading user from localStorage directly is often discouraged in React for state management, 
-    // but preserving the user's implementation choice here.
-    const user = JSON.parse(localStorage.getItem("user"));
+  const user = JSON.parse(localStorage.getItem("user"));
 
-    return (
-        <AuthProvider>
-            { /* Introductory Logo */}
-            <LogoIntro />
+  return (
+    <AuthProvider>
+      <LogoIntro />
+      <Router>
+        <VIPQuickLink />
+        <StoreQuickLink />
+        {user && <QueryChatbot user={user} />}
 
-            <Router>
-                {/* Conditionally render Chatbot if user exists */}
-                {user && <QueryChatbot user={user} />}
+        <Routes>
+          {}
+          <Route path="/" element={<MainLayout><HomeComp /></MainLayout>} />
+          <Route path="/about" element={<MainLayout><AboutComp /></MainLayout>} />
+          <Route path="/blog" element={<MainLayout><BlogComp /></MainLayout>} />
+          <Route path="/contact" element={<MainLayout><ContactComp /></MainLayout>} />
+          <Route path="/customer-reviews" element={<MainLayout><CustomerReviewsPage /></MainLayout>} />
 
-                <Routes>
-                    {/* ---------- Public Routes ---------- */}
-                    <Route path="/" element={<MainLayout><HomeComp /></MainLayout>} />
-                    <Route path="/about" element={<MainLayout><AboutComp /></MainLayout>} />
-                    <Route path="/blog" element={<MainLayout><BlogComp /></MainLayout>} />
-                    <Route path="/contact" element={<MainLayout><ContactComp /></MainLayout>} />
+          {/* ----------  Locations ---------- */}
+          <Route path="/hyderabad" element={<MainLayout><HyderabadComp /></MainLayout>} />
+          <Route path="/tirupati" element={<MainLayout><TirupatiComp /></MainLayout>} />
+          <Route path="/vijayawada" element={<MainLayout><VijayawadaComp /></MainLayout>} />
 
-                    {/* NEW: Public Route for Viewing All Reviews */}
-                    <Route path="/customer-reviews" element={<MainLayout><CustomerReviewsPage /></MainLayout>} />
+          {/* ----------  Auth Routes ---------- */}
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<SignUp />} />
+          <Route path="/hall-owner-signup" element={<OwnerAuth type="signup" />} />
+          <Route path="/hall-owner-login" element={<OwnerAuth type="login" />} />
 
-                    {/* ---------- Locations ---------- */}
-                    <Route path="/hyderabad" element={<MainLayout><HyderabadComp /></MainLayout>} />
-                    <Route path="/tirupati" element={<MainLayout><TirupatiComp /></MainLayout>} />
-                    <Route path="/vijayawada" element={<MainLayout><VijayawadaComp /></MainLayout>} />
+          {/* ----------  Owner Routes ---------- */}
+          <Route
+            path="/owner/dashboard"
+            element={<OwnerRoute><MainLayout><OwnerDashboard /></MainLayout></OwnerRoute>}
+          />
 
-                    {/* ---------- Auth Routes (User) ---------- */}
-                    <Route path="/login" element={<Login />} />
-                    <Route path="/signup" element={<SignUp />} />
-                    
-                    {/* NEW: Hall Owner Authentication (Public Routes) */}
-                    <Route path="/hall-owner-signup" element={<OwnerAuth type="signup" />} />
-                    <Route path="/hall-owner-login" element={<OwnerAuth type="login" />} />
+          {/* ----------  Protected User Routes ---------- */}
+          <Route
+            path="/vip-wedding"
+            element={<ProtectedRoute><MainLayout><VIPWeddingServiceComp /></MainLayout></ProtectedRoute>}
+          />
+          <Route
+            path="/dashboard"
+            element={<ProtectedRoute><MainLayout><Dashboard /></MainLayout></ProtectedRoute>}
+          />
+          <Route
+            path="/bookings"
+            element={<ProtectedRoute><MainLayout><MainBookingView /></MainLayout></ProtectedRoute>}
+          />
+          <Route
+            path="/submit-review"
+            element={<ProtectedRoute><MainLayout><ReviewContainerPage /></MainLayout></ProtectedRoute>}
+          />
 
-                    {/* 🔑 NEW: Protected Owner Dashboard Route */}
-                    <Route 
-                        path="/owner/dashboard" 
-                        element={<OwnerRoute><MainLayout><OwnerDashboard /></MainLayout></OwnerRoute>} 
-                    />
+          {/* ----------  Services ---------- */}
+          <Route path="/exclusive-services" element={<MainLayout><ExclusiveServicesComp /></MainLayout>} />
+          <Route path="/exclusive" element={<Navigate to="/exclusive-services" replace />} />
+          <Route path="/decoration" element={<MainLayout><DecorationServiceComp /></MainLayout>} />
+          <Route path="/photography" element={<MainLayout><PhotographyServiceComp /></MainLayout>} />
+          <Route path="/exclusive-offers" element={<MainLayout><ExclusiveOffers /></MainLayout>} />
 
-                    {/* ---------- Protected User Routes ---------- */}
-                    {/* Standard User Dashboard - NOTE: You may want to split Dashboard logic based on role here */}
-                    <Route path="/dashboard" element={<ProtectedRoute><MainLayout><Dashboard /></MainLayout></ProtectedRoute>} />
-                    
-                    {/* Booking route (only accessible to regular authenticated users) */}
-                    <Route path="/bookings" element={<ProtectedRoute><MainLayout><MainBookingView /></MainLayout></ProtectedRoute>} />
+          {/* ---------- Event Store Section ---------- */}
+          <Route path="/store" element={<MainLayout><StoreFront /></MainLayout>} />
+          <Route path="/cart" element={<MainLayout><CartPage /></MainLayout>} />
+          <Route path="/checkout" element={<MainLayout><CheckoutPage /></MainLayout>} />
+          {/* <Route path="/offers-slider" element={<MainLayout><SwiperSection /></MainLayout>} /> */}
 
-                    {/* Protected Route for Review submission */}
-                    <Route
-                        path="/submit-review"
-                        element={<ProtectedRoute><MainLayout><ReviewContainerPage /></MainLayout></ProtectedRoute>}
-                    />
+          {/* ----------  Admin Routes ---------- */}
+          <Route path="/admin" element={<AdminRoute><AdminLayout /></AdminRoute>}>
+            <Route index element={<AdminDashboard />} />
+            <Route path="store" element={<AdminStoreManagement />} />
+          </Route>
 
-                    {/* ---------- Service Routes (All using MainLayout) ---------- */}
-                    <Route path="/exclusive-services" element={<MainLayout><ExclusiveServicesComp /></MainLayout>} />
-                    <Route path="/exclusive" element={<Navigate to="/exclusive-services" replace />} />
-                    <Route path="/decoration" element={<MainLayout><DecorationServiceComp /></MainLayout>} />
-                    <Route path="/photography" element={<MainLayout><PhotographyServiceComp /></MainLayout>} />
-
-                    {/* ---------- Exclusive Offers ---------- */}
-                    <Route path="/exclusive-offers" element={<MainLayout><ExclusiveOffers /></MainLayout>} />
-
-                    {/* ---------- Admin Routes ---------- */}
-                    <Route path="/admin" element={<AdminRoute><AdminLayout /></AdminRoute>}>
-                        <Route index element={<AdminDashboard />} />
-                    </Route>
-
-                    {/* ---------- 404 Page ---------- */}
-                    <Route path="*" element={<NotFound />} />
-                </Routes>
-            </Router>
-        </AuthProvider>
-    );
+          {/* ---------- 404 Page ---------- */}
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </Router>
+    </AuthProvider>
+  );
 }
 
 export default App;

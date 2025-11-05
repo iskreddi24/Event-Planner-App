@@ -1,9 +1,7 @@
-// models/bookingSchema.js
 
 const mongoose = require('mongoose');
 
 const bookingSchema = new mongoose.Schema({
-    // Link to the user who made the booking
     user: {
         type: mongoose.Schema.Types.ObjectId,
         required: true,

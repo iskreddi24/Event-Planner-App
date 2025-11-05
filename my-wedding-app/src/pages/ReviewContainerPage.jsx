@@ -1,8 +1,7 @@
 import React from "react";
-// Assuming ReviewFormPage and CustomerReviewsPage are siblings in the 'pages' directory
 import ReviewFormPage from "./ReviewFormPage"; 
 import CustomerReviewsPage from "./CustomerReviewsPage"; 
-import "../styles/ReviewContainerPage.css"; // Ensure you create and import this simple CSS file
+import "../styles/ReviewContainerPage.css"; 
 
 function ReviewContainerPage() {
     return (
