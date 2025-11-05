@@ -7,7 +7,6 @@ const VIPBookingSchema = new mongoose.Schema({
         required: true
     },
 
-    // Main booking info
     weddingDate: {
         type: Date,
         required: true
@@ -26,13 +25,11 @@ const VIPBookingSchema = new mongoose.Schema({
         required: true
     },
 
-    // Venue details
     selectedVenue: {
         name: { type: String, required: true },
         vipPriceQuoted: { type: Number, default: 0 }
     },
 
-    // Services selected by user (customizable later by admin)
     requiredServices: {
         photography: { type: Boolean, default: false },
         decoration: { type: Boolean, default: false },
@@ -41,7 +38,6 @@ const VIPBookingSchema = new mongoose.Schema({
         fullAssistance: { type: Boolean, default: true }
     },
 
-    // Admin workflow
     status: {
         type: String,
         enum: ['Pending Quote', 'Quote Sent', 'Booked', 'Completed', 'Cancelled'],

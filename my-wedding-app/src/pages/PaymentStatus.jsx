@@ -9,7 +9,6 @@ const PaymentStatus = () => {
   const [progress, setProgress] = useState(0);
 
   useEffect(() => {
-    // simulate server-side progress updates
     const interval = setInterval(() => {
       setProgress((prev) => {
         if (prev >= 100) {

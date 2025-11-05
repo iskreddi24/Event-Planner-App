@@ -1,241 +1,142 @@
-/* ===== BLOG PAGE BASE ===== */
+/* --------------------------------------------- */
+/* 🕊️ BLOG PAGE — CLEAN FIXED VERSION */
+/* --------------------------------------------- */
+
 .blog-page {
   padding: 60px 20px;
   text-align: center;
   min-height: calc(100vh - 120px);
-  background: linear-gradient(145deg, #0e0e13 0%, #1a1a23 50%, #222833 100%);
-  color: #f4f4f4;
-  overflow: hidden;
-  position: relative;
+  background: #f9fafb;
+  color: #333;
+  font-family: "Poppins", sans-serif;
 }
 
-.blog-page::before {
-  content: "";
-  position: absolute;
-  width: 300%;
-  height: 300%;
-  top: -100%;
-  left: -100%;
-  background: radial-gradient(circle, rgba(255, 204, 51, 0.05), transparent 70%);
-  animation: glowPulse 10s infinite alternate;
-  z-index: 0;
-}
-
-@keyframes glowPulse {
-  0% { transform: scale(1); opacity: 0.5; }
-  100% { transform: scale(1.1); opacity: 1; }
-}
-
+/* ---------------- Header ---------------- */
 .blog-page h1 {
-  font-size: 3rem;
+  font-size: 2rem;
+  color: #ff914d;
   margin-bottom: 10px;
-  background: linear-gradient(90deg, #ffcc33, #ff8c00, #ffcc33);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  position: relative;
-  z-index: 1;
-  animation: slideDownFade 1.2s ease forwards;
-}
-
-@keyframes slideDownFade {
-  from {
-    opacity: 0;
-    transform: translateY(-40px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
 }
 
 .blog-page p {
-  font-size: 1.2rem;
-  margin-bottom: 50px;
-  color: #bdbdbd;
-  animation: fadeIn 1.6s ease-in forwards;
+  font-size: 1rem;
+  color: #555;
+  margin-bottom: 40px;
 }
 
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-/* ===== SWIPER CONTAINER ===== */
+/* ---------------- Swiper Container ---------------- */
 .blog-carousel-container {
-  max-width: 1250px;
+  max-width: 1200px;
   margin: 0 auto;
-  padding-bottom: 80px;
-  position: relative;
-  z-index: 2;
+  padding-bottom: 60px;
 }
 
 .blogSwiper {
   width: 100%;
 }
 
-/* ===== BLOG CARD ===== */
+/* ---------------- Blog Card ---------------- */
 .blog-card {
-  background: linear-gradient(145deg, #1e1e25, #282a33);
-  border-radius: 16px;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
   overflow: hidden;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-  transition: transform 0.4s ease, box-shadow 0.4s ease, filter 0.4s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
   display: flex;
   flex-direction: column;
-  height: 480px;
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  position: relative;
+  min-height: 440px; /* instead of fixed height */
+  height: auto;
 }
 
-.blog-card:hover {
-  transform: translateY(-12px) scale(1.02);
-  box-shadow: 0 15px 40px rgba(255, 204, 51, 0.2);
-  filter: brightness(1.05);
-}
-
-/* ===== BLOG CARD IMAGE ===== */
+/* Image */
 .blog-card img {
   width: 100%;
-  height: 230px;
+  height: 220px;
   object-fit: cover;
-  transition: transform 0.6s ease, filter 0.6s ease;
-  filter: brightness(0.9);
+  border-bottom: 1px solid #f0f0f0;
 }
 
-.blog-card:hover img {
-  transform: scale(1.08);
-  filter: brightness(1.1) saturate(1.3);
-}
-
-/* ===== CARD CONTENT ===== */
+/* Card Content */
 .card-content {
-  padding: 20px;
-  flex-grow: 1;
+  padding: 16px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  flex-grow: 1;
 }
 
 .card-content h2 {
-  font-size: 1.3rem;
-  color: #ffcc33;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  margin-bottom: 10px;
-  text-shadow: 0 0 10px rgba(255, 204, 51, 0.3);
-  transition: color 0.3s;
+  font-size: 1.1rem;
+  color: #ff914d;
+  font-weight: 600;
+  margin-bottom: 8px;
+  text-align: left;
+  word-break: break-word;
 }
 
 .card-content p {
-  font-size: 1rem;
-  color: #d1d1d1;
-  line-height: 1.6;
-  margin-bottom: 15px;
+  font-size: 0.95rem;
+  color: #555;
+  text-align: left;
+  margin-bottom: 12px;
+  line-height: 1.5;
 }
 
-.blog-card:hover h2 {
-  color: #ffd75d;
-}
-
-/* ===== READ MORE BUTTON ===== */
+/* Button */
 .read-more-btn {
   align-self: flex-start;
-  background: linear-gradient(90deg, #ffcc33, #ff8c00);
-  color: #000;
+  background: linear-gradient(90deg, #ffd8a8, #ffb685);
+  color: #333;
   border: none;
-  padding: 10px 18px;
-  border-radius: 8px;
+  padding: 8px 14px;
+  border-radius: 20px;
   font-weight: 600;
+  font-size: 0.9rem;
   cursor: pointer;
-  transition: all 0.4s ease;
-  letter-spacing: 0.5px;
-  position: relative;
-  overflow: hidden;
-}
-
-.read-more-btn::after {
-  content: "";
-  position: absolute;
-  left: -100%;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(255, 255, 255, 0.2);
-  transform: skewX(-20deg);
-  transition: left 0.5s ease;
-}
-
-.read-more-btn:hover::after {
-  left: 200%;
 }
 
 .read-more-btn:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 5px 15px rgba(255, 204, 51, 0.4);
+  background: linear-gradient(90deg, #ffe3be, #ffc59e);
 }
 
-/* ===== SWIPER BUTTONS + PAGINATION ===== */
+/* ---------------- Swiper Controls ---------------- */
 .swiper-button-prev,
 .swiper-button-next {
-  color: #ffcc33 !important;
-  filter: drop-shadow(0 0 8px rgba(255, 204, 51, 0.6));
-  transition: transform 0.3s;
-}
-
-.swiper-button-prev:hover,
-.swiper-button-next:hover {
-  transform: scale(1.2);
+  color: #ff914d !important;
+  top: 45%;
+  transform: scale(0.9);
 }
 
 .swiper-pagination-bullet {
-  background: rgba(255, 204, 51, 0.5);
+  background: #ffd8a8 !important;
+  opacity: 1;
 }
 
 .swiper-pagination-bullet-active {
-  background: #ffcc33 !important;
-  box-shadow: 0 0 8px rgba(255, 204, 51, 0.8);
+  background: #ff914d !important;
 }
 
-/* ===== ANIMATED GRADIENT OVERLAY ===== */
-.blog-card::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(
-    130deg,
-    rgba(255, 255, 255, 0.03) 0%,
-    rgba(255, 255, 255, 0) 50%,
-    rgba(255, 255, 255, 0.03) 100%
-  );
-  pointer-events: none;
-  animation: shimmer 6s infinite linear;
+/* Remove unwanted blue line */
+.swiper-scrollbar,
+.swiper-scrollbar-drag {
+  display: none !important;
 }
 
-@keyframes shimmer {
-  0% { background-position: -200% 0; }
-  100% { background-position: 200% 0; }
-}
-
-/* ===== RESPONSIVE ===== */
+/* ---------------- Responsive ---------------- */
 @media (max-width: 768px) {
   .blog-page h1 {
-    font-size: 2.2rem;
+    font-size: 1.6rem;
   }
 
   .blog-card {
-    height: 420px;
+    min-height: 400px;
   }
 
   .card-content h2 {
-    font-size: 1.1rem;
+    font-size: 1rem;
   }
 
   .read-more-btn {
-    padding: 8px 14px;
+    font-size: 0.85rem;
   }
 }

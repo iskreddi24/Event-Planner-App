@@ -1,81 +1,47 @@
 /* ===========================
-   PREMIUM CINEMATIC FOOTER
+   CLEAN LIGHT FOOTER STYLE
    =========================== */
 
 #footerd {
-  background: linear-gradient(135deg, #1a0b2e 0%, #3a0d4a 40%, #581845 100%);
-  color: #e8def8;
+  background: linear-gradient(135deg, #f9f9ff 0%, #fdf8ff 50%, #fff9f3 100%);
+  color: #333;
   padding: 70px 20px 30px;
   font-family: "Poppins", sans-serif;
-  position: relative;
-  overflow: hidden;
+  border-top: 1px solid #ddd;
 }
 
-/* Soft floating shimmer background */
-#footerd::before {
-  content: "";
-  position: absolute;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  background: radial-gradient(circle at 30% 30%, rgba(255, 180, 255, 0.15), transparent 70%),
-              radial-gradient(circle at 70% 70%, rgba(255, 200, 150, 0.1), transparent 70%);
-  animation: moveGlow 15s infinite alternate ease-in-out;
-  z-index: 0;
-}
-
+/* === Grid Layout === */
 .footer-grid {
-  position: relative;
-  z-index: 1;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-  gap: 50px;
+  gap: 40px;
   max-width: 1200px;
   margin: 0 auto;
   text-align: left;
-  animation: fadeUp 1.2s ease forwards;
 }
 
-/* ===== Headings ===== */
+/* === Headings === */
 .mycondiv h2,
 .mycondiv h3,
 .soclass h3 {
-  margin-bottom: 18px;
-  font-size: 1.4rem;
+  margin-bottom: 15px;
+  font-size: 1.3rem;
   font-weight: 700;
-  color: #f3cfff;
+  color: #7b3e9d; /* Soft purple accent */
   letter-spacing: 0.5px;
-  position: relative;
+  border-bottom: 2px solid #ff9d76;
+  display: inline-block;
+  padding-bottom: 4px;
 }
 
-.mycondiv h2::after,
-.mycondiv h3::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  bottom: -6px;
-  width: 45px;
-  height: 3px;
-  background: linear-gradient(90deg, #ff9d76, #f8b7ff);
-  border-radius: 2px;
-}
-
-/* ===== Company Description ===== */
+/* === Paragraphs === */
 .mycondiv p {
   font-size: 15px;
   line-height: 1.7;
-  color: #d3c1e0;
-  opacity: 0.9;
-  transition: all 0.3s ease;
+  color: #555;
 }
 
-.mycondiv p:hover {
-  opacity: 1;
-  transform: scale(1.01);
-}
-
-/* ===== Quick Links ===== */
+/* === Quick Links === */
 .footer-links {
   list-style: none;
   padding: 0;
@@ -83,83 +49,59 @@
 }
 
 .footer-links li {
-  margin: 10px 0;
+  margin: 8px 0;
 }
 
 .footer-link,
 .review-link {
-  color: #f2b8ff;
+  color: #6a2c91;
   text-decoration: none;
   font-weight: 500;
-  transition: all 0.3s ease;
-  position: relative;
-}
-
-.footer-link::after,
-.review-link::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  bottom: -3px;
-  width: 0%;
-  height: 2px;
-  background: #ffcc66;
-  transition: width 0.3s ease;
-}
-
-.footer-link:hover::after,
-.review-link:hover::after {
-  width: 100%;
 }
 
 .footer-link:hover,
 .review-link:hover {
-  color: #ffcc66;
+  color: #ff6f91;
 }
 
-/* ===== Newsletter ===== */
+/* === Newsletter === */
 .newsletter-form {
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  margin-top: 18px;
+  gap: 10px;
+  margin-top: 15px;
 }
 
 #emailsubc {
-  padding: 12px;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 8px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
   font-size: 14px;
-  background: rgba(255, 255, 255, 0.05);
-  color: #fff;
+  background: #fff;
+  color: #333;
   outline: none;
-  transition: all 0.3s ease;
 }
 
 #emailsubc:focus {
-  border-color: #ffcc66;
-  box-shadow: 0 0 10px rgba(255, 204, 102, 0.3);
+  border-color: #ff9d76;
 }
 
 .subbtn {
-  padding: 12px 22px;
+  padding: 10px 18px;
   background: linear-gradient(90deg, #ff9d76, #ffcc66);
-  color: #1a0b2e;
+  color: #fff;
   border: none;
-  border-radius: 30px;
+  border-radius: 25px;
   font-weight: 700;
   cursor: pointer;
-  transition: all 0.4s ease;
   width: fit-content;
-  box-shadow: 0 4px 12px rgba(255, 204, 102, 0.25);
 }
 
 .subbtn:hover {
-  transform: scale(1.05);
-  box-shadow: 0 6px 18px rgba(255, 200, 150, 0.35);
+  background: linear-gradient(90deg, #ff9671, #ffd78a);
 }
 
-/* ===== Rating / Social ===== */
+/* === Social / Rating === */
 .soclass {
   display: flex;
   flex-direction: column;
@@ -169,94 +111,64 @@
 .review-btn {
   display: inline-block;
   padding: 10px 18px;
-  background: linear-gradient(90deg, #fcd56d, #ffd79e);
-  color: #3a0d4a;
-  border-radius: 50px;
+  background: linear-gradient(90deg, #ffcc66, #ff9d76);
+  color: #4a2555;
+  border-radius: 25px;
   font-weight: 700;
   text-decoration: none;
-  transition: all 0.4s ease;
-  margin-bottom: 20px;
-  box-shadow: 0 3px 10px rgba(255, 215, 120, 0.3);
+  margin-bottom: 15px;
 }
 
 .review-btn:hover {
-  transform: scale(1.08);
-  box-shadow: 0 5px 20px rgba(255, 215, 150, 0.4);
+  background: linear-gradient(90deg, #ffd78a, #ffa585);
 }
 
-/* ===== Social Media ===== */
+/* === Social Icons === */
 .socialMedia {
   display: flex;
-  gap: 15px;
-  margin-top: 10px;
+  gap: 12px;
+  margin-top: 8px;
 }
 
 .iconssocial {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 44px;
-  height: 44px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  color: #ffcc66;
-  transition: all 0.4s ease;
-  box-shadow: 0 0 10px rgba(255, 204, 102, 0.1);
+  background: #fff;
+  border: 1px solid #ddd;
+  color: #ff9d76;
+  transition: all 0.3s ease;
 }
 
 .iconssocial:hover {
-  transform: rotate(10deg) scale(1.15);
   background: linear-gradient(135deg, #ffcc66, #ff9d76);
-  color: #2e0d3a;
-  box-shadow: 0 0 20px rgba(255, 204, 102, 0.4);
+  color: #fff;
+  border-color: transparent;
 }
 
-/* ===== Footer Bottom ===== */
+/* === Footer Bottom === */
 .footer-bottom {
-  position: relative;
-  z-index: 1;
   text-align: center;
-  padding-top: 30px;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-  margin-top: 50px;
-  animation: fadeUp 1.4s ease;
+  padding-top: 25px;
+  border-top: 1px solid #e5e5e5;
+  margin-top: 40px;
 }
 
 .footer-bottom p {
   margin: 6px 0;
   font-size: 14px;
-  color: #d1c3e0;
-  opacity: 0.9;
+  color: #555;
 }
 
 .paracopy {
   font-style: italic;
-  color: #ffcc99;
+  color: #ff9671;
 }
 
-/* ===== Animations ===== */
-@keyframes moveGlow {
-  0% {
-    transform: translate(0, 0);
-  }
-  100% {
-    transform: translate(50px, 50px);
-  }
-}
-
-@keyframes fadeUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* ===== Responsive ===== */
+/* === Responsive === */
 @media screen and (max-width: 768px) {
   #footerd {
     padding: 40px 15px;
@@ -265,7 +177,7 @@
   .footer-grid {
     grid-template-columns: 1fr;
     text-align: center;
-    gap: 30px;
+    gap: 25px;
   }
 
   .mycondiv,

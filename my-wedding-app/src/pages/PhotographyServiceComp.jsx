@@ -21,6 +21,7 @@ function PhotographyServiceComp() {
   const [status, setStatus] = useState("");
   const [loading, setLoading] = useState(false);
   const [bookings, setBookings] = useState([]);
+  const [notification, setNotification] = useState(null); // 🔔 Notification State
 
   const API_URL = "/photography";
 
@@ -37,16 +38,14 @@ function PhotographyServiceComp() {
     } catch (err) {
       console.error("Error fetching photography bookings:", err);
       if (err.response?.status === 401 || err.response?.status === 403) {
-        setStatus("❌ Your session has expired. Please log in again to view bookings.");
+        showNotification("❌ Your session expired. Please log in again.", "error");
       }
       setLoading(false);
     }
   }, [isAuthenticated, user?.id]);
 
   useEffect(() => {
-    if (isAuthenticated && user?.id) {
-      setLoading(true);
-    }
+    if (isAuthenticated && user?.id) setLoading(true);
     fetchBookings();
   }, [fetchBookings]);
 
@@ -63,10 +62,16 @@ function PhotographyServiceComp() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  // 🔔 Notification Helper (auto-hide after 6s)
+  const showNotification = (message, type = "info") => {
+    setNotification({ message, type });
+    setTimeout(() => setNotification(null), 6000);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!isAuthenticated) {
-      setStatus("❌ Please log in to book a service.");
+      showNotification("⚠️ Please log in to book a service.", "error");
       return;
     }
 
@@ -84,10 +89,16 @@ function PhotographyServiceComp() {
       };
 
       await axiosClient.post(API_URL, payload);
-      setStatus("✅ Photoshoot booking request submitted successfully! We will contact you shortly.");
 
-      setFormData((prev) => ({
-        ...prev,
+      showNotification(
+        `📸 Booking confirmed for your ${formData.eventType || "event"} photoshoot!`,
+        "success"
+      );
+
+      setFormData({
+        userName: user?.name || "",
+        email: user?.email || "",
+        phone: user?.phone || "",
         eventType: "",
         packageType: "Standard",
         durationHours: 3,
@@ -95,19 +106,21 @@ function PhotographyServiceComp() {
         location: "",
         budget: "",
         message: "",
-      }));
+      });
 
       fetchBookings();
     } catch (err) {
       console.error("Error submitting form:", err);
-      const msg = err.response?.data?.message || "Error submitting request. Check fields or log in.";
-      setStatus(`❌ ${msg}`);
+      const msg =
+        err.response?.data?.message ||
+        "❌ Error submitting booking! Please try again.";
+      showNotification(msg, "error");
     } finally {
       setLoading(false);
     }
   };
 
-  // 💅 Inner CSS Styles
+  // 💅 Inline Styles
   const styles = {
     container: {
       display: "flex",
@@ -118,6 +131,7 @@ function PhotographyServiceComp() {
       minHeight: "100vh",
       fontFamily: "Poppins, sans-serif",
       padding: "2rem",
+      position: "relative",
     },
     card: {
       background: "#fff",
@@ -159,7 +173,6 @@ function PhotographyServiceComp() {
       fontSize: "14px",
       minHeight: "100px",
       resize: "none",
-      transition: "0.3s",
     },
     select: {
       width: "100%",
@@ -170,7 +183,6 @@ function PhotographyServiceComp() {
       fontSize: "14px",
       cursor: "pointer",
       color: "#333",
-      transition: "0.3s",
     },
     label: {
       textAlign: "left",
@@ -208,13 +220,45 @@ function PhotographyServiceComp() {
       boxShadow: "0 2px 10px rgba(0, 0, 0, 0.05)",
       textAlign: "left",
     },
+    notification: {
+      position: "fixed",
+      top: "20px",
+      right: "25px",
+      padding: "12px 18px",
+      borderRadius: "8px",
+      color: "white",
+      fontWeight: "600",
+      boxShadow: "0 4px 12px rgba(0,0,0,0.2)",
+      zIndex: 1000,
+      animation: "fadeSlideIn 0.4s ease-out",
+    },
   };
 
   return (
     <div style={styles.container}>
+      {/* 🔔 Floating Notification */}
+      {notification && (
+        <div
+          style={{
+            ...styles.notification,
+            backgroundColor:
+              notification.type === "success"
+                ? "#27ae60"
+                : notification.type === "error"
+                ? "#e74c3c"
+                : "#3498db",
+          }}
+        >
+          {notification.message}
+        </div>
+      )}
+
+      {/* Form Section */}
       <div style={styles.card}>
         <h2 style={styles.heading}>📸 Photoshoot & Photography Booking</h2>
-        <p style={styles.subText}>Let our professional team capture your special moments.</p>
+        <p style={styles.subText}>
+          Let our professional team capture your special moments.
+        </p>
 
         <form onSubmit={handleSubmit}>
           <input
@@ -345,6 +389,7 @@ function PhotographyServiceComp() {
         )}
       </div>
 
+      {/* 🧾 Previous Bookings */}
       {(isAuthenticated || bookings.length > 0) && (
         <div style={styles.bookingsSection}>
           <h3 style={{ color: "#a350a3", textAlign: "center" }}>
@@ -358,8 +403,7 @@ function PhotographyServiceComp() {
                   <strong>Event:</strong> {b.eventType} ({b.packageType})
                 </p>
                 <p>
-                  <strong>Date:</strong>{" "}
-                  {new Date(b.date).toLocaleDateString()}
+                  <strong>Date:</strong> {new Date(b.date).toLocaleDateString()}
                 </p>
                 <p>
                   <strong>Duration:</strong> {b.durationHours} hours

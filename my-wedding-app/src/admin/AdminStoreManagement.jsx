@@ -1,145 +1,88 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
-import io from "socket.io-client";
+// src/admin/AdminStoreManagement.jsx
+import React, { useEffect, useState } from "react";
 import { FaEdit, FaTrash, FaPlus } from "react-icons/fa";
 import "../styles/AdminStoreManagement.css";
-
-// const socket = io("http://localhost:5000");
+import axiosClient from "../utils/axiosClient";
 
 const AdminStoreManagement = () => {
   const [products, setProducts] = useState([]);
-  const [formData, setFormData] = useState({
-    name: "",
-    description: "",
-    price: "",
-    imageUrl: "",
+  const [cats, setCats] = useState([]);
+  const [form, setForm] = useState({
+    name: "", description: "", price: "", stock: "", image: "", category: ""
   });
   const [editingId, setEditingId] = useState(null);
 
-  // Fetch products initially
-  useEffect(() => {
-    axios
-      .get("http://localhost:5000/api/products")
-      .then((res) => setProducts(res.data))
-      .catch((err) => console.error("Error fetching products:", err));
-  }, []);
-
-  // Real-time updates from socket
-  // useEffect(() => {
-  //   socket.on("product-updated", (updatedProducts) => {
-  //     setProducts(updatedProducts);
-  //   });
-  //   return () => socket.disconnect();
-  // }, []);
-
-  // Handle form inputs
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+  const loadAll = async () => {
+    const [p, c] = await Promise.all([
+      axiosClient.get("/store/products", { params: { limit: 100 } }),
+      axiosClient.get("/store/categories"),
+    ]);
+    setProducts(p.data.items || []);
+    setCats(c.data || []);
   };
 
-  // Add or update a product
+  useEffect(() => { loadAll(); }, []);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      if (editingId) {
-        await axios.put(
-          `http://localhost:5000/api/products/${editingId}`,
-          formData
-        );
-      } else {
-        await axios.post("http://localhost:5000/api/products", formData);
-      }
-      setFormData({ name: "", description: "", price: "", imageUrl: "" });
-      setEditingId(null);
-    } catch (err) {
-      console.error("Error saving product:", err);
+    const payload = { ...form, price: Number(form.price), stock: Number(form.stock) || 0 };
+    if (editingId) {
+      await axiosClient.put(`/store/products/${editingId}`, payload);
+    } else {
+      await axiosClient.post("/store/products", payload);
     }
+    setForm({ name: "", description: "", price: "", stock: "", image: "", category: "" });
+    setEditingId(null);
+    loadAll();
   };
 
-  // Edit handler
-  const handleEdit = (product) => {
-    setEditingId(product._id);
-    setFormData({
-      name: product.name,
-      description: product.description,
-      price: product.price,
-      imageUrl: product.imageUrl,
+  const handleEdit = (p) => {
+    setEditingId(p._id);
+    setForm({
+      name: p.name, description: p.description, price: p.price, stock: p.stock,
+      image: p.image, category: p?.category?._id || ""
     });
   };
 
-  // Delete handler
   const handleDelete = async (id) => {
-    try {
-      await axios.delete(`http://localhost:5000/api/products/${id}`);
-    } catch (err) {
-      console.error("Error deleting product:", err);
-    }
+    if (!window.confirm("Delete product?")) return;
+    await axiosClient.delete(`/store/products/${id}`);
+    loadAll();
   };
 
   return (
     <div className="admin-store-container">
       <h2>🛒 Store Management</h2>
 
-      {/* Product form */}
       <form onSubmit={handleSubmit} className="product-form">
-        <input
-          type="text"
-          name="name"
-          value={formData.name}
-          placeholder="Product Name"
-          onChange={handleChange}
-          required
-        />
-        <input
-          type="text"
-          name="imageUrl"
-          value={formData.imageUrl}
-          placeholder="Image URL"
-          onChange={handleChange}
-          required
-        />
-        <input
-          type="text"
-          name="description"
-          value={formData.description}
-          placeholder="Description"
-          onChange={handleChange}
-          required
-        />
-        <input
-          type="number"
-          name="price"
-          value={formData.price}
-          placeholder="Price (₹)"
-          onChange={handleChange}
-          required
-        />
+        <input name="name" placeholder="Product Name" value={form.name} onChange={(e)=>setForm({...form, name: e.target.value})} required />
+        <input name="image" placeholder="Image URL" value={form.image} onChange={(e)=>setForm({...form, image: e.target.value})} required />
+        <select value={form.category} onChange={(e)=>setForm({...form, category: e.target.value})}>
+          <option value="">Select Category</option>
+          {cats.map(c => <option key={c._id} value={c._id}>{c.name}</option>)}
+        </select>
+        <input name="description" placeholder="Description" value={form.description} onChange={(e)=>setForm({...form, description: e.target.value})} required />
+        <input type="number" name="price" placeholder="Price (₹)" value={form.price} onChange={(e)=>setForm({...form, price: e.target.value})} required />
+        <input type="number" name="stock" placeholder="Stock" value={form.stock} onChange={(e)=>setForm({...form, stock: e.target.value})} />
         <button type="submit" className="add-btn">
           {editingId ? "Update Product" : "Add Product"} <FaPlus />
         </button>
       </form>
 
-      {/* Product List */}
       <div className="product-list">
         {products.length === 0 ? (
-          <p className="no-products">No products available.</p>
+          <p className="no-products">No products.</p>
         ) : (
-          products.map((product) => (
-            <div key={product._id} className="product-card">
-              <img src={product.imageUrl} alt={product.name} />
-              <h4>{product.name}</h4>
-              <p>{product.description}</p>
-              <p className="price">₹{product.price}</p>
+          products.map((p) => (
+            <div key={p._id} className="product-card">
+              <img src={p.image} alt={p.name} />
+              <h4>{p.name}</h4>
+              <p className="muted">{p?.category?.name || "Uncategorized"}</p>
+              <p>{p.description}</p>
+              <p className="price">₹{p.price}</p>
               <div className="actions">
-                <button className="edit-btn" onClick={() => handleEdit(product)}>
-                  <FaEdit />
-                </button>
-                <button
-                  className="delete-btn"
-                  onClick={() => handleDelete(product._id)}
-                >
-                  <FaTrash />
-                </button>
+                <button className="edit-btn" onClick={() => handleEdit(p)}><FaEdit /></button>
+                <button className="delete-btn" onClick={() => handleDelete(p._id)}><FaTrash /></button>
               </div>
             </div>
           ))

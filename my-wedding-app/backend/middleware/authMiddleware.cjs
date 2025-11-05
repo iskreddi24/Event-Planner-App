@@ -7,7 +7,6 @@ const protect = async (req, res, next) => {
   try {
     let token;
 
-    // Allow "Authorization: Bearer <token>" or "Authorization: <token>"
     if (req.headers.authorization) {
       const parts = req.headers.authorization.split(" ");
       token = parts.length === 2 ? parts[1] : parts[0];
@@ -17,10 +16,8 @@ const protect = async (req, res, next) => {
       return res.status(401).json({ message: "Not authorized, no token provided." });
     }
 
-    // Verify the token
     const decoded = jwt.verify(token, process.env.JWT_SECRET || "fallback_secret");
 
-    // Extract user ID and role from payload
     const userId =
       decoded._id ||
       decoded.id ||
@@ -33,7 +30,6 @@ const protect = async (req, res, next) => {
       return res.status(401).json({ message: "Token payload missing user identifier." });
     }
 
-    // Attach user info to the request object
     req.user = {
       _id: userId,
       role: decoded.role || decoded.user?.role || "user",

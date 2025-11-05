@@ -102,5 +102,28 @@ router.put('/:id/status', protect, admin, async (req, res) => {
         res.status(500).json({ message: 'Error updating booking status.' });
     }
 });
+// 🧾 GET /api/vip/bookings/:userId
+// Fetch all VIP bookings for a specific user (User Dashboard)
+router.get('/bookings/:userId', protect, async (req, res) => {
+  try {
+    const loggedInId = req.user.id || req.user._id; // Safe ID reference
+    const { userId } = req.params;
+
+    // ✅ Only allow viewing your own bookings (unless admin)
+    if (loggedInId.toString() !== userId && req.user.role !== 'admin') {
+      return res.status(403).json({ message: 'Not authorized to view these bookings.' });
+    }
+
+    const userBookings = await VIPBooking.find({ userId })
+      .sort({ createdAt: -1 })
+      .populate('userId', 'name email');
+
+    res.status(200).json(userBookings);
+  } catch (error) {
+    console.error('Error fetching user VIP bookings:', error);
+    res.status(500).json({ message: 'Failed to fetch user VIP bookings.' });
+  }
+});
+
 
 module.exports = router;

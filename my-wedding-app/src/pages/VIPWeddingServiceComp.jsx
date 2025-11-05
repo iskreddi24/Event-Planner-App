@@ -15,7 +15,7 @@ import {
 } from "react-icons/fa";
 import { GiBigDiamondRing } from "react-icons/gi";
 
-// ✅ Connect to backend socket server
+// ✅ Socket connection
 const socket = io("http://localhost:8080", {
   transports: ["websocket"],
   withCredentials: true,
@@ -29,22 +29,22 @@ const VIPWeddingServiceComp = () => {
   const [actions, setActions] = useState([]);
   const [chat, setChat] = useState([]);
   const [message, setMessage] = useState("");
+  const [notification, setNotification] = useState(null);
+  const [bookings, setBookings] = useState([]); // 🆕 User bookings
   const [functionHalls, setFunctionHalls] = useState({
     Hyderabad: [],
     Mumbai: [],
     Delhi: [],
   });
 
-  // 🆕 NEW FORM STATE
   const [formData, setFormData] = useState({
     weddingDate: "",
     guestCount: 300,
     totalBudget: 500000,
-    decorationTheme: "Standard Decor", // for requiredServices.decorationTheme
-    haldiTeam: false, // for requiredServices.haldiTeam
+    decorationTheme: "Standard Decor",
+    haldiTeam: false,
   });
 
-  // Default backup venues
   const defaultHalls = {
     Hyderabad: [
       { name: "The Grand Regal", capacity: 1500, price: "₹4 Lakh" },
@@ -64,63 +64,32 @@ const VIPWeddingServiceComp = () => {
   };
 
   const vipServices = [
-    {
-      icon: GiBigDiamondRing,
-      name: "Wedz Assistance",
-      desc: "A dedicated team to guide your entire wedding plan.",
-      link: "#",
-    },
-    {
-      icon: FaUserFriends,
-      name: "Wedz Makeup",
-      desc: "Professional bridal makeup and styling services.",
-      link: "#",
-    },
-    {
-      icon: FaCommentDots,
-      name: "Wedz Invitation",
-      desc: "Create and share digital invites with guests easily.",
-      link: "#",
-    },
-    {
-      icon: FaMapMarkerAlt,
-      name: "Wedz Venue",
-      desc: "Exclusive venue curation at best prices.",
-      link: "#",
-    },
-    {
-      icon: FaHeart,
-      name: "Wedz Photography",
-      desc: "Capture every moment with our premium photography.",
-      link: "#",
-    },
+    { icon: GiBigDiamondRing, name: "Wedz Assistance", desc: "A dedicated team to guide your entire wedding plan." },
+    { icon: FaUserFriends, name: "Wedz Makeup", desc: "Professional bridal makeup and styling services." },
+    { icon: FaCommentDots, name: "Wedz Invitation", desc: "Create and share digital invites with guests easily." },
+    { icon: FaMapMarkerAlt, name: "Wedz Venue", desc: "Exclusive venue curation at best prices." },
+    { icon: FaHeart, name: "Wedz Photography", desc: "Capture every moment with our premium photography." },
   ];
 
   const planningSteps = [
-    {
-      title: "SEARCH",
-      desc: "Find the best vendors and venues for your wedding.",
-    },
-    {
-      title: "SELECT",
-      desc: "Compare quotes and finalize your perfect team.",
-    },
-    {
-      title: "BOOK",
-      desc: "Book, pay securely, and relax — we’ll handle the rest.",
-    },
+    { title: "SEARCH", desc: "Find the best vendors and venues for your wedding." },
+    { title: "SELECT", desc: "Compare quotes and finalize your perfect team." },
+    { title: "BOOK", desc: "Book, pay securely, and relax — we’ll handle the rest." },
   ];
 
-  // 🎯 Fetch halls (from backend or fallback)
+  // ✅ Notification function
+  const showNotification = (message, type = "info") => {
+    setNotification({ message, type });
+    setTimeout(() => setNotification(null), 5000); // auto-hide after 5s
+  };
+
+  // Fetch VIP halls
   useEffect(() => {
     const fetchHalls = async () => {
       try {
         const res = await axiosClient.get("/vip/management/halls");
         const halls = res.data || [];
-        if (halls.length === 0) {
-          setFunctionHalls(defaultHalls);
-          return;
-        }
+        if (halls.length === 0) return setFunctionHalls(defaultHalls);
 
         const grouped = halls.reduce((acc, hall) => {
           if (!acc[hall.city]) acc[hall.city] = [];
@@ -136,7 +105,22 @@ const VIPWeddingServiceComp = () => {
     fetchHalls();
   }, []);
 
-  // ⚡ Real-time updates
+  // Fetch user bookings
+  const fetchBookings = async () => {
+    if (!isAuthenticated || !user?.id) return;
+    try {
+      const res = await axiosClient.get(`/vip/bookings/${user.id}`);
+      setBookings(res.data || []);
+    } catch (err) {
+      console.error("Error fetching VIP bookings:", err);
+    }
+  };
+
+  useEffect(() => {
+    fetchBookings();
+  }, [isAuthenticated, user]);
+
+  // Socket events
   useEffect(() => {
     socket.on("vipHallAdded", (newHall) => {
       setFunctionHalls((prev) => {
@@ -155,19 +139,6 @@ const VIPWeddingServiceComp = () => {
     };
   }, []);
 
-  // 📋 Log user actions
-  const logAction = (message, type = "info", actionName = "Action") => {
-    const newAction = {
-      id: Date.now(),
-      time: new Date().toLocaleTimeString(),
-      message,
-      type,
-      actionName,
-    };
-    setActions((prev) => [newAction, ...prev]);
-  };
-
-  // 🆕 Handle form input change
   const handleFormChange = (e) => {
     const { name, value, type, checked } = e.target;
     setFormData((prev) => ({
@@ -177,50 +148,36 @@ const VIPWeddingServiceComp = () => {
   };
 
   const handleVenueBook = async (hallName) => {
-    if (!isAuthenticated) {
-      return navigate("/login");
-    }
-    
-    if (!formData.weddingDate) {
-      alert("Please select a valid wedding date in Step 1 first!");
-      return;
-    }
-
-    if (formData.guestCount < 50) {
-      alert("Guest count must be at least 50 for a VIP request.");
-      return;
-    }
+    if (!isAuthenticated) return navigate("/login");
+    if (!formData.weddingDate)
+      return showNotification("⚠️ Please select a valid wedding date first!", "error");
 
     const bookingData = {
       weddingDate: formData.weddingDate,
       city: selectedCity,
-      selectedVenue: { name: hallName }, // Venue name from button click
+      selectedVenue: { name: hallName },
       guestCount: parseInt(formData.guestCount, 10),
       totalBudget: parseFloat(formData.totalBudget),
-      // Pass the new services fields from form state
-      requiredServices: { 
-        decorationTheme: formData.decorationTheme, 
-        haldiTeam: formData.haldiTeam 
+      requiredServices: {
+        decorationTheme: formData.decorationTheme,
+        haldiTeam: formData.haldiTeam,
       },
     };
 
     try {
       const res = await axiosClient.post("/vip/book", bookingData);
       if (res.data.success) {
-        logAction(`VIP Request submitted for ${hallName}`, "success", "Venue Booking");
-        socket.emit("vipBookingAdded", res.data.booking);
-        // 🚀 Optional: Reset date/venue after successful booking to prevent accidental duplicate clicks
-        setFormData(prev => ({...prev, weddingDate: ""}));
+        showNotification(`✅ Booking confirmed for ${hallName}!`, "success");
+        fetchBookings();
       } else {
-        logAction(`VIP Request failed for ${hallName}`, "error", "Venue Booking");
+        showNotification(`❌ Booking failed for ${hallName}`, "error");
       }
     } catch (err) {
       console.error("Error booking venue:", err);
-      logAction(`Error submitting VIP Request for ${hallName}`, "error", "Venue Booking");
+      showNotification("❌ Something went wrong while booking!", "error");
     }
   };
 
-  // 💬 Chat (User ↔ Admin)
   const sendMessage = () => {
     if (!message.trim()) return;
     const msg = {
@@ -245,7 +202,32 @@ const VIPWeddingServiceComp = () => {
 
   return (
     <div className="vip-service-comp">
-      {/* HERO */}
+      {/* 🔔 Floating Notification */}
+      {notification && (
+        <div
+          style={{
+            position: "fixed",
+            top: "20px",
+            right: "25px",
+            backgroundColor:
+              notification.type === "success"
+                ? "#2ecc71"
+                : notification.type === "error"
+                ? "#e74c3c"
+                : "#3498db",
+            color: "white",
+            padding: "12px 18px",
+            borderRadius: "8px",
+            boxShadow: "0 4px 10px rgba(0,0,0,0.2)",
+            fontWeight: "600",
+            zIndex: 1000,
+          }}
+        >
+          {notification.message}
+        </div>
+      )}
+
+      {/* HERO SECTION */}
       <div className="vip-hero">
         <div className="hero-content">
           <h1 className="vip-title">
@@ -256,7 +238,7 @@ const VIPWeddingServiceComp = () => {
           </p>
           <button
             className="start-planning-btn"
-            onClick={() => logAction("VIP planning started", "success", "Start Planning")}
+            onClick={() => showNotification("🎉 Planning started!", "success")}
           >
             Start Planning <FaArrowRight />
           </button>
@@ -286,77 +268,62 @@ const VIPWeddingServiceComp = () => {
               <service.icon className="service-icon" />
               <h4>{service.name}</h4>
               <p>{service.desc}</p>
-              <a href={service.link} className="read-more-link">
-                Read More <FaArrowRight />
-              </a>
             </div>
           ))}
         </div>
       </section>
 
-      {/* 🆕 VENUE BOOKING FORM SECTION */}
+      {/* BOOKING FORM */}
       <section className="vip-section booking-form-section">
         <h2 className="section-title">Step 1: Specify Your Wedding Details</h2>
         <div className="booking-form-card">
-          <label htmlFor="weddingDate">Wedding Date*</label>
-          <input 
-            type="date" 
-            name="weddingDate" 
-            id="weddingDate"
-            value={formData.weddingDate} 
-            onChange={handleFormChange} 
-            required 
+          <label>Wedding Date*</label>
+          <input
+            type="date"
+            name="weddingDate"
+            value={formData.weddingDate}
+            onChange={handleFormChange}
+            required
           />
-
-          <label htmlFor="guestCount">Approximate Guest Count*</label>
-          <input 
-            type="number" 
-            name="guestCount" 
-            id="guestCount"
-            value={formData.guestCount} 
-            onChange={handleFormChange} 
+          <label>Guest Count*</label>
+          <input
+            type="number"
+            name="guestCount"
+            value={formData.guestCount}
+            onChange={handleFormChange}
             min="50"
-            required 
+            required
           />
-          
-          <label htmlFor="totalBudget">Total Budget (INR)*</label>
-          <input 
-            type="number" 
-            name="totalBudget" 
-            id="totalBudget"
-            value={formData.totalBudget} 
-            onChange={handleFormChange} 
-            min="100000"
-            required 
+          <label>Total Budget (₹)*</label>
+          <input
+            type="number"
+            name="totalBudget"
+            value={formData.totalBudget}
+            onChange={handleFormChange}
+            required
           />
-          
-          <label htmlFor="decorationTheme">Decoration Theme</label>
-          <input 
-            type="text" 
-            name="decorationTheme" 
-            id="decorationTheme"
-            value={formData.decorationTheme} 
-            onChange={handleFormChange} 
+          <label>Decoration Theme</label>
+          <input
+            type="text"
+            name="decorationTheme"
+            value={formData.decorationTheme}
+            onChange={handleFormChange}
             placeholder="e.g., Grand Floral, Royal Peacock"
           />
-
           <div className="haldi-checkbox">
-            <input 
-              type="checkbox" 
-              name="haldiTeam" 
-              checked={formData.haldiTeam} 
-              onChange={handleFormChange} 
+            <input
+              type="checkbox"
+              name="haldiTeam"
+              checked={formData.haldiTeam}
+              onChange={handleFormChange}
               id="haldi-check"
             />
-            <label htmlFor="haldi-check">Require Haldi Team/Services?</label>
+            <label htmlFor="haldi-check">Require Haldi Team?</label>
           </div>
         </div>
-        <p className="form-tip">
-          <FaArrowRight /> Fill the details above, then choose a venue below to submit your VIP request.
-        </p>
       </section>
 
-      {/* VENUES */}
+      {/* VENUE BOOKING */}
       <section className="vip-section venue-section">
         <h2 className="section-title">Step 2: Choose Your Exclusive Venue</h2>
         <div className="city-selector">
@@ -371,80 +338,92 @@ const VIPWeddingServiceComp = () => {
           ))}
         </div>
         <div className="venue-grid">
-          {functionHalls[selectedCity]?.length > 0 ? (
-            functionHalls[selectedCity].map((hall, index) => (
-              <div className="venue-card" key={index}>
-                <div className="venue-detail">
-                  <h5>{hall.name}</h5>
-                  <p>Capacity: {hall.capacity}</p>
-                  <p>
-                    VIP Price:{" "}
-                    <strong>{hall.price || `₹${hall.vipPrice?.toLocaleString()}`}</strong>
-                  </p>
-                </div>
-                <button
-                  className="venue-book-btn"
-                  onClick={() => handleVenueBook(hall.name)}
-                  // 🛑 DISABLED if date is missing
-                  disabled={!formData.weddingDate} 
-                  title={!formData.weddingDate ? "Please enter the wedding date first (Step 1)" : `Book ${hall.name}`}
-                >
-                  Book / Enquire
-                </button>
-              </div>
-            ))
-          ) : (
-            <p className="no-venues">No venues found for {selectedCity}.</p>
-          )}
-        </div>
-      </section>
-
-      {/* CHAT */}
-      <section className="vip-section contact-expert">
-        <h2>
-          <FaCommentDots /> VIP Live Chat
-        </h2>
-        <div className="chat-box">
-          {chat.map((msg, idx) => (
-            <p key={idx}>
-              <b>{msg.sender}:</b> {msg.text}
-            </p>
+          {functionHalls[selectedCity]?.map((hall, index) => (
+            <div className="venue-card" key={index}>
+              <h5>{hall.name}</h5>
+              <p>Capacity: {hall.capacity}</p>
+              <p>Price: {hall.price}</p>
+              <button
+                className="venue-book-btn"
+                onClick={() => handleVenueBook(hall.name)}
+                disabled={!formData.weddingDate}
+              >
+                Book / Enquire
+              </button>
+            </div>
           ))}
         </div>
-        <div className="chat-input">
-          <input
-            type="text"
-            value={message}
-            onChange={(e) => setMessage(e.target.value)}
-            placeholder="Type your message..."
-          />
-          <button onClick={sendMessage}>Send</button>
-        </div>
       </section>
 
-      {/* ACTION LOG */}
-      <section className="vip-section action-log-section">
-        <h2 className="section-title">
-          <FaRegClock /> Your VIP Action Log
-        </h2>
-        <div className="action-log-container">
-          {actions.length === 0 ? (
-            <p className="no-actions">
-              No recent actions. Start planning your dream wedding!
+      {/* 🧾 VIP BOOKINGS LIST */}
+  {/* 🧾 VIP BOOKINGS LIST (Stylish Version) */}
+<section className="vip-section vip-bookings-section">
+  <h2 className="section-title">💍 Your VIP Bookings</h2>
+
+  {bookings.length === 0 ? (
+    <p className="no-bookings-text">You haven’t booked any VIP venues yet.</p>
+  ) : (
+    <div className="vip-booking-cards">
+      {bookings.map((b) => (
+        <div key={b._id} className="vip-booking-card">
+          <div className="card-header">
+            <h3>{b.selectedVenue?.name || "Venue Unknown"}</h3>
+            <span
+              className={`status-badge ${
+                b.status?.toLowerCase() || "pending"
+              }`}
+            >
+              {b.status || "Pending"}
+            </span>
+          </div>
+
+          <div className="card-body">
+            <p>
+              <strong>📅 Date:</strong>{" "}
+              {new Date(b.weddingDate).toLocaleDateString()}
             </p>
-          ) : (
-            actions.map((action) => (
-              <div key={action.id} className={`action-item ${action.type}`}>
-                <div className="action-header">
-                  <span className="action-name">{action.actionName}</span>
-                  <span className="action-time">{action.time}</span>
-                </div>
-                <p className="action-message">{action.message}</p>
-              </div>
-            ))
-          )}
+            <p>
+              <strong>📍 City:</strong> {b.city}
+            </p>
+            <p>
+              <strong>👥 Guests:</strong> {b.guestCount || 0}
+            </p>
+            <p>
+              <strong>💰 Budget:</strong> ₹
+              {b.totalBudget?.toLocaleString() || "N/A"}
+            </p>
+
+            {b.requiredServices && (
+              <>
+                <p>
+                  <strong>🎨 Theme:</strong>{" "}
+                  {b.requiredServices.decorationTheme || "Standard"}
+                </p>
+                {b.requiredServices.haldiTeam && (
+                  <p>
+                    <strong>🌼 Haldi Team:</strong> Included
+                  </p>
+                )}
+              </>
+            )}
+          </div>
+
+          <div className="card-footer">
+            <small>
+              Booked on:{" "}
+              {new Date(b.createdAt).toLocaleDateString(undefined, {
+                year: "numeric",
+                month: "short",
+                day: "numeric",
+              })}
+            </small>
+          </div>
         </div>
-      </section>
+      ))}
+    </div>
+  )}
+</section>
+
     </div>
   );
 };

@@ -75,7 +75,6 @@ app.use("/api/orders", orderRoutes);
 
 app.use("/api/messages", messageRoutes);
 
-// --- 6. MOUNT ROUTES ---
 app.use("/api/auth", authRoutes);
 app.use("/api/contact", contactRoutes);
 app.use("/api/exclusive", exclusiveServiceRoutes);

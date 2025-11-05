@@ -4,7 +4,6 @@ const Owner = require('../models/Owner.cjs');
 const FunctionHall = require('../models/FunctionHall.cjs');
 const Booking = require('../models/Booking.cjs'); // Need Booking model for confirmed bookings
 
-// --- 1. Owner Signup (Frontend calls /api/owner/signup) ---
 router.post('/signup', async (req, res) => {
     try {
         const existingOwner = await Owner.findOne({ email: req.body.email });
@@ -12,14 +11,11 @@ router.post('/signup', async (req, res) => {
              return res.status(400).json({ message: 'Email already registered.' });
         }
         
-        // 1. Create the new Owner user
         const newOwner = new Owner(req.body);
         await newOwner.save();
 
-        // 2. Create the Function Hall entry, linking it to the new Owner's ID
         const { hallName, location, area, capacity, pricePerDay } = req.body;
         const newHall = new FunctionHall({
-            // Assuming your Hall schema field is 'ownerId'
             ownerId: newOwner._id, 
             hallName,
             location,
@@ -40,7 +36,6 @@ router.post('/signup', async (req, res) => {
     }
 });
 
-// --- 2. Owner Login (Frontend calls /api/owner/login) ---
 router.post('/login', async (req, res) => {
     const { email, password } = req.body;
     const owner = await Owner.findOne({ email, password });
@@ -48,14 +43,9 @@ router.post('/login', async (req, res) => {
     res.json({ message: 'Login successful', owner, token: 'owner_jwt_placeholder' });
 });
 
-
-// --- 3. Owner Dashboard Data Fetch (Frontend calls /api/owner/hall/:ownerId) ---
-// Now defined as /hall/:ownerId because the prefix is /api/owner
 router.get('/hall/:ownerId', /* authMiddleware, */ async (req, res) => {
     try {
         const ownerId = req.params.ownerId;
-        // Find the FunctionHall associated with this owner ID
-        // Ensure this field ('ownerId' or whatever you use) matches your schema
         const hall = await FunctionHall.findOne({ ownerId: ownerId }); 
 
         if (!hall) {
@@ -68,12 +58,9 @@ router.get('/hall/:ownerId', /* authMiddleware, */ async (req, res) => {
     }
 });
 
-// --- 4. Owner Dashboard Bookings Fetch (Frontend calls /api/owner/bookings/:hallId) ---
-// Now defined as /bookings/:hallId because the prefix is /api/owner
 router.get('/bookings/:hallId', /* authMiddleware, */ async (req, res) => {
     try {
         const hallId = req.params.hallId;
-        // Fetch only CONFIRMED bookings for the hall
         const confirmedBookings = await Booking.find({ 
             hall: hallId,
             status: 'Confirmed'
@@ -86,8 +73,6 @@ router.get('/bookings/:hallId', /* authMiddleware, */ async (req, res) => {
     }
 });
 
-// --- 5. Owner Hall Update (Frontend calls /api/owner/hall/:hallId) ---
-// Now defined as /hall/:hallId because the prefix is /api/owner
 router.put('/hall/:hallId', /* authMiddleware, */ async (req, res) => {
     try {
         const hallId = req.params.hallId;

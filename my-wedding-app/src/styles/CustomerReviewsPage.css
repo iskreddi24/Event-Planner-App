@@ -1,87 +1,129 @@
-/* Container */
+/* --------------------------------------------- */
+/* 🧾 CUSTOMER REVIEWS PAGE — SIMPLE FLAT UI */
+/* --------------------------------------------- */
+
 .customer-reviews-container {
-    background-color: #f7f5fa;
-    padding: 3rem 1rem;
-    min-height: 80vh;
-    font-family: 'Inter', sans-serif;
+  background-color: #f9fafb;
+  padding: 3rem 1rem;
+  font-family: "Poppins", sans-serif;
+  color: #333;
+  min-height: 80vh;
 }
 
-/* Grid layout */
+/* ---------- Header ---------- */
+.customer-reviews-container header h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #1f2937;
+}
+
+.customer-reviews-container header p {
+  font-size: 1rem;
+  color: #6b7280;
+  margin-top: 0.5rem;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.customer-reviews-container header .text-yellow-500 {
+  color: #fbbf24;
+}
+
+/* ---------- Reviews Grid ---------- */
 .reviews-grid {
-    display: grid;
-    gap: 2rem;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    max-width: 1200px;
-    margin: 0 auto;
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  max-width: 1100px;
+  margin: 2rem auto 0 auto;
 }
 
-/* Review card */
+/* ---------- Review Card ---------- */
 .review-card {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    min-height: 250px;
-    border-top: 5px solid #a855f7;
-    border-radius: 12px;
-    transition: all 0.3s ease;
+  background-color: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 220px;
 }
 
-.review-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 10px 18px rgba(168, 85, 247, 0.15);
-}
-
-/* Star colors */
-.review-card .text-yellow-500 {
-    color: #fbbf24;
-}
-.review-card .text-gray-300 {
-    color: #d1d5db;
-}
-.review-card .text-purple-400 {
-    color: #c084fc;
-}
-
-/* Review text */
+/* No hover animation or shadow */
 .review-card p {
-    margin: 0;
+  margin: 0.5rem 0;
+  font-size: 0.95rem;
+  color: #374151;
 }
 
-/* CTA button */
+/* ---------- Rating Stars ---------- */
+.text-yellow-500 {
+  color: #fbbf24;
+}
+
+.text-gray-300 {
+  color: #d1d5db;
+}
+
+/* ---------- Footer ---------- */
+.review-card .font-semibold {
+  font-weight: 600;
+  color: #4c1d95;
+}
+
+.review-card .text-gray-500 {
+  color: #6b7280;
+  font-size: 0.9rem;
+}
+
+/* ---------- Status ---------- */
+.text-green-600 {
+  color: #059669;
+  font-weight: 600;
+}
+
+.text-red-600 {
+  color: #dc2626;
+  font-weight: 600;
+}
+
+/* ---------- CTA Button ---------- */
 .review-cta-button {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0.8rem 2rem;
-    background-color: #9333ea;
-    color: white;
-    font-weight: 600;
-    border-radius: 9999px;
-    text-decoration: none;
-    transition: background-color 0.3s, transform 0.2s;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  display: inline-block;
+  background-color: #7e22ce;
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: 600;
+  padding: 0.7rem 1.6rem;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  margin-top: 2rem;
+  border: none;
 }
 
 .review-cta-button:hover {
-    background-color: #7e22ce;
-    transform: translateY(-2px);
+  background-color: #6d28d9;
 }
 
-/* Status colors */
-.text-green-600 {
-    color: #059669;
-}
-.text-red-600 {
-    color: #dc2626;
+/* ---------- Loading / Error ---------- */
+.customer-reviews-container p.text-purple-600 {
+  color: #6b21a8;
 }
 
-/* Responsive */
+.customer-reviews-container p.text-red-600 {
+  color: #dc2626;
+}
+
+/* ---------- Responsive ---------- */
 @media (max-width: 768px) {
-    .reviews-grid {
-        grid-template-columns: 1fr;
-        padding: 0 1rem;
-    }
-    .customer-reviews-container {
-        padding: 2rem 0.5rem;
-    }
+  .reviews-grid {
+    grid-template-columns: 1fr;
+    padding: 0 1rem;
+  }
+
+  .customer-reviews-container header h1 {
+    font-size: 1.6rem;
+  }
 }

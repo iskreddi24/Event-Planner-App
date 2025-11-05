@@ -1,110 +1,114 @@
-/* --------------------------------------------------- */
-/* 💎 Premium Exclusive Offers Page UI — Modern Luxury */
-/* --------------------------------------------------- */
+/* --------------------------------------------- */
+/* 🎀 EXCLUSIVE OFFERS — SIMPLE LIGHT VERSION WITH BANNER */
+/* --------------------------------------------- */
 
 .exclusive-offers-page {
   min-height: 100vh;
-  padding: 60px 30px;
-  text-align: center;
-  background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
-  color: #fff;
+  padding: 40px 20px;
+  background: #f9fafb;
+  color: #333;
   font-family: "Poppins", sans-serif;
+  text-align: center;
 }
 
-/* --- Title Section --- */
+/* ---------------- Banner ---------------- */
+.offers-banner {
+  background: linear-gradient(90deg, #ffe3be, #ffd8a8);
+  padding: 25px 10px;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  margin-bottom: 40px;
+}
+
+.offers-banner h1 {
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: #333;
+}
+
+/* ---------------- Section Title ---------------- */
 .offers-title {
-  font-size: 2.5rem;
+  font-size: 1.5rem;
   font-weight: 700;
-  background: linear-gradient(90deg, #fbbf24, #ec4899, #8b5cf6);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  margin-bottom: 10px;
-  letter-spacing: 1px;
+  color: #ff914d;
+  margin-bottom: 8px;
 }
 
 .offers-subtitle {
-  font-size: 1.1rem;
-  color: #d1d5db;
+  font-size: 1rem;
+  color: #666;
   margin-bottom: 40px;
-  font-weight: 400;
 }
 
-/* --- Offers Container --- */
+/* ---------------- Offers Container ---------------- */
 .offers-container {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 30px;
+  gap: 24px;
 }
 
-/* --- Offer Cards --- */
+/* ---------------- Offer Card ---------------- */
 .offer-card {
-  background: rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(14px);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  border-radius: 20px;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
   padding: 25px;
-  width: 270px;
-  transition: all 0.4s ease;
-  color: #f9fafb;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+  width: 280px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  text-align: center;
 }
 
-.offer-card h2 {
-  font-size: 1.3rem;
+.offer-card h3 {
+  font-size: 1.2rem;
   font-weight: 600;
-  margin-bottom: 10px;
-  color: #fbbf24;
+  color: #ff914d;
+  margin-bottom: 8px;
 }
 
 .discount {
-  font-size: 1.1rem;
-  font-weight: bold;
-  color: #ec4899;
-  margin: 8px 0 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #ff6f61;
+  margin-bottom: 12px;
 }
 
 .offer-card p {
-  color: #e5e7eb;
   font-size: 0.95rem;
-  line-height: 1.5;
+  color: #555;
+  line-height: 1.6;
 }
 
-/* --- Hover Animation --- */
-.offer-card:hover {
-  transform: translateY(-10px) scale(1.03);
-  box-shadow: 0 12px 30px rgba(236, 72, 153, 0.3);
-  border-color: rgba(236, 72, 153, 0.5);
-}
-
-/* --- Book Button --- */
+/* ---------------- Button ---------------- */
 .book-btn {
   margin-top: 20px;
-  padding: 10px 20px;
+  padding: 10px 18px;
   border: none;
-  border-radius: 12px;
-  background: linear-gradient(90deg, #fbbf24, #ec4899, #8b5cf6);
-  color: white;
+  border-radius: 8px;
+  background: linear-gradient(90deg, #ffd8a8, #ffb685);
+  color: #333;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: background 0.2s ease;
   width: 100%;
-  letter-spacing: 0.5px;
 }
 
 .book-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 15px rgba(236, 72, 153, 0.4);
+  background: linear-gradient(90deg, #ffe3be, #ffc59e);
 }
 
-/* --- Responsive --- */
+/* ---------------- Responsive ---------------- */
 @media (max-width: 768px) {
-  .offers-title {
-    font-size: 2rem;
+  .offers-banner h1 {
+    font-size: 1.2rem;
+  }
+
+  .offers-container {
+    gap: 16px;
   }
 
   .offer-card {
     width: 100%;
-    max-width: 320px;
+    max-width: 340px;
   }
 }

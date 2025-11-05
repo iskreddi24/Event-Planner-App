@@ -7,7 +7,6 @@ const bookingSchema = new mongoose.Schema({
         required: true,
         ref: 'User'
     },
-    // Link to the function hall being booked
     hall: {
         type: mongoose.Schema.Types.ObjectId,
         required: true,
@@ -19,7 +18,7 @@ const bookingSchema = new mongoose.Schema({
         enum: ['Wedding', 'Birthday Party', 'Anniversary', 'Half Saree']
     },
     date: {
-        type: String, // Stored as YYYY-MM-DD string for easy lookup
+        type: String, 
         required: true
     },
     timeSlot: {

@@ -1,5 +1,5 @@
 /* --------------------------------------------- */
-/* 💎 EXCLUSIVE SERVICES PAGE — CINEMATIC PREMIUM */
+/* 💎 EXCLUSIVE SERVICES PAGE — CLEAN LIGHT THEME */
 /* --------------------------------------------- */
 
 .exclusive-services-page {
@@ -7,60 +7,50 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 60px 20px;
-  background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+  padding: 50px 20px;
+  background: #f9fafb;
   font-family: "Poppins", sans-serif;
+  color: #333;
   gap: 3rem;
-  color: #e5e6e8;
 }
 
 /* ------------------ Form Card ------------------ */
 .form-card {
   width: 100%;
   max-width: 520px;
-  background: rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(14px);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  border-radius: 20px;
-  padding: 2.5rem;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+  padding: 2rem;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
 }
 
-.form-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 20px 50px rgba(255, 255, 255, 0.1);
-}
-
-/* ------------------ Headings ------------------ */
 .form-card h1 {
   text-align: center;
-  font-size: 2.3rem;
-  font-weight: 700;
-  background: linear-gradient(90deg, #fbbf24, #ec4899, #8b5cf6);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  margin-bottom: 10px;
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: #ff914d;
+  margin-bottom: 8px;
 }
 
 .form-card p {
   text-align: center;
-  font-size: 1rem;
-  color: #cacfd7;
-  margin-bottom: 2rem;
+  font-size: 0.95rem;
+  color: #666;
+  margin-bottom: 1.8rem;
 }
 
 /* ------------------ Form Styling ------------------ */
 form {
   display: flex;
   flex-direction: column;
-  gap: 1.4rem;
+  gap: 1rem;
 }
 
 label {
   font-weight: 500;
-  color: #e0e0e0;
-  margin-bottom: 6px;
+  color: #444;
+  margin-bottom: 4px;
   display: block;
 }
 
@@ -69,67 +59,57 @@ select,
 textarea {
   width: 100%;
   padding: 10px 14px;
-  border-radius: 10px;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  background: rgba(255, 255, 255, 0.1);
-  color: #9a2525;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  background: #fff;
+  color: #333;
   font-size: 0.95rem;
   outline: none;
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 input::placeholder,
 textarea::placeholder {
-  color: rgba(228, 19, 19, 0.6);
-}
-
-input:focus,
-select:focus,
-textarea:focus {
-  border-color: #f472b6;
-  box-shadow: 0 0 0 3px rgba(236, 72, 153, 0.4);
+  color: #aaa;
 }
 
 /* ------------------ Conditional Sections ------------------ */
 .pink-section,
 .yellow-section {
-  padding: 1.2rem;
-  border-radius: 10px;
-  margin-top: 1rem;
+  padding: 1rem;
+  border-radius: 8px;
+  margin-top: 0.5rem;
 }
 
 .pink-section {
-  background: rgba(236, 72, 153, 0.08);
-  border: 1px solid rgba(236, 72, 153, 0.4);
+  background: #fff2f6;
+  border: 1px solid #f8b4c3;
 }
 
 .yellow-section {
-  background: rgba(251, 191, 36, 0.1);
-  border: 1px solid rgba(251, 191, 36, 0.4);
+  background: #fff9eb;
+  border: 1px solid #ffd8a8;
 }
 
 .section-title {
-  color: #fbbf24;
+  color: #ff914d;
   font-weight: 600;
-  margin-bottom: 8px;
+  margin-bottom: 6px;
 }
 
 /* ------------------ Submit Button ------------------ */
 button {
-  background: linear-gradient(90deg, #fbbf24, #ec4899, #8b5cf6);
+  background: linear-gradient(90deg, #ffd8a8, #ffb685);
   border: none;
-  padding: 12px 20px;
-  border-radius: 12px;
-  color: #fff;
+  padding: 10px 18px;
+  border-radius: 25px;
+  color: #333;
   font-weight: 600;
-  font-size: 1.05rem;
+  font-size: 1rem;
   cursor: pointer;
-  transition: all 0.3s ease;
 }
 
 button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(236, 72, 153, 0.4);
+  background: linear-gradient(90deg, #ffe2ba, #ffc59e);
 }
 
 button:disabled {
@@ -139,21 +119,22 @@ button:disabled {
 
 /* ------------------ Status Message ------------------ */
 .status-message {
-  padding: 10px;
-  border-radius: 10px;
+  padding: 8px;
+  border-radius: 8px;
   font-weight: 500;
   text-align: center;
-  margin-top: 10px;
+  margin-top: 8px;
+  font-size: 0.9rem;
 }
 
 .status-success {
-  background-color: rgba(16, 185, 129, 0.2);
-  color: #34d399;
+  background-color: #e6f9ee;
+  color: #16a34a;
 }
 
 .status-error {
-  background-color: rgba(239, 68, 68, 0.2);
-  color: #f87171;
+  background-color: #fdeaea;
+  color: #e11d48;
 }
 
 /* ------------------ Previous Bookings ------------------ */
@@ -162,40 +143,40 @@ button:disabled {
   max-width: 1000px;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 1.5rem;
+  gap: 1.2rem;
+}
+
+.previous-bookings h2 {
+  grid-column: 1 / -1;
+  text-align: center;
+  color: #ff914d;
+  margin-bottom: 1rem;
 }
 
 .booking-card {
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  border-radius: 16px;
-  padding: 1.5rem;
-  backdrop-filter: blur(10px);
-  transition: all 0.3s ease;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
-}
-
-.booking-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 10px 30px rgba(236, 72, 153, 0.3);
-  border-color: rgba(236, 72, 153, 0.4);
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 1.2rem;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
 }
 
 .booking-card h3 {
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   font-weight: 600;
-  color: #fbbf24;
-  margin-bottom: 0.5rem;
+  color: #ff914d;
+  margin-bottom: 0.4rem;
 }
 
 .booking-card p {
   font-size: 0.9rem;
-  color: #e5e7eb;
-  margin: 4px 0;
+  color: #555;
+  margin: 3px 0;
 }
 
+/* Status Colors */
 .booking-card .pending {
-  color: #fbbf24;
+  color: #ffb100;
 }
 .booking-card .approved {
   color: #22c55e;
@@ -207,9 +188,45 @@ button:disabled {
 /* ------------------ Responsive ------------------ */
 @media (max-width: 600px) {
   .form-card {
-    padding: 1.8rem;
+    padding: 1.5rem;
   }
   .exclusive-services-page {
     padding: 30px 10px;
+  }
+}
+/* ✅ Floating Notification Styles */
+.floating-notification {
+  position: fixed;
+  top: 20px;
+  right: 25px;
+  padding: 12px 18px;
+  border-radius: 8px;
+  font-weight: 600;
+  color: white;
+  z-index: 9999;
+  animation: fadeSlide 0.5s ease-out;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.floating-notification.info {
+  background-color: #3498db;
+}
+
+.floating-notification.success {
+  background-color: #27ae60;
+}
+
+.floating-notification.error {
+  background-color: #e74c3c;
+}
+
+@keyframes fadeSlide {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }

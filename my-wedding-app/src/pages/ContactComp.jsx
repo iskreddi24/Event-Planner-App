@@ -19,6 +19,7 @@ function ContactComp() {
 
     const [formData, setFormData] = useState(initialFormData);
     const [status, setStatus] = useState(null);
+    const [notification, setNotification] = useState(null); // 🔔 New state for inline notifications
 
     useEffect(() => {
         if (user && isAuthenticated) {
@@ -38,19 +39,26 @@ function ContactComp() {
     const handleSubmit = async e => {
         e.preventDefault();
         setStatus("loading");
+        setNotification({ type: "info", message: "Submitting your inquiry..." });
 
-        const payload = { ...formData, userId: user?.id ?? null };
+        const payload = { ...formData, userId: user?._id ?? null };
 
         try {
             await axiosClient.post("/contact", payload);
             setStatus("success");
-            alert("Form submitted successfully! We'll contact you shortly.");
+            setNotification({ type: "success", message: "✅ Inquiry submitted successfully! We’ll contact you soon." });
+
             setFormData(initialFormData);
-            navigate("/bookings", { state: { bookingSubmitted: Date.now() } });
+
+            setTimeout(() => {
+                setNotification(null);
+                navigate("/bookings", { state: { bookingSubmitted: Date.now() } });
+            }, 2000);
+
         } catch (error) {
             console.error("Submission Error:", error);
             setStatus("error");
-            alert("Submission failed. Please try again.");
+            setNotification({ type: "error", message: "❌ Submission failed. Please try again." });
         }
     };
 
@@ -58,6 +66,13 @@ function ContactComp() {
         <div className="contact-page">
             <h1 className="page-title">Book Your Dream Event</h1>
             <p className="page-intro">Fill out the form below and let us handle the rest!</p>
+
+            {/* ✅ Inline notification box */}
+            {notification && (
+                <div className={`notification ${notification.type}`}>
+                    {notification.message}
+                </div>
+            )}
 
             <form className="contact-form" onSubmit={handleSubmit}>
                 <label className="form-label">Name:</label>
@@ -129,13 +144,6 @@ function ContactComp() {
                 <button type="submit" className="submit-btn" disabled={status === "loading"}>
                     {status === "loading" ? "Submitting..." : "Submit Inquiry"}
                 </button>
-
-                {status === "success" && (
-                    <p className="status-message success">Thank you! Your inquiry was sent successfully.</p>
-                )}
-                {status === "error" && (
-                    <p className="status-message error">An error occurred. Please try again.</p>
-                )}
             </form>
         </div>
     );

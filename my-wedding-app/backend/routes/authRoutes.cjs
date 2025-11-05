@@ -2,20 +2,24 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const User = require('../models/User.cjs'); 
+const User = require('../models/User.cjs');
 
 const signTokenAndRespond = (user, res, statusCode = 200) => {
-    const payload = {
-        user: { id: user._id, name: user.name, role: user.role }
+    const payload = { 
+        _id: user._id, 
+        name: user.name, 
+        role: user.role 
     };
+
     const secret = process.env.JWT_SECRET || 'fallback_secret';
-    const token = jwt.sign(payload, secret, { expiresIn: '1h' });
+    const token = jwt.sign(payload, secret, { expiresIn: process.env.JWT_EXPIRES_IN || '7d' });
 
     res.status(statusCode).json({
         token,
         user: { id: user._id, name: user.name, email: user.email, role: user.role }
     });
 };
+
 
 
 router.post('/register', async (req, res) => {

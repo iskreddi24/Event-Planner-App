@@ -1,8 +1,6 @@
-
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/exclusiveServices.css";
-
 import { useAuth } from "../context/AuthContext";
 import axiosClient from "../utils/axiosClient";
 
@@ -11,9 +9,9 @@ function ExclusiveServicesComp() {
     const navigate = useNavigate();
 
     const [formData, setFormData] = useState({
-        userName: user?.name || "", 
+        userName: user?.name || "",
         email: user?.email || "",
-        phone: user?.phone || "", 
+        phone: user?.phone || "",
         serviceType: "Makeup Artist",
         dateRequired: "",
         targetPerson: "Bride",
@@ -24,9 +22,10 @@ function ExclusiveServicesComp() {
         message: ""
     });
 
-    const [statusMessage, setStatusMessage] = useState('');
+    const [statusMessage, setStatusMessage] = useState("");
     const [loading, setLoading] = useState(false);
-    const [bookings, setBookings] = useState([]); 
+    const [bookings, setBookings] = useState([]);
+    const [notification, setNotification] = useState(null); // 🔔 new inline notification
 
     const fetchBookings = async () => {
         if (!isAuthenticated || !user?.id) {
@@ -34,8 +33,8 @@ function ExclusiveServicesComp() {
             return;
         }
         try {
-            const response = await axiosClient.get(`/exclusive/user/${user.id}`); 
-            setBookings(response.data); 
+            const response = await axiosClient.get(`/exclusive/user/${user.id}`);
+            setBookings(response.data);
         } catch (err) {
             console.error("Error fetching bookings:", err);
         }
@@ -43,29 +42,34 @@ function ExclusiveServicesComp() {
 
     useEffect(() => {
         fetchBookings();
-    }, [isAuthenticated, user]); 
+    }, [isAuthenticated, user]);
+
+    const showNotification = (message, type = "info") => {
+        setNotification({ message, type });
+        setTimeout(() => setNotification(null), 5000);
+    };
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setFormData(prev => ({ ...prev, [name]: value }));
+        setFormData((prev) => ({ ...prev, [name]: value }));
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (!isAuthenticated) {
-            setStatusMessage("Please log in to submit a service request.");
+            showNotification("⚠️ Please log in to submit a service request.", "error");
             setTimeout(() => navigate("/login"), 1500);
             return;
         }
 
         setLoading(true);
-        setStatusMessage('');
+        setStatusMessage("");
 
         try {
             const payload = {
                 userName: formData.userName || user?.name,
                 email: formData.email || user?.email,
-                phone: formData.phone, 
+                phone: formData.phone,
                 userId: user?.id,
                 serviceType: formData.serviceType,
                 date: formData.dateRequired,
@@ -76,43 +80,58 @@ function ExclusiveServicesComp() {
                 budget: formData.budget || 0,
             };
 
-            if (formData.serviceType === 'Makeup Artist') {
+            if (formData.serviceType === "Makeup Artist") {
                 payload.targetPerson = formData.targetPerson;
                 payload.serviceLocation = formData.serviceLocation;
             }
 
             await axiosClient.post("/exclusive", payload);
-            setStatusMessage("Request submitted successfully! We will contact you shortly.");
+            showNotification(
+                `🎉 Booking confirmed for ${formData.serviceType}! We’ll contact you soon.`,
+                "success"
+            );
 
-            setFormData(prev => ({
-                ...prev, dateRequired: '', targetPerson: 'Bride', serviceLocation: '',
-                goldWeight: '', rentalDurationDays: '', budget: '', message: ''
+            setFormData((prev) => ({
+                ...prev,
+                dateRequired: "",
+                targetPerson: "Bride",
+                serviceLocation: "",
+                goldWeight: "",
+                rentalDurationDays: "",
+                budget: "",
+                message: ""
             }));
 
-            fetchBookings(); 
-
+            fetchBookings();
         } catch (err) {
             console.error("Submission error:", err);
-            const msg = err.response?.data?.message || "Failed to submit request. Check if all required fields are valid.";
-            setStatusMessage(`${msg}`);
+            const msg =
+                err.response?.data?.message ||
+                "❌ Failed to submit request. Please check all required fields.";
+            showNotification(msg, "error");
         } finally {
             setLoading(false);
         }
     };
 
-    const isMakeup = formData.serviceType === 'Makeup Artist';
-    const isJewelry = formData.serviceType === 'Jewelry Rental';
+    const isMakeup = formData.serviceType === "Makeup Artist";
+    const isJewelry = formData.serviceType === "Jewelry Rental";
 
     return (
         <div className="exclusive-services-page">
-            {}
+            {/* 🔔 Floating Notification */}
+            {notification && (
+                <div className={`floating-notification ${notification.type}`}>
+                    {notification.message}
+                </div>
+            )}
+
+            {/* Form */}
             <div className="form-card">
                 <h1>Exclusive Services</h1>
                 <p>Luxury bookings for your special day.</p>
 
                 <form onSubmit={handleSubmit} className="space-y-6">
-                    
-                    {}
                     <div>
                         <label htmlFor="serviceType">Service Required *</label>
                         <select
@@ -127,7 +146,6 @@ function ExclusiveServicesComp() {
                         </select>
                     </div>
 
-                    {/* Name, Email, Phone, Date */}
                     <div>
                         <label htmlFor="userName">Full Name *</label>
                         <input
@@ -153,8 +171,7 @@ function ExclusiveServicesComp() {
                             placeholder="Enter your email address"
                         />
                     </div>
-                    
-                    {/* ⬅️ FIX: Added Phone Number input field */}
+
                     <div>
                         <label htmlFor="phone">Phone Number *</label>
                         <input
@@ -180,7 +197,6 @@ function ExclusiveServicesComp() {
                         />
                     </div>
 
-                    
                     {isMakeup && (
                         <div className="pink-section">
                             <h4 className="section-title">Makeup Details</h4>
@@ -254,40 +270,38 @@ function ExclusiveServicesComp() {
                         onChange={handleChange}
                     ></textarea>
 
-                    {statusMessage && (
-                        <p className={`status-message ${statusMessage.startsWith('✅') ? 'status-success' : 'status-error'}`}>
-                            {statusMessage}
-                        </p>
-                    )}
-
                     <button type="submit" disabled={loading}>
-                        {loading ? 'Submitting...' : `Book Exclusive Service`}
+                        {loading ? "Submitting..." : "Book Exclusive Service"}
                     </button>
                 </form>
             </div>
 
-            {/* ------------------ Previous Bookings ------------------ */}
+            {/* 🧾 Previous Bookings */}
             {isAuthenticated && bookings.length > 0 && (
                 <div className="previous-bookings">
                     <h2>Your Previous Bookings</h2>
                     {bookings.map((b) => (
                         <div
                             key={b._id}
-                            className={`booking-card ${b.serviceType === 'Makeup Artist' ? 'makeup' : 'jewelry'}`}
+                            className={`booking-card ${b.serviceType === "Makeup Artist" ? "makeup" : "jewelry"}`}
                         >
                             <h3>{b.serviceType}</h3>
-                            <p><strong>Date:</strong> {new Date(b.date).toLocaleDateString()}</p>
+                            <p>
+                                <strong>Date:</strong> {new Date(b.date).toLocaleDateString()}
+                            </p>
                             {b.targetPerson && <p><strong>For:</strong> {b.targetPerson}</p>}
                             {b.serviceLocation && <p><strong>Location:</strong> {b.serviceLocation}</p>}
                             {b.goldWeight && <p><strong>Gold Weight:</strong> {b.goldWeight}g</p>}
                             {b.rentalDurationDays && <p><strong>Duration:</strong> {b.rentalDurationDays} days</p>}
                             {b.budget && <p><strong>Budget:</strong> ₹{b.budget}</p>}
-                            <p><strong>Status:</strong> <span className={b.status?.toLowerCase() || 'pending'}>
-                                {b.status || "Pending"}
-                            </span></p>
+                            <p>
+                                <strong>Status:</strong>{" "}
+                                <span className={b.status?.toLowerCase() || "pending"}>
+                                    {b.status || "Pending"}
+                                </span>
+                            </p>
                         </div>
                     ))}
-
                 </div>
             )}
         </div>

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import "../styles/DecorationServiceComp.css"; // Import the new CSS file
+import "../styles/DecorationServiceComp.css";
 
 function DecorationServiceComp() {
   const [formData, setFormData] = useState({
@@ -18,6 +18,7 @@ function DecorationServiceComp() {
 
   const [status, setStatus] = useState("");
   const [bookings, setBookings] = useState([]);
+  const [notification, setNotification] = useState(null); // 🔔 Notification state
 
   useEffect(() => {
     fetchBookings();
@@ -36,11 +37,22 @@ function DecorationServiceComp() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  // ✨ Notification helper
+  const showNotification = (message, type = "info") => {
+    setNotification({ message, type });
+    setTimeout(() => setNotification(null), 3000); // auto-hide in 3 seconds
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       await axios.post("http://localhost:8080/api/decoration", formData);
-      setStatus("Booking created successfully!");
+
+      showNotification(
+        `🎉 Booking confirmed for your ${formData.eventType || "event"}!`,
+        "success"
+      );
+
       setFormData({
         userName: "",
         email: "",
@@ -53,15 +65,24 @@ function DecorationServiceComp() {
         budget: "",
         message: "",
       });
-      fetchBookings(); // refresh bookings
+
+      fetchBookings();
     } catch (err) {
       console.error("Error submitting form:", err);
-      setStatus("Error submitting booking!");
+      showNotification("❌ Error submitting booking! Please try again.", "error");
     }
   };
 
   return (
     <div className="decoration-service-container">
+      {/* 🔔 Floating Notification */}
+      {notification && (
+        <div className={`floating-notification ${notification.type}`}>
+          {notification.message}
+        </div>
+      )}
+
+      {/* Booking Form */}
       <div className="booking-form-card">
         <h2 className="form-title">Decoration Service Booking</h2>
         <form onSubmit={handleSubmit} className="booking-form-content">
@@ -148,8 +169,15 @@ function DecorationServiceComp() {
             Book Decoration
           </button>
         </form>
+
         {status && (
-          <p className={status.includes("Error") ? "status-message error" : "status-message success"}>
+          <p
+            className={
+              status.includes("Error")
+                ? "status-message error"
+                : "status-message success"
+            }
+          >
             {status}
           </p>
         )}
@@ -174,8 +202,12 @@ function DecorationServiceComp() {
                 <p>
                   <strong>Location:</strong> {b.location}
                 </p>
-                <p className={`booking-status status-${b.status ? b.status.toLowerCase() : 'pending'}`}>
-                  <strong>Status:</strong> {b.status}
+                <p
+                  className={`booking-status status-${
+                    b.status ? b.status.toLowerCase() : "pending"
+                  }`}
+                >
+                  <strong>Status:</strong> {b.status || "Pending"}
                 </p>
               </div>
             ))

@@ -15,14 +15,27 @@ const CheckoutPage = () => {
     setTotal(totalAmount);
   }, []);
 
-  const handlePayment = () => {
-    // simple mock payment
-    setTimeout(() => {
-      alert("✅ Payment successful! Your booking is confirmed.");
-      localStorage.removeItem("cart");
-      navigate("/");
-    }, 1500);
+ const handlePayment = () => {
+  const order = {
+    id: Date.now(),
+    items: cartItems,
+    total,
+    paymentMethod,
+    status: "Processing",
+    createdAt: new Date().toLocaleString(),
   };
+
+  const existingOrders = JSON.parse(localStorage.getItem("orders")) || [];
+  existingOrders.push(order);
+
+  localStorage.setItem("orders", JSON.stringify(existingOrders));
+
+  localStorage.removeItem("cart");
+
+  alert("✅ Payment successful! Your order has been placed.");
+  navigate("/orders");
+};
+
 
   return (
     <div className="checkout-container">

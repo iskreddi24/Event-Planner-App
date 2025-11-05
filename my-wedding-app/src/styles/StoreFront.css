@@ -1,27 +1,108 @@
-.storefront-container {
-  padding: 40px 20px;
-  background: #fafafa;
-  min-height: 100vh;
+/* Elegant Wedding Theme — Store */
+.store-wrap {
+  --rose: #d86b8a;
+  --rose-200: #ffd7e2;
+  --cream: #fff8f8;
+  --ink: #2a2a2a;
+  --muted: #6b6b6b;
+
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px 16px 48px;
 }
 
-.storefront-title {
+.store-hero {
+  background: linear-gradient(135deg, var(--rose-200), #ffeef5);
+  border-radius: 18px;
+  padding: 36px 24px;
+  margin-bottom: 18px;
   text-align: center;
-  font-size: 28px;
-  font-weight: 700;
-  color: #333;
-  margin: 30px 0;
+  border: 1px solid #f8d7e1;
 }
 
-.product-grid {
+.store-hero h1 {
+  margin: 0;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  color: var(--ink);
+}
+
+.store-hero p {
+  color: var(--muted);
+  margin-top: 6px;
+}
+
+.store-controls {
+  background: #fff;
+  border: 1px solid #f1e3e7;
+  border-radius: 14px;
+  padding: 14px;
+  margin-bottom: 18px;
+}
+
+.control-row {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 25px;
-  padding: 0 10px;
+  grid-template-columns: 1.2fr 1fr 0.7fr 0.7fr 0.8fr auto auto;
+  gap: 10px;
 }
 
-.no-products {
-  text-align: center;
-  font-size: 18px;
-  color: #777;
-  margin-top: 40px;
+.input, .select {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #e9d8de;
+  border-radius: 10px;
+  background: #fff;
+  outline: none;
+}
+.input:focus, .select:focus { border-color: var(--rose); }
+
+.btn {
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: none;
+  background: var(--rose);
+  color: #fff;
+  cursor: pointer;
+  font-weight: 600;
+}
+.btn:disabled { opacity: 0.6; cursor: not-allowed; }
+.btn.outline {
+  background: #fff;
+  color: var(--ink);
+  border: 1px solid #ead3da;
+}
+
+.store-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  margin-top: 8px;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  margin-top: 20px;
+}
+.pg-btn {
+  padding: 8px 14px;
+  border-radius: 10px;
+  border: 1px solid #ead3da;
+  background: #fff;
+  cursor: pointer;
+}
+.pg-btn:disabled { opacity: .5; cursor: not-allowed; }
+.pg-info { color: var(--muted); }
+
+.muted { color: var(--muted); text-align: center; padding: 24px 0; }
+
+@media (max-width: 1024px) {
+  .control-row { grid-template-columns: 1fr 1fr 1fr 1fr 1fr auto; }
+  .store-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 640px) {
+  .control-row { grid-template-columns: 1fr 1fr; }
+  .store-grid { grid-template-columns: 1fr; }
 }

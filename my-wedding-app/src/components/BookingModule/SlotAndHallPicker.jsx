@@ -1,15 +1,13 @@
 // src/components/booking/SlotAndHallPicker.jsx
-
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import StripePaymentPortal from './StripePaymentPortal';
-// import { useAuth } from '../../context/AuthContext'; 
-import "../../styles/bookingStyles.css"; 
+import "../../styles/bookingStyles.css";
 
 const API_URL = import.meta.env.VITE_API_URL || process.env.REACT_APP_API_URL || 'http://localhost:8080/api';
-
 const SLOTS = ['Morning (9 AM - 2 PM)', 'Evening (5 PM - 10 PM)', 'Full Day'];
 
+// Format date for input[type="date"]
 const formatDate = (date) => {
     if (!date) return '';
     const d = new Date(date);
@@ -20,6 +18,8 @@ const formatDate = (date) => {
 };
 
 export default function SlotAndHallPicker({ location, area, eventType }) {
+    // ✅ React hooks must be inside component
+    const [notification, setNotification] = useState(null);
     const [halls, setHalls] = useState([]);
     const [selectedHall, setSelectedHall] = useState(null);
     const [selectedDate, setSelectedDate] = useState(formatDate(new Date()));
@@ -29,8 +29,13 @@ export default function SlotAndHallPicker({ location, area, eventType }) {
     const [bookingDetails, setBookingDetails] = useState(null);
     const [fetchError, setFetchError] = useState(null);
 
-    // const { token, user } = useAuth(); // Example of getting auth details
+    // ✅ Simple reusable notification helper
+    const showNotification = (message, type = "info") => {
+        setNotification({ message, type });
+        setTimeout(() => setNotification(null), 2500); // Auto hide after 2.5s
+    };
 
+    // Fetch halls based on location/area
     useEffect(() => {
         const fetchHalls = async () => {
             setLoading(true);
@@ -49,13 +54,12 @@ export default function SlotAndHallPicker({ location, area, eventType }) {
         fetchHalls();
     }, [location, area]);
 
+    // Check booked slots whenever hall/date changes
     useEffect(() => {
         if (selectedHall && selectedDate) {
             const checkAvailability = async () => {
-                // Reset selected slot to prevent user booking a now-unavailable slot
                 setSelectedSlot(null);
                 try {
-                    // NOTE: The backend API MUST ONLY return slots where status is 'Confirmed'
                     const res = await axios.get(`${API_URL}/booking/availability/${selectedHall._id}/${selectedDate}`);
                     setBookedSlots(res.data.bookedSlots);
                 } catch (err) {
@@ -67,31 +71,32 @@ export default function SlotAndHallPicker({ location, area, eventType }) {
         }
     }, [selectedHall, selectedDate]);
 
+    // Reset hall & slot when user changes location or area
     useEffect(() => {
         setSelectedHall(null);
         setBookingDetails(null);
         setSelectedSlot(null);
     }, [location, area]);
 
-
+    // Slot booking validation
     const isSlotBooked = (slot) => {
-        // The bookedSlots array only contains 'Confirmed' slots based on the API response
         if (bookedSlots.includes('Full Day')) return true;
         if (bookedSlots.includes(slot)) return true;
         return false;
     };
 
+    // Booking handler
     const handleProceedToPayment = async () => {
         if (!selectedHall || !selectedDate || !selectedSlot) {
-            // Replaced alert with custom handling or a console error for robust apps
-            console.error('Please select a hall, date, and time slot.');
+            showNotification("Please select a hall, date, and slot", "warning");
             setFetchError('Please select a hall, date, and time slot.');
             return;
         }
+        showNotification("Processing booking...", "info");
         setFetchError(null);
         setLoading(true);
-        // IMPORTANT: Replace DUMMY_USER_ID with the actual user ID from context/state
-        const DUMMY_USER_ID = '60c72b2f9a9c1e0015f8a0a1';
+
+        const DUMMY_USER_ID = '60c72b2f9a9c1e0015f8a0a1'; // Replace with real user ID
 
         const bookingData = {
             user: DUMMY_USER_ID,
@@ -103,43 +108,35 @@ export default function SlotAndHallPicker({ location, area, eventType }) {
         };
 
         try {
-            // Backend creates a booking with status: 'Pending_Payment'
             const res = await axios.post(`${API_URL}/booking/create`, bookingData);
             setBookingDetails({
                 bookingId: res.data.bookingId,
                 amount: res.data.amount,
-                // You might also pass paymentIntentId if created on backend
             });
         } catch (err) {
-            // Replaced alert with custom handling
-            setFetchError(`Booking failed: ${err.response?.data?.message || 'Server error'}`);
             console.error(err);
+            showNotification("Booking failed. Please try again.", "error");
+            setFetchError(`Booking failed: ${err.response?.data?.message || 'Server error'}`);
         } finally {
             setLoading(false);
         }
     };
 
-    // ➡️ UPDATED: Confirm booking status after payment success
+    // Payment success flow
     const handlePaymentSuccess = async (paymentResponseData) => {
-        // 1. Display success message (using console.log instead of alert)
         console.log('Payment Successful! Confirming your booking status...');
-
         setLoading(true);
         try {
-            // 2. Call backend to update booking status to 'Confirmed'
-            // 💡 ASSUMPTION: API endpoint PUT /booking/confirm/:bookingId
             await axios.put(`${API_URL}/booking/confirm/${bookingDetails.bookingId}`, {
-                // You might pass transaction details here if needed
                 paymentIntentId: paymentResponseData?.paymentIntentId,
             });
 
-            // 3. Update local state to reflect the confirmed booking
-            setBookedSlots((prevSlots) => [...prevSlots, selectedSlot]);
-            alert('Booking Confirmed! Check your email for details.');
-
+            // Confirmed successfully
+            setBookedSlots((prev) => [...prev, selectedSlot]);
+            showNotification("Payment successful", "success");
         } catch (err) {
             console.error('Error confirming booking:', err);
-            alert('Payment was successful, but there was an issue confirming the booking on the server. Please contact support with your payment ID.');
+            showNotification("Payment succeeded but booking confirmation failed", "error");
         } finally {
             setLoading(false);
             setBookingDetails(null);
@@ -147,14 +144,12 @@ export default function SlotAndHallPicker({ location, area, eventType }) {
         }
     };
 
-
     if (bookingDetails) {
         return (
             <div className="payment-portal-container">
                 <StripePaymentPortal
                     bookingId={bookingDetails.bookingId}
                     amount={bookingDetails.amount}
-                    // Pass a function that takes the payment response data (e.g., paymentIntentId)
                     onSuccess={handlePaymentSuccess}
                 />
             </div>
@@ -163,12 +158,21 @@ export default function SlotAndHallPicker({ location, area, eventType }) {
 
     return (
         <div className="hall-picker-grid">
-            {/* Hall Selection Column */}
+            {/* Floating Notification */}
+            {notification && (
+                <div className={`floating-notification ${notification.type}`}>
+                    {notification.message}
+                </div>
+            )}
+
+            {/* Hall Selection */}
             <div className="hall-list">
                 <h4 className="hall-picker-title">Select Hall</h4>
                 {loading && <p>Loading halls...</p>}
                 {!loading && fetchError && <p className="error-message">{fetchError}</p>}
-                {!loading && !fetchError && halls.length === 0 && <p className="error-message">No halls found in this area.</p>}
+                {!loading && !fetchError && halls.length === 0 && (
+                    <p className="error-message">No halls found in this area.</p>
+                )}
                 {halls.map(hall => (
                     <div
                         key={hall._id}
@@ -182,13 +186,14 @@ export default function SlotAndHallPicker({ location, area, eventType }) {
                 ))}
             </div>
 
-            {/* Date and Slot Column */}
+            {/* Date and Slot Picker */}
             <div>
                 {selectedHall ? (
                     <div className="slot-hall-details">
-                        <h4 className="hall-picker-title">Choose Date & Slot for **{selectedHall.hallName}**</h4>
+                        <h4 className="hall-picker-title">
+                            Choose Date & Slot for <b>{selectedHall.hallName}</b>
+                        </h4>
 
-                        {/* Date Picker */}
                         <div className="date-picker-container">
                             <label>Event Date</label>
                             <input
@@ -202,31 +207,37 @@ export default function SlotAndHallPicker({ location, area, eventType }) {
                             />
                         </div>
 
-                        {/* Slot Selector */}
                         <div className="slot-selector-grid">
                             {SLOTS.map(slot => (
                                 <button
                                     key={slot}
                                     disabled={isSlotBooked(slot)}
                                     onClick={() => setSelectedSlot(slot)}
-                                    className={`slot-button ${isSlotBooked(slot) ? 'booked' :
-                                        selectedSlot === slot ? 'selected' : 'available'
-                                        }`}
+                                    className={`slot-button ${
+                                        isSlotBooked(slot)
+                                            ? 'booked'
+                                            : selectedSlot === slot
+                                            ? 'selected'
+                                            : 'available'
+                                    }`}
                                 >
                                     {slot}
-                                    {isSlotBooked(slot) && <span className="slot-booked-text">Booked</span>}
+                                    {isSlotBooked(slot) && (
+                                        <span className="slot-booked-text">Booked</span>
+                                    )}
                                 </button>
                             ))}
                         </div>
 
-                        {/* Booking Summary and Button */}
                         <div className="booking-summary-actions">
                             {selectedSlot ? (
                                 <div className="booking-summary-text">
-                                    Selected: **{selectedDate}** at **{selectedSlot}**
+                                    Selected: <b>{selectedDate}</b> at <b>{selectedSlot}</b>
                                 </div>
                             ) : (
-                                <p className="error-message">Please select a date and time slot to proceed.</p>
+                                <p className="error-message">
+                                    Please select a date and time slot to proceed.
+                                </p>
                             )}
 
                             <button
@@ -234,7 +245,12 @@ export default function SlotAndHallPicker({ location, area, eventType }) {
                                 disabled={!selectedHall || !selectedDate || !selectedSlot || loading}
                                 className="proceed-button"
                             >
-                                {loading ? 'Initiating Booking...' : `Proceed to Pay ₹${selectedHall.pricePerDay?.toLocaleString('en-IN') || '10,000'}`}
+                                {loading
+                                    ? 'Initiating Booking...'
+                                    : `Proceed to Pay ₹${
+                                          selectedHall.pricePerDay?.toLocaleString('en-IN') ||
+                                          '10,000'
+                                      }`}
                             </button>
                         </div>
                     </div>

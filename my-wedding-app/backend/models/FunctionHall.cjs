@@ -12,12 +12,12 @@ const functionHallSchema = new mongoose.Schema({
         required: true,
         trim: true
     },
-    location: { // State/City (e.g., Andhra Pradesh)
+    location: { 
         type: String,
         required: true,
         trim: true
     },
-    area: { // Area/Sub-District (e.g., Vijayawada)
+    area: { 
         type: String,
         required: true,
         trim: true
@@ -50,5 +50,4 @@ const functionHallSchema = new mongoose.Schema({
     }
 });
 
-// Export using CommonJS module.exports
 module.exports = mongoose.model('FunctionHall', functionHallSchema);

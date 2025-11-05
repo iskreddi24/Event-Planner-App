@@ -1,82 +1,123 @@
+/* --------------------------------------------- */
+/* 📞 CONTACT FORM — SIMPLE FLAT DESIGN */
+/* --------------------------------------------- */
+
 .contact-page {
-    max-width: 700px;
-    margin: 40px auto;
-    padding: 30px;
-    background: #ffffff;
-    border-radius: 12px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  font-family: "Poppins", sans-serif;
+  background-color: #f9fafb;
+  padding: 3rem 1rem;
+  text-align: center;
+  min-height: 100vh;
 }
 
 .page-title {
-    text-align: center;
-    color: #e67e22;
-    margin-bottom: 10px;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #4a148c;
 }
 
 .page-intro {
-    text-align: center;
-    color: #7f8c8d;
-    margin-bottom: 30px;
+  font-size: 1rem;
+  color: #6b7280;
+  margin-bottom: 2rem;
 }
 
+/* ---------------- Notification Box ---------------- */
+.notification {
+  margin: 1rem auto 2rem auto;
+  padding: 0.9rem 1.2rem;
+  border-radius: 8px;
+  max-width: 600px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+}
+
+.notification.success {
+  background-color: #ecfdf5;
+  color: #065f46;
+  border: 1px solid #34d399;
+}
+
+.notification.error {
+  background-color: #fef2f2;
+  color: #991b1b;
+  border: 1px solid #f87171;
+}
+
+.notification.info {
+  background-color: #f3f4f6;
+  color: #374151;
+  border: 1px solid #d1d5db;
+}
+
+/* ---------------- Form Styles ---------------- */
 .contact-form {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 15px;
+  max-width: 600px;
+  margin: 0 auto;
+  background-color: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 2rem;
+  text-align: left;
 }
 
 .form-label {
-    font-weight: 600;
-    color: #34495e;
-    margin-bottom: 5px;
+  display: block;
+  font-weight: 600;
+  color: #374151;
+  margin-bottom: 0.3rem;
+  font-size: 0.95rem;
 }
 
-.form-input, .form-select, .form-textarea {
-    width: 100%;
-    padding: 12px;
-    border: 1px solid #cbc6c6;
-    border-radius: 8px;
-    transition: border-color 0.3s;
-    box-sizing: border-box; 
+.form-input,
+.form-select,
+.form-textarea {
+  width: 100%;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  margin-bottom: 1rem;
+  font-size: 0.95rem;
+  background-color: #fafafa;
 }
 
-.form-input:focus, .form-select:focus, .form-textarea:focus {
-    border-color: #e67e22;
-    outline: none;
+.form-input:focus,
+.form-select:focus,
+.form-textarea:focus {
+  border-color: #7c3aed;
+  outline: none;
 }
 
+/* ---------------- Button ---------------- */
 .submit-btn {
-    padding: 15px;
-    background: #2ecc71; 
-    color: white;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 18px;
-    font-weight: bold;
-    transition: background 0.3s ease;
+  width: 100%;
+  background-color: #7c3aed;
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  padding: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
 .submit-btn:hover {
-    background: #27ae60;
+  background-color: #6d28d9;
 }
 
-.status-message {
-    padding: 10px;
-    border-radius: 5px;
-    margin-top: 10px;
-    text-align: center;
-    font-weight: 600;
+.submit-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
 }
 
-.status-message.success {
-    background-color: #d4edda;
-    color: #155724;
-    border: 1px solid #c3e6cb;
-}
+/* ---------------- Responsive ---------------- */
+@media (max-width: 640px) {
+  .contact-form {
+    padding: 1.5rem;
+  }
 
-.status-message.error {
-    background-color: #f8d7da;
-    color: #721c24;
-    border: 1px solid #f5c6cb;
+  .page-title {
+    font-size: 1.6rem;
+  }
 }

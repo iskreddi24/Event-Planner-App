@@ -23,7 +23,6 @@ const router = express.Router();
 const Order = require("../models/OrderModel.cjs");
 const { protect } = require("../middleware/authMiddleware.cjs");
 
-// 🧾 Create New Order (User)
 router.post("/create", protect, async (req, res) => {
   try {
     const newOrder = new Order({
@@ -41,7 +40,6 @@ router.post("/create", protect, async (req, res) => {
   }
 });
 
-// 📦 Get User Orders
 router.get("/my-orders", protect, async (req, res) => {
   try {
     const orders = await Order.find({ user: req.user._id });

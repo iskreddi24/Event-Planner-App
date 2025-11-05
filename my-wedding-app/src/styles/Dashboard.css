@@ -1,232 +1,115 @@
-/* .dashboard-page {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: calc(100vh - 120px);
-  background: linear-gradient(135deg, #081c2f, #123e68, #2c87c8);
-  background-size: 400% 400%;
-  animation: bgFlow 10s ease infinite;
-  padding: 60px 20px;
-}
-
-@keyframes bgFlow {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-
-.welcome-card {
-  max-width: 850px;
-  width: 100%;
-  padding: 50px;
-  background: rgba(255, 255, 255, 0.12);
-  backdrop-filter: blur(20px);
-  border-radius: 20px;
-  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.35);
-  text-align: center;
-  transform: translateY(0);
-  animation: fadeUp 1.2s ease forwards;
-  transition: transform 0.4s ease, box-shadow 0.4s ease;
-}
-
-.welcome-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
-}
-
-@keyframes fadeUp {
-  from {
-    opacity: 0;
-    transform: translateY(40px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.welcome-title {
-  font-size: 2.8rem;
-  color: #ffffff;
-  text-shadow: 0 0 20px rgba(52, 152, 219, 0.7);
-  margin-bottom: 10px;
-  animation: glowText 2.5s infinite alternate ease-in-out;
-}
-
-@keyframes glowText {
-  from {
-    text-shadow: 0 0 10px rgba(52, 152, 219, 0.5),
-                 0 0 20px rgba(52, 152, 219, 0.3);
-  }
-  to {
-    text-shadow: 0 0 25px rgba(52, 152, 219, 1),
-                 0 0 40px rgba(52, 152, 219, 0.8);
-  }
-}
-
-.welcome-message {
-  font-size: 1.2rem;
-  color: rgba(255, 255, 255, 0.9);
-  margin-bottom: 40px;
-  line-height: 1.7;
-  letter-spacing: 0.5px;
-}
-
-.dashboard-features {
-  display: flex;
-  justify-content: center;
-  gap: 25px;
-  flex-wrap: wrap;
-}
-
-.feature-btn {
-  position: relative;
-  padding: 14px 35px;
-  background: linear-gradient(135deg, #00ffb3, #0072ff);
-  color: #fff;
-  font-weight: bold;
-  font-size: 17px;
-  border: none;
-  border-radius: 50px;
-  cursor: pointer;
-  overflow: hidden;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  box-shadow: 0 8px 20px rgba(0, 114, 255, 0.4);
-}
-
-.feature-btn:hover {
-  transform: scale(1.05);
-  box-shadow: 0 12px 30px rgba(0, 255, 179, 0.6);
-}
-
-.feature-btn::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 200%;
-  height: 100%;
-  background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-  transition: left 0.6s ease;
-}
-
-.feature-btn:hover::before {
-  left: 100%;
-} */
-/* src/styles/Dashboard.css */
+/* --------------------------------------------- */
+/* 🌸 DASHBOARD PAGE — SIMPLE LIGHT WITH BACKGROUND IMAGES */
+/* --------------------------------------------- */
 
 .dashboard-page {
   font-family: "Poppins", sans-serif;
-  padding: 40px 20px;
+  padding: 60px 20px;
   text-align: center;
   min-height: 100vh;
+
   display: flex;
   justify-content: center;
   align-items: center;
-  color: #f4eae6;
-  overflow: hidden;
   position: relative;
+  color: #333;
 
-  /* --- MULTI-IMAGE BACKGROUND SET UP --- */
-  /* Using four images as quadrants in the background */
+  /* 4 background images (wedding, anniversary, birthday, half saree) */
   background-image:
     url('../backimages/marriageback.png'),
     url('../backimages/anniversaryback.png'),
     url('../backimages/birthdayback.png'),
     url('../backimages/halfsareeback.png');
 
-  /* Position for the four quadrants (Top-Left, Top-Right, Bottom-Left, Bottom-Right) */
+  /* Position them in 4 quadrants */
   background-position:
     top left,
     top right,
     bottom left,
     bottom right;
 
-  /* Sizing for each quadrant */
   background-size: 50% 50%, 50% 50%, 50% 50%, 50% 50%;
   background-repeat: no-repeat;
+  background-color: #fff; /* fallback */
 }
 
-/* Optional: Add a dark, semi-transparent overlay for text readability */
+/* Optional: add very soft overlay for readability */
 .dashboard-page::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.6);
-  /* Dark semi-transparent overlay */
-  z-index: -1;
-  /* Place behind content */
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.6); /* very light white tint */
+  z-index: 0;
 }
 
-/* --- Content Styling for Transparency/Readability --- */
-
+/* ---------------- Welcome Card ---------------- */
 .welcome-card {
-  /* Use a transparent background with blur (glassmorphism effect) */
-  background: rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(10px);
-  padding: 40px;
-  border-radius: 20px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  max-width: 550px;
-  width: 90%;
+  position: relative;
   z-index: 1;
-  /* Ensure card is above the background overlay */
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+  padding: 40px 30px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  max-width: 600px;
+  width: 100%;
+  text-align: center;
 }
 
+/* ---------------- Text ---------------- */
 .welcome-title {
-  font-size: 2.5rem;
-  color: #ffffff;
-  /* Keep title bright for emphasis */
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #ff914d;
   margin-bottom: 15px;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
 }
 
 .welcome-message {
-  font-size: 1.1rem;
-  color: rgba(255, 255, 255, 0.85);
-  /* Slightly transparent text */
-  line-height: 1.6;
+  font-size: 1rem;
+  color: #444;
   margin-bottom: 30px;
+  line-height: 1.6;
 }
 
+/* ---------------- Buttons ---------------- */
 .dashboard-features {
   display: flex;
   justify-content: center;
-  gap: 20px;
+  gap: 16px;
+  flex-wrap: wrap;
 }
 
 .feature-btn {
-  background: linear-gradient(135deg, rgba(255, 100, 100, 0.8), rgba(255, 180, 50, 0.8));
-  /* Transparent gradient button */
-  color: #1a1a1a;
+  background: linear-gradient(90deg, #ffd8a8, #ffb685);
+  color: #333;
   border: none;
-  padding: 12px 25px;
+  padding: 10px 22px;
   border-radius: 10px;
-  font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  transition: background 0.2s ease;
 }
 
 .feature-btn:hover {
-  background: linear-gradient(135deg, rgba(255, 80, 80, 1), rgba(255, 160, 30, 1));
-  transform: translateY(-3px);
-  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
+  background: linear-gradient(90deg, #ffe3be, #ffc59e);
 }
 
-/* --- Responsive Design --- */
-@media (max-width: 600px) {
+/* ---------------- Responsive ---------------- */
+@media (max-width: 768px) {
+  .dashboard-page {
+    background-size: 100% 50%, 100% 50%, 100% 50%, 100% 50%;
+    background-position: top, center, bottom, bottom;
+  }
+
   .welcome-card {
     padding: 30px 20px;
   }
 
   .welcome-title {
-    font-size: 2rem;
+    font-size: 1.5rem;
   }
 
   .dashboard-features {

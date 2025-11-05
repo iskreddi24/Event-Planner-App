@@ -1,0 +1,35 @@
+.floating-cart {
+  position: fixed;
+  bottom: 160px; /* was 90px */
+  right: 20px;
+  background: linear-gradient(135deg, #ff6f91, #ff9671);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 55px;
+  height: 55px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.3);
+  z-index: 1000;
+  transition: transform 0.2s;
+}
+
+
+.floating-cart:hover {
+  transform: scale(1.1);
+}
+
+.cart-badge {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  background: white;
+  color: #ff4d6d;
+  font-weight: bold;
+  border-radius: 50%;
+  font-size: 0.8rem;
+  padding: 2px 6px;
+}

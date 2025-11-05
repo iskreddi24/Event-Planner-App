@@ -1,50 +1,42 @@
-/* This CSS ensures the Review Form (which uses its own max-width for centering) 
-and the Customer Reviews (which is often full-width) flow cleanly together.
-*/
+/* --------------------------------------------- */
+/* 🧾 REVIEW CONTAINER PAGE */
+/* --------------------------------------------- */
 
 .review-container-page {
-    /* Use a very light background for the whole page area to provide a clean base */
-    background-color: #f7f5fa;
-    min-height: 100vh;
-    padding-top: 1px;
-    /* Small trick to ensure container respects margin of first child */
+  background-color: #f9fafb;
+  min-height: 100vh;
 }
 
-/* The Submission Form area already centers itself using the CSS defined 
-   in ReviewFormPage.css (e.g., max-w-2xl mx-auto)
-*/
-
+/* --- Divider Section --- */
 .reviews-section-divider {
-    /* Styles for the separator between the form and the public display area */
-    margin: 3rem 0;
-    padding: 2rem 0;
-    background-color: #f0f0f5;
-    /* Slightly darker than the page background */
-    border-top: 1px solid #e0e0e9;
-    border-bottom: 1px solid #e0e0e9;
-    text-align: center;
+  margin: 3rem 0;
+  padding: 2rem 0;
+  background-color: #ffffff;
+  border-top: 1px solid #e5e7eb;
+  border-bottom: 1px solid #e5e7eb;
+  text-align: center;
 }
 
 .reviews-section-divider h2 {
-    font-size: 2rem;
-    font-weight: 700;
-    color: #4a007d;
-    /* Dark purple */
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #4a148c;
 }
 
 .reviews-section-divider p {
-    color: #6b7280;
-    /* Gray text */
+  color: #6b7280;
+  font-size: 0.95rem;
+  margin-top: 0.5rem;
 }
 
-/* On smaller screens, reduce margin/padding */
+/* --- Responsive --- */
 @media (max-width: 768px) {
-    .reviews-section-divider {
-        margin: 2rem 0;
-        padding: 1.5rem 0;
-    }
+  .reviews-section-divider {
+    margin: 2rem 0;
+    padding: 1.5rem 0;
+  }
 
-    .reviews-section-divider h2 {
-        font-size: 1.5rem;
-    }
+  .reviews-section-divider h2 {
+    font-size: 1.4rem;
+  }
 }

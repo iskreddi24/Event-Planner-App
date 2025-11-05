@@ -12,7 +12,7 @@ router.post("/", protect, async (req, res) => {
             return res.status(400).json({ message: "Please fill all required fields." });
         }
 
-        if (!mongoose.Types.ObjectId.isValid(req.user.id)) {
+        if (!mongoose.Types.ObjectId.isValid(req.user._id)) {
             return res.status(400).json({ message: "Invalid user ID format." });
         }
 
@@ -25,8 +25,10 @@ router.post("/", protect, async (req, res) => {
             eventDate,
             eventLocation,
             profession,
-            userId: req.user.id, 
+            userId: req.user._id,
         });
+
+
 
         await newContact.save();
         res.status(201).json({ message: "Booking request submitted successfully!", newContact });
@@ -43,10 +45,10 @@ router.get("/", protect, admin, async (req, res) => {
     try {
         console.log("Admin fetching all contacts...");
         console.log("Admin user:", req.user);
-        
+
         const contacts = await Contact.find().sort({ submittedAt: -1 }); // Use submittedAt instead of createdAt
         console.log("Fetched contacts count:", contacts.length);
-        
+
         res.status(200).json(contacts);
     } catch (error) {
         console.error("Error fetching contacts:", error);
@@ -56,11 +58,10 @@ router.get("/", protect, admin, async (req, res) => {
 
 router.get("/my-bookings", protect, async (req, res) => {
     try {
-        if (!mongoose.Types.ObjectId.isValid(req.user.id)) {
+        if (!mongoose.Types.ObjectId.isValid(req.user._id)) {
             return res.status(400).json({ message: "Invalid user ID." });
         }
-
-        const userId = new mongoose.Types.ObjectId(req.user.id);
+        const userId = new mongoose.Types.ObjectId(req.user._id);
         const bookings = await Contact.find({ userId }).sort({ submittedAt: -1 });
         res.status(200).json(bookings);
     } catch (error) {
@@ -72,7 +73,7 @@ router.get("/my-bookings", protect, async (req, res) => {
 router.put("/:id/status", protect, admin, async (req, res) => {
     try {
         const { status } = req.body;
-        
+
         if (!['Pending', 'Contacted', 'Completed'].includes(status)) {
             return res.status(400).json({ message: "Invalid status value." });
         }
@@ -100,7 +101,7 @@ router.put("/:id/status", protect, admin, async (req, res) => {
 router.delete("/:id", protect, async (req, res) => {
     try {
         const { id } = req.params;
-        
+
         if (!mongoose.Types.ObjectId.isValid(id)) {
             return res.status(400).json({ message: "Invalid booking ID format." });
         }

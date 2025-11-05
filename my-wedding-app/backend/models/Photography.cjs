@@ -1,14 +1,12 @@
 const mongoose = require('mongoose');
 
 const photographySchema = new mongoose.Schema({
-    // Link to the user who made the booking
     userId: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'User', // Assuming your user model is named 'User'
+        ref: 'User', 
         required: true
     },
     
-    // User Contact Information
     userName: {
         type: String,
         required: true,
@@ -24,7 +22,6 @@ const photographySchema = new mongoose.Schema({
         required: true
     },
 
-    // Service Details
     eventType: {
         type: String,
         required: true,
@@ -58,14 +55,13 @@ const photographySchema = new mongoose.Schema({
         default: ''
     },
 
-    // Admin/Status Tracking
     status: {
         type: String,
         enum: ['Pending', 'Contacted', 'Confirmed', 'Cancelled', 'Completed'],
         default: 'Pending'
     }
 }, {
-    timestamps: true // Adds createdAt and updatedAt fields
+    timestamps: true 
 });
 
 const Photography = mongoose.model('Photography', photographySchema);

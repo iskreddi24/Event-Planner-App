@@ -15,13 +15,12 @@ const VIPFunctionHallSchema = new mongoose.Schema({
         type: Number,
         required: true,
     },
-    vipPrice: { // VIP Base Price (Admin-defined)
+    vipPrice: { 
         type: Number,
         required: true,
     },
-    // Optional details
     amenities: [String], 
-    isExclusive: { // Hall only available to VIP clients
+    isExclusive: { 
         type: Boolean,
         default: true,
     },
