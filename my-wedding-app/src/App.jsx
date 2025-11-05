@@ -26,10 +26,11 @@ import ExclusiveServicesComp from "./pages/ExclusiveServicesComp";
 import DecorationServiceComp from "./pages/DecorationServiceComp";
 import PhotographyServiceComp from "./pages/PhotographyServiceComp";
 import VIPWeddingServiceComp from "./pages/VIPWeddingServiceComp";
-
+import ForgotPassword from "./pages/ForgotPassword";
 import ReviewFormPage from "./pages/ReviewFormPage";
 import CustomerReviewsPage from "./pages/CustomerReviewsPage";
 import ReviewContainerPage from "./pages/ReviewContainerPage";
+import ResetPassword from "./pages/ResetPassword";
 
 import OwnerAuth from "./pages/Owner/OwnerAuth";
 import OwnerDashboard from "./pages/Owner/OwnerDashboard";
@@ -109,6 +110,8 @@ function App() {
             {/* ----------  Auth ---------- */}
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<SignUp />} />
+            <Route path="/forgot-password" element={<ForgotPassword />} />
+            <Route path="/reset-password/:token" element={<ResetPassword />} /> 
             <Route path="/hall-owner-signup" element={<OwnerAuth type="signup" />} />
             <Route path="/hall-owner-login" element={<OwnerAuth type="login" />} />
 

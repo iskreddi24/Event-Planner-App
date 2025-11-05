@@ -86,3 +86,61 @@
 .owner-register-btn:hover {
   background: #1e8449;
 }
+.auth-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.muted {
+  color: #555;
+  font-size: 14px;
+}
+.auth-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #4b0082, #9b59b6);
+}
+
+.auth-form {
+  background: #fff;
+  padding: 30px 40px;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+}
+
+.auth-title {
+  font-size: 26px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #fff;
+}
+
+.auth-btn {
+  background: #4b0082;
+  color: white;
+  padding: 12px 18px;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  width: 100%;
+  margin-top: 10px;
+}
+
+.auth-btn:hover {
+  background: #6a0dad;
+}
+
+.quick-link {
+  color: #4b0082;
+  text-decoration: none;
+}
+
+.quick-link:hover {
+  text-decoration: underline;
+}

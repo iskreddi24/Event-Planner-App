@@ -1,51 +1,46 @@
-/* --------------------------------------------- */
-/* 🕊️ BLOG PAGE — CLEAN FIXED VERSION */
-/* --------------------------------------------- */
-
+/* 🌿 BLOG PAGE - Minimal Light Theme */
 .blog-page {
   padding: 60px 20px;
   text-align: center;
-  min-height: calc(100vh - 120px);
-  background: #f9fafb;
+  background: #fdfdfd;
   color: #333;
   font-family: "Poppins", sans-serif;
 }
 
-/* ---------------- Header ---------------- */
+/* Header */
 .blog-page h1 {
   font-size: 2rem;
-  color: #ff914d;
+  color: #444;
   margin-bottom: 10px;
+  font-weight: 600;
 }
 
 .blog-page p {
   font-size: 1rem;
-  color: #555;
+  color: #666;
   margin-bottom: 40px;
 }
 
-/* ---------------- Swiper Container ---------------- */
+/* Swiper Container */
 .blog-carousel-container {
   max-width: 1200px;
   margin: 0 auto;
-  padding-bottom: 60px;
 }
 
-.blogSwiper {
-  width: 100%;
-}
-
-/* ---------------- Blog Card ---------------- */
+/* Blog Card */
 .blog-card {
-  background: #ffffff;
-  border: 1px solid #e5e7eb;
+  background: #fff;
   border-radius: 14px;
   overflow: hidden;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.07);
   display: flex;
   flex-direction: column;
-  min-height: 440px; /* instead of fixed height */
-  height: auto;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.blog-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
 }
 
 /* Image */
@@ -53,83 +48,64 @@
   width: 100%;
   height: 220px;
   object-fit: cover;
-  border-bottom: 1px solid #f0f0f0;
 }
 
-/* Card Content */
+/* Content */
 .card-content {
-  padding: 16px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  flex-grow: 1;
+  padding: 16px 18px;
+  text-align: left;
 }
 
 .card-content h2 {
   font-size: 1.1rem;
-  color: #ff914d;
+  color: #333;
   font-weight: 600;
   margin-bottom: 8px;
-  text-align: left;
-  word-break: break-word;
 }
 
 .card-content p {
   font-size: 0.95rem;
-  color: #555;
-  text-align: left;
-  margin-bottom: 12px;
+  color: #666;
   line-height: 1.5;
+  margin-bottom: 14px;
 }
 
 /* Button */
 .read-more-btn {
-  align-self: flex-start;
-  background: linear-gradient(90deg, #ffd8a8, #ffb685);
-  color: #333;
+  background: #f2f2f2;
+  color: #444;
   border: none;
-  padding: 8px 14px;
+  padding: 8px 16px;
   border-radius: 20px;
-  font-weight: 600;
-  font-size: 0.9rem;
+  font-weight: 500;
   cursor: pointer;
+  transition: background 0.3s ease;
 }
 
 .read-more-btn:hover {
-  background: linear-gradient(90deg, #ffe3be, #ffc59e);
+  background: #ececec;
 }
 
-/* ---------------- Swiper Controls ---------------- */
+/* Swiper Controls */
 .swiper-button-prev,
 .swiper-button-next {
-  color: #ff914d !important;
+  color: #888 !important;
   top: 45%;
-  transform: scale(0.9);
 }
 
 .swiper-pagination-bullet {
-  background: #ffd8a8 !important;
+  background: #ddd !important;
   opacity: 1;
 }
 
 .swiper-pagination-bullet-active {
-  background: #ff914d !important;
+  background: #999 !important;
 }
 
-/* Remove unwanted blue line */
-.swiper-scrollbar,
-.swiper-scrollbar-drag {
-  display: none !important;
-}
-
-/* ---------------- Responsive ---------------- */
+/* Responsive */
 @media (max-width: 768px) {
   .blog-page h1 {
     font-size: 1.6rem;
-  }
-
-  .blog-card {
-    min-height: 400px;
   }
 
   .card-content h2 {
@@ -138,5 +114,90 @@
 
   .read-more-btn {
     font-size: 0.85rem;
+  }
+}
+.swiper-scrollbar,
+.swiper-scrollbar-drag {
+  display: none !important;
+}
+
+/* Also make sure no bottom border shows */
+.blog-carousel-container .swiper {
+  border-bottom: none !important;
+}
+/* ======================= */
+/* 🌸 MODAL STYLES */
+/* ======================= */
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(20, 20, 20, 0.65);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  backdrop-filter: blur(3px);
+}
+
+.modal-content {
+  background: #fff;
+  border-radius: 14px;
+  padding: 20px;
+  max-width: 600px;
+  width: 90%;
+  text-align: center;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+  position: relative;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.modal-image {
+  width: 100%;
+  max-height: 320px;
+  object-fit: cover;
+  border-radius: 10px;
+  margin-bottom: 15px;
+}
+
+.modal-content h2 {
+  font-size: 1.4rem;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.modal-content p {
+  font-size: 1rem;
+  color: #666;
+  line-height: 1.5;
+}
+
+.close-modal-btn {
+  position: absolute;
+  top: 8px;
+  right: 12px;
+  border: none;
+  background: transparent;
+  font-size: 1.4rem;
+  cursor: pointer;
+  color: #888;
+  transition: color 0.3s;
+}
+
+.close-modal-btn:hover {
+  color: #333;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }

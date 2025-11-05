@@ -73,6 +73,11 @@ function Login() {
           onChange={handleChange}
           required
         />
+<p className="auth-link-text" style={{ textAlign: "center" }}>
+  <Link to="/forgot-password" className="quick-link">
+    Forgot Password?
+  </Link>
+</p>
 
         <button type="submit" className="auth-btn">
           Login
