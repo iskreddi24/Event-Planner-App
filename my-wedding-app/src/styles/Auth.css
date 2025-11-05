@@ -51,3 +51,38 @@
     text-align: center;
     margin-top: 15px;
 }
+.quick-link {
+  display: inline-block;
+  margin: 5px 8px;
+  color: #2980b9;
+  font-weight: 500;
+  text-decoration: none;
+  transition: 0.2s;
+}
+
+.quick-link:hover {
+  text-decoration: underline;
+  color: #1b4f72;
+}
+
+.auth-links {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 10px;
+}
+
+.owner-register-section {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.owner-register-btn {
+  background: #27ae60;
+  color: white;
+  font-weight: 600;
+}
+
+.owner-register-btn:hover {
+  background: #1e8449;
+}

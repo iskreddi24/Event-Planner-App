@@ -96,3 +96,68 @@ h2 {
 .delete-btn {
   background-color: #dc3545;
 }
+.refresh-btn {
+  margin-bottom: 10px;
+  background-color: #3498db;
+  color: white;
+  padding: 8px 14px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+}
+.refresh-btn:hover {
+  background-color: #2980b9;
+}
+.category-section {
+  background: #fafafa;
+  border-radius: 12px;
+  padding: 15px 20px;
+  margin-bottom: 25px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+}
+
+.category-form {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.category-form input {
+  flex: 1;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+.category-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.category-item {
+  background: white;
+  border: 1px solid #ddd;
+  padding: 8px 12px;
+  border-radius: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-width: 180px;
+}
+
+.cat-actions button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  margin-left: 6px;
+}
+
+.cat-actions .edit-btn {
+  color: #2980b9;
+}
+
+.cat-actions .delete-btn {
+  color: #e74c3c;
+}

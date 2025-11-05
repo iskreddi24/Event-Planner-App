@@ -1,6 +1,3 @@
-// ===============================
-// server.cjs (REALTIME FINAL BUILD + Chat Persistence)
-// ===============================
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
@@ -13,7 +10,7 @@ const { Server } = require("socket.io");
 // --- 1. ENV LOAD ---
 dotenv.config({ path: path.resolve(__dirname, ".env") });
 
-// --- 2. SAFELY FETCH MONGO URI ---
+// --- 2. SAFE MONGO URI FETCH ---
 const getMongoUri = () => {
   if (process.env.MONGODB_CONNECTION_URI) {
     console.log("✅ Loaded MONGODB_CONNECTION_URI from env");
@@ -70,11 +67,24 @@ const messageRoutes = require("./routes/messageRoute.cjs");
 const storeRoutes = require("./routes/storeRoutes.cjs");
 const orderRoutes = require("./routes/orderRoutes.cjs");
 
-app.use("/api/store", storeRoutes);
-app.use("/api/orders", orderRoutes);
+// --- 6. HTTP SERVER + SOCKET.IO ---
+const httpServer = http.createServer(app);
+const io = new Server(httpServer, {
+  cors: {
+    origin: process.env.FRONTEND_ORIGIN || "http://localhost:5173",
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true,
+  },
+});
+app.set("io", io);
 
-app.use("/api/messages", messageRoutes);
+// --- 7. INJECT SOCKET.IO INTO ROUTES ---
+app.use((req, res, next) => {
+  req.io = io;
+  next();
+});
 
+// --- 8. REGISTER ROUTES ---
 app.use("/api/auth", authRoutes);
 app.use("/api/contact", contactRoutes);
 app.use("/api/exclusive", exclusiveServiceRoutes);
@@ -86,33 +96,25 @@ app.use("/api/owner", ownerRoutes);
 app.use("/api/booking", bookingRoutes);
 app.use("/api/vip", vipRoutes);
 app.use("/api/vip/management", vipManagementRoutes);
+app.use("/api/messages", messageRoutes);
+app.use("/api/store", storeRoutes); // ✅ Store routes with real-time
+app.use("/api/orders", orderRoutes);
 
-// --- 7. BASIC ROUTES ---
+// --- 9. BASIC ROUTES ---
 app.get("/", (req, res) =>
   res.send("🎉 JUEYM Wedding App Backend (Realtime) is running!")
 );
 app.use((req, res) => res.status(404).send("<h1>404 - Route Not Found</h1>"));
 
-// --- 8. SOCKET.IO SETUP ---
-const httpServer = http.createServer(app);
-const io = new Server(httpServer, {
-  cors: {
-    origin: process.env.FRONTEND_ORIGIN || "http://localhost:5173",
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    credentials: true,
-  },
-});
-app.set("io", io);
-
-// --- 9. SOCKET EVENTS ---
+// --- 10. SOCKET.IO EVENTS ---
 io.on("connection", (socket) => {
   console.log("⚡ Socket connected:", socket.id);
 
-  // Live VIP Chat
+  /* ---------- VIP CHAT ---------- */
   socket.on("vipChatMessage", async (msg) => {
     io.emit("vipChatUpdate", msg);
 
-    // 🔥 Save chat message automatically to MongoDB
+    // 🔥 Persist chat in MongoDB
     try {
       const Message = require("./models/messageModel.cjs");
       await Message.create({
@@ -125,17 +127,34 @@ io.on("connection", (socket) => {
     }
   });
 
-  // Live Function Hall Updates
+  /* ---------- VIP FUNCTION HALL MANAGEMENT ---------- */
   socket.on("vipHallUpdated", (payload) => {
     io.emit("vipHallRealtimeUpdate", payload);
   });
 
+  /* ---------- STORE REAL-TIME UPDATES ---------- */
+  socket.on("productAdded", (data) => {
+    console.log("🛒 Product added:", data.name);
+    io.emit("productAdded", data);
+  });
+
+  socket.on("productUpdated", (data) => {
+    console.log("♻️ Product updated:", data.name);
+    io.emit("productUpdated", data);
+  });
+
+  socket.on("productDeleted", (data) => {
+    console.log("🗑️ Product deleted:", data.id);
+    io.emit("productDeleted", data);
+  });
+
+  /* ---------- DISCONNECT ---------- */
   socket.on("disconnect", () =>
     console.log("❌ Socket disconnected:", socket.id)
   );
 });
 
-// --- 10. START SERVER ---
+// --- 11. START SERVER ---
 const PORT = process.env.PORT || 8080;
 httpServer.listen(PORT, () => {
   console.log(`🚀 Server running with Socket.IO at http://localhost:${PORT}`);

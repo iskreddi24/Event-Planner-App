@@ -11,17 +11,37 @@ const ProductForm = () => {
     image: "",
   });
   const [editingIndex, setEditingIndex] = useState(null);
+  const [toast, setToast] = useState(null);
 
-  // Simulated fetch (replace with API later)
+  // 🪷 Default Wedding Categories
+  const defaultCategories = [
+    "Bangles",
+    "Makeup Kits",
+    "Wedding Sarees",
+    "Bridal Jewellery",
+    "Decor Items",
+    "Lighting Accessories",
+    "Groom Attire",
+    "Photography Gear",
+    "Gift Hampers",
+    "Puja Essentials",
+  ];
+
+  // Load from localStorage
   useEffect(() => {
     const storedProducts = JSON.parse(localStorage.getItem("adminProducts")) || [];
     setProducts(storedProducts);
   }, []);
 
-  // Save to local storage (temporary)
+  // Save to localStorage on change
   useEffect(() => {
     localStorage.setItem("adminProducts", JSON.stringify(products));
   }, [products]);
+
+  const showToast = (msg, type = "info") => {
+    setToast({ msg, type });
+    setTimeout(() => setToast(null), 2500);
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -32,7 +52,7 @@ const ProductForm = () => {
     e.preventDefault();
 
     if (!formData.name || !formData.price) {
-      alert("Please fill in product name and price!");
+      showToast("⚠️ Please fill in product name and price!", "error");
       return;
     }
 
@@ -41,8 +61,10 @@ const ProductForm = () => {
       updated[editingIndex] = formData;
       setProducts(updated);
       setEditingIndex(null);
+      showToast("♻️ Product updated!", "success");
     } else {
       setProducts([...products, formData]);
+      showToast("🆕 Product added!", "success");
     }
 
     setFormData({ name: "", category: "", price: "", stock: "", image: "" });
@@ -54,13 +76,39 @@ const ProductForm = () => {
   };
 
   const handleDelete = (index) => {
-    if (window.confirm("Are you sure you want to delete this product?")) {
+    if (window.confirm("Delete this product?")) {
       setProducts(products.filter((_, i) => i !== index));
+      showToast("🗑️ Product deleted!", "error");
     }
   };
 
   return (
     <div className="product-form-container">
+      {/* Floating Toast */}
+      {toast && (
+        <div
+          style={{
+            position: "fixed",
+            top: "20px",
+            right: "25px",
+            backgroundColor:
+              toast.type === "success"
+                ? "#2ecc71"
+                : toast.type === "error"
+                ? "#e74c3c"
+                : "#3498db",
+            color: "white",
+            padding: "10px 16px",
+            borderRadius: "8px",
+            boxShadow: "0 4px 10px rgba(0,0,0,0.2)",
+            fontWeight: "600",
+            zIndex: 1000,
+          }}
+        >
+          {toast.msg}
+        </div>
+      )}
+
       <h3>{editingIndex !== null ? "Edit Product" : "Add New Product"}</h3>
 
       <form onSubmit={handleSubmit} className="product-form">
@@ -71,13 +119,21 @@ const ProductForm = () => {
           value={formData.name}
           onChange={handleChange}
         />
-        <input
-          type="text"
+
+        <select
           name="category"
-          placeholder="Category"
           value={formData.category}
           onChange={handleChange}
-        />
+          required
+        >
+          <option value="">Select Category</option>
+          {defaultCategories.map((cat) => (
+            <option key={cat} value={cat}>
+              {cat}
+            </option>
+          ))}
+        </select>
+
         <input
           type="number"
           name="price"
@@ -85,6 +141,7 @@ const ProductForm = () => {
           value={formData.price}
           onChange={handleChange}
         />
+
         <input
           type="number"
           name="stock"
@@ -92,6 +149,7 @@ const ProductForm = () => {
           value={formData.stock}
           onChange={handleChange}
         />
+
         <input
           type="text"
           name="image"
@@ -117,9 +175,11 @@ const ProductForm = () => {
               <img src={p.image || "https://via.placeholder.com/80"} alt={p.name} />
               <div>
                 <h5>{p.name}</h5>
-                <p>Category: {p.category}</p>
-                <p>Price: ₹{p.price}</p>
-                <p>Stock: {p.stock}</p>
+                <p>
+                  <strong>Category:</strong> {p.category || "—"}
+                </p>
+                <p>💰 ₹{p.price}</p>
+                <p>📦 Stock: {p.stock || 0}</p>
               </div>
               <div className="actions">
                 <button onClick={() => handleEdit(index)} className="btn-edit">

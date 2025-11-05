@@ -4,7 +4,6 @@ import "../styles/BookingList.css";
 const BookingList = () => {
   const [bookings, setBookings] = useState([]);
 
-  // Simulated fetch (replace with backend API later)
   useEffect(() => {
     const storedBookings = JSON.parse(localStorage.getItem("userBookings")) || [
       {

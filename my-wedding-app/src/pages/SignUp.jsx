@@ -1,63 +1,102 @@
-import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import axiosClient from '../utils/axiosClient';
-import '../styles/Auth.css';
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import axiosClient from "../utils/axiosClient";
+import "../styles/Auth.css";
+import Toast from "../components/common/Toast";
+import { useToast } from "../hooks/useToast";
 
 function SignUp() {
-    const [formData, setFormData] = useState({ name: '', email: '', password: '' });
-    const navigate = useNavigate();
+  const [formData, setFormData] = useState({ name: "", email: "", password: "" });
+  const navigate = useNavigate();
+  const { toast, showToast, hideToast } = useToast();
 
-    const handleChange = (e) => {
-        setFormData({ ...formData, [e.target.name]: e.target.value });
-    };
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        try {
-            const { data } = await axiosClient.post('/auth/register', formData);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-            if (data?.token && data?.user) {
-                localStorage.setItem('token', data.token);
-                alert('Registration successful! Please log in.');
-                navigate('/login');
-            } else {
-                alert('Registration failed: Invalid server response.');
-            }
-        } catch (error) {
-            console.error('Sign Up Error:', error);
-            alert(error.response?.data?.message || 'An error occurred during registration.');
-        }
-    };
+    if (!formData.name || !formData.email || !formData.password) {
+      showToast("⚠️ Please fill all fields before submitting!", "error");
+      return;
+    }
 
-    return (
-        <div className="auth-page">
-            <h1 className="auth-title">Create Your Account (User)</h1>
-            <form className="auth-form" onSubmit={handleSubmit}>
-                <label>Name</label>
-                <input type="text" name="name" value={formData.name} onChange={handleChange} required />
+    try {
+      const { data } = await axiosClient.post("/auth/register", formData);
 
-                <label>Email</label>
-                <input type="email" name="email" value={formData.email} onChange={handleChange} required />
+      if (data?.token && data?.user) {
+        showToast("Registration successful! Redirecting to login...", "success");
+        setTimeout(() => navigate("/login"), 1000);
+      } else {
+        showToast("Invalid server response.", "error");
+      }
+    } catch (error) {
+      console.error("Sign Up Error:", error);
+      showToast(
+        error.response?.data?.message || "An error occurred during registration.",
+        "error"
+      );
+    }
+  };
 
-                <label>Password</label>
-                <input type="password" name="password" value={formData.password} onChange={handleChange} required />
+  return (
+    <div className="auth-page">
+      {toast && (
+        <Toast message={toast.message} type={toast.type} onClose={hideToast} />
+      )}
 
-                <button type="submit" className="auth-btn">Sign Up</button>
-                
-                <p className="auth-link-text">
-                    Already have an account? <Link to="/login">Login here</Link>
-                </p>
+      <h1 className="auth-title">Create Your Account</h1>
+      <form className="auth-form" onSubmit={handleSubmit}>
+        <label>Name</label>
+        <input
+          type="text"
+          name="name"
+          value={formData.name}
+          onChange={handleChange}
+          required
+        />
 
-                {/* NEW: Explicit link for Hall Owner Registration */}
-                <div className="owner-register-section">
-                    <p>--- OR ---</p>
-                    <Link to="/hall-owner-signup" className="auth-btn owner-register-btn">
-                        Register as Hall Owner
-                    </Link>
-                </div>
-            </form>
+        <label>Email</label>
+        <input
+          type="email"
+          name="email"
+          value={formData.email}
+          onChange={handleChange}
+          required
+        />
+
+        <label>Password</label>
+        <input
+          type="password"
+          name="password"
+          value={formData.password}
+          onChange={handleChange}
+          required
+        />
+
+        <button type="submit" className="auth-btn">
+          Sign Up
+        </button>
+
+        <div className="auth-links">
+          <Link to="/" className="quick-link">
+            Back to Home
+          </Link>
+          <Link to="/login" className="quick-link">
+            Back to Login
+          </Link>
         </div>
-    );
+
+        <div className="owner-register-section">
+          <p>--- OR ---</p>
+          <Link to="/hall-owner-signup" className="auth-btn owner-register-btn">
+            Register as Hall Owner
+          </Link>
+        </div>
+      </form>
+    </div>
+  );
 }
 
 export default SignUp;

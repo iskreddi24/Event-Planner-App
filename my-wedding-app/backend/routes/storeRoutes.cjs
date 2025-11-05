@@ -1,3 +1,4 @@
+// storeRoutes.cjs
 const express = require("express");
 const Product = require("../models/ProductModel.cjs");
 const Category = require("../models/CategoryModel.cjs");
@@ -34,8 +35,6 @@ router.get("/categories", async (req, res) => {
 router.post("/products", async (req, res) => {
   try {
     const body = req.body;
-
-    // ✅ Defensive fix: ignore invalid category
     if (!body.category || body.category === "" || body.category === "undefined") {
       delete body.category;
     }
@@ -44,13 +43,14 @@ router.post("/products", async (req, res) => {
     await newProduct.save();
 
     const populated = await Product.findById(newProduct._id).populate("category", "name");
+
+    // ✅ Emit real-time event to all connected clients
+    if (req.io) req.io.emit("productAdded", populated);
+
     res.status(201).json({ success: true, data: populated });
   } catch (err) {
     console.error("❌ Error creating product:", err);
-    res.status(400).json({
-      success: false,
-      message: err.message || "Invalid product data",
-    });
+    res.status(400).json({ success: false, message: err.message || "Invalid product data" });
   }
 });
 
@@ -58,8 +58,6 @@ router.post("/products", async (req, res) => {
 router.put("/products/:id", async (req, res) => {
   try {
     const body = req.body;
-
-    // ✅ Defensive fix again
     if (!body.category || body.category === "" || body.category === "undefined") {
       delete body.category;
     }
@@ -70,6 +68,10 @@ router.put("/products/:id", async (req, res) => {
     }).populate("category", "name");
 
     if (!updated) return res.status(404).json({ message: "Product not found" });
+
+    // ✅ Emit update event
+    if (req.io) req.io.emit("productUpdated", updated);
+
     res.json({ success: true, data: updated });
   } catch (err) {
     console.error("❌ Error updating product:", err);
@@ -82,10 +84,40 @@ router.delete("/products/:id", async (req, res) => {
   try {
     const deleted = await Product.findByIdAndDelete(req.params.id);
     if (!deleted) return res.status(404).json({ message: "Product not found" });
+
+    // ✅ Emit delete event
+    if (req.io) req.io.emit("productDeleted", { id: req.params.id });
+
     res.json({ success: true, message: "Product deleted" });
   } catch (err) {
     console.error("❌ Error deleting product:", err);
     res.status(500).json({ message: "Error deleting product" });
+  }
+});
+// Auto-add default wedding categories if not exist
+router.get("/seed-categories", async (req, res) => {
+  try {
+    const count = await Category.countDocuments();
+    if (count === 0) {
+      const defaults = [
+        { name: "Bangles" },
+        { name: "Makeup Kits" },
+        { name: "Wedding Sarees" },
+        { name: "Bridal Jewellery" },
+        { name: "Decor Items" },
+        { name: "Lighting Accessories" },
+        { name: "Groom Attire" },
+        { name: "Photography Gear" },
+        { name: "Gift Hampers" },
+        { name: "Puja Essentials" },
+      ];
+      await Category.insertMany(defaults);
+      return res.json({ success: true, message: "Default categories added!", count: defaults.length });
+    }
+    res.json({ success: true, message: "Categories already exist" });
+  } catch (err) {
+    console.error("Error seeding categories:", err);
+    res.status(500).json({ success: false, message: "Server error while seeding" });
   }
 });
 
